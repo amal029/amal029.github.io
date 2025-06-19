@@ -2,7 +2,159 @@
   1. It allows building finite state machines.
   2. It allows developing synchronous concurrent programs.
   3. It allows for shared memory or distributed memory concurrency.
-  4. Time tide language and tool suite is a work in progress -- expect
+  4. The compiler produces efficient C++ code, which allows for easy
+     interaction with native code and deployment on embedded platforms.
+  5. Time tide language and tool suite is a work in progress -- expect
      bugs and things to change daily
 
-* 
+* Installing the Time tide compiler(s)
+  1. Time tide uses multiple compiler tool chains.
+  2. You are expected to have installed C++ compilers with support for
+     at least C++-17 standard.
+  3. Pull the Time tide compiler from:
+     https://github.com/PRETgroup/timetide
+  4. Install the Ocaml programming language compiler from here:
+     https://ocaml.org/install#linux_mac_bsd
+  5. Install dune with command ~opam install dune~
+  6. Now go to the timetide directory and do command ~dune build~
+  7. It will *not* compile and list the missing libraries.
+  8. You will need to manually install the libraries like so: ~opam install <lib-name>~
+  9. You will need to install the following libraries:
+     ~pretty_expressive~
+     ~ppx_deriving~
+     ~ppx_sexp_conv~
+     ~sexplib~
+     ~base~
+  10. Once all the libraries are installed you should be able to build
+      the compiler using ~dune build~ in the timetide directory.
+  11. Download and install the Rust programming language compiler from:
+      [[https://rustlang.org][Rust]]
+  12. Pull the Sysrust intermediate language compiler from:
+      https://github.com/amal029/sysrust
+  13. Go inside the Sysrust compiler directory and run: ~make br~
+  14. Download and pull the Time tide example directory from:
+      https://github.com/PRETgroup/Timetide_tests
+  15. Go inside the ~Timetide_tests~ directory and run the following
+      command: ~COMPILE_SWITCH=sysrs FNAME="abro"
+      SYSRUST_DIR=<path-of-sysrust-compiler-dir>
+      TIMETIDE_DIR=<path-of-timetide-compiler-dir> make cleanall~
+  16. In the above command replace the ~<path-of-sysrust-compiler-dir>~
+      with where you have downloaded the individual timetide and sysrust
+      compilers.
+  17. Now run the command: ~COMPILE_SWITCH=sysrs FNAME="abro"
+      SYSRUST_DIR=<path-of-sysrust-compiler-dir>
+      TIMETIDE_DIR=<path-of-timetide-compiler-dir>
+      compilers~ -- this will build all the compilers.
+
+* We are now ready to compile our first example program
+
+  We will use the ~abro.tt~ program in ~Timetide_tests~ directory as our
+  first program.
+
+  #+begin_src C
+    main() {
+      int channel A delay 1;
+      int channel B delay 1;
+      int channel R delay 2;
+      int channel O delay 1;
+      {
+        for (int i:1:99) {
+          abort(R) {		/* preemption when channel has data */
+    	/* Wait for A and B in parallel */
+    	{run waitA(A);}<>{run waitB(B);};
+    	send O(100);		/* send O once both are received */
+    	/* abort when R is present and restart */
+    	task(period=1,duration=0,offset=0){;} /* halt */
+          }
+        } /* loop back */
+      }<> /* synchronous parallel concurrency */
+        {/*The environment*/
+          {send A(1);}<>{send B(1);};
+        }
+    };
+    /* Other functions/reactions being used inside main */
+    waitA(input int A) {abort(A) {task(period=1,duration=0,offset=0){;}}};
+    waitB(input int B) {abort(B) {task(period=1,duration=0,offset=0){;}}}
+  #+end_src
+
+  1. The code above is a *shared* memory synchronous program.
+  2. The program' entry point is ~main~.
+  3. The program has three modules/functions/reactions: ~waitA~,
+     ~waitB~, and ~main~.
+  4. The ~main~ function waits for some data to be available on
+     ~channels~ A and B in synchronous parallel.
+  5. Once the channel data is received; ~main~ sends data on channel O.
+  6. If during the process of waiting if any data is available on
+     channel R, ~main~ pre-empts waiting for A and B and the program is
+     reset.
+  7. Channels are typed and have an associated delay.
+  8. In the ~abro.tt~ program sending data in channel A or B makes it
+     available after a single so called ~tick~.
+  9. Sending data in channel R makes it available after two ticks.
+  10. The concept of a ~tick~ is central to programming in Time tide.
+  11. Tick is the synchronous (logical) clock running the whole program.
+
+** Compiling the abro.tt (shared memory) program
+   1. Run the command: ~COMPILE_SWITCH=sysrs FNAME="abro"
+      SYSRUST_DIR=<path-of-sysrust-compiler-dir>
+      TIMETIDE_DIR=<path-of-timetide-compiler-dir> make~ -- this will
+      produce three files ~abro.sysrs~ and ~abro.cpp~ and ~abro.h~.
+   2. The file ~abro.sysrs~ is the intermediate representation of the
+      ~abro.tt~ program in a synchronous format.
+   3. Files ~abro.cpp~ and ~abro.h~ are the generated C++ and header,
+      respectively.
+   4. The code snippet below shows the part of the generated ~main~
+      function. The generated ~main~ function is in namespace ~abro~ --
+      always the name of the ~.tt~ file.
+   5. You need to now write a ~main.cpp~ file that provides the input
+      and output functions.
+      #+begin_src C++
+	namespace abro {
+	  //....
+	  int main(void) {
+	    read_inputs();		// provide this function
+	    //...
+	    write_outputs();		// provide this function
+	    pre_eq_curr();
+	    reset_curr();
+	    return 0;
+	  }
+	}
+      #+end_src
+   6. The example ~main.cpp~ file is below. The file is available in
+      ~Timetide_tests~ directory to modify.
+      #+begin_src C++
+	#include "abro.h"
+	#include <cassert>
+	#include <iostream>
+	int mtick() {
+	  char b = '\0';
+	  int k = scanf("%c", &b);
+	  return b;
+	}
+	// In this case there are no inputs and outputs to abro.tt
+	void abro::read_inputs() {}
+	void abro::write_outputs() {}
+
+	// The main function
+	int main(void) {
+	  while (1) {
+	    // Run the abro program
+	    abro::main();
+	    // Then we are done with the tick.
+	    if (mtick() == 'd')
+	      break;
+	  }
+	  return 0;
+	}
+      #+end_src
+   7. Once we have the ~main.cpp~ file we can compile the ~abro~ example
+      to a binary using the command: ~COMPILE_SWITCH=sysrs FNAME="abro"
+      SYSRUST_DIR=<path-of-sysrust-compiler-dir>
+      TIMETIDE_DIR=<path-of-timetide-compiler-dir> EXTRA_FLAGS="-DDEBUG"
+      exe~ -- notice the ~-DDEBUG~ macro being provided.
+   8. We can finally run the program using the command:
+      ~COMPILE_SWITCH=sysrs FNAME="abro"
+      SYSRUST_DIR=<path-of-sysrust-compiler-dir>
+      TIMETIDE_DIR=<path-of-timetide-compiler-dir> EXTRA_FLAGS="-DDEBUG"
+      run~
