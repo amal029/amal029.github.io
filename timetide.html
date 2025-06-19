@@ -3,11 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-06-20 Fri 10:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
-<meta name="author" content="Avinash Malik" />
+<meta name="author" content="Dr. Avinash Malik" />
 <meta name="generator" content="Org Mode" />
 <style type="text/css">
   #content { max-width: 60em; margin: auto; }
@@ -193,26 +192,13 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { }
 </style>
+<link rel="stylesheet" type="text/css" href="http://thomasf.github.io/solarized-css/solarized-light.min.css" />
 </head>
 <body>
 <div id="content" class="content">
-<div id="table-of-contents" role="doc-toc">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents" role="doc-toc">
-<ul>
-<li><a href="#orgb7586c5">1. Time tide is a new programming language</a></li>
-<li><a href="#org9d0659d">2. Installing the Time tide compiler(s)</a></li>
-<li><a href="#orgf0e9307">3. We are now ready to compile our first example program</a>
-<ul>
-<li><a href="#org0cc8fb8">3.1. Compiling the abro.tt (shared memory) program</a></li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
-<div id="outline-container-orgb7586c5" class="outline-2">
-<h2 id="orgb7586c5"><span class="section-number-2">1.</span> Time tide is a new programming language</h2>
-<div class="outline-text-2" id="text-1">
+<div id="outline-container-org146b85b" class="outline-2">
+<h2 id="org146b85b">Time tide is a new programming language</h2>
+<div class="outline-text-2" id="text-org146b85b">
 <ol class="org-ol">
 <li>It allows building finite state machines.</li>
 <li>It allows developing synchronous concurrent programs.</li>
@@ -224,9 +210,9 @@ bugs and things to change daily</li>
 </ol>
 </div>
 </div>
-<div id="outline-container-org9d0659d" class="outline-2">
-<h2 id="org9d0659d"><span class="section-number-2">2.</span> Installing the Time tide compiler(s)</h2>
-<div class="outline-text-2" id="text-2">
+<div id="outline-container-orgfb91611" class="outline-2">
+<h2 id="orgfb91611">Installing the Time tide compiler(s)</h2>
+<div class="outline-text-2" id="text-orgfb91611">
 <ol class="org-ol">
 <li>Time tide uses multiple compiler tool chains.</li>
 <li>You are expected to have installed C++ compilers with support for
@@ -268,9 +254,9 @@ compilers.</li>
 </ol>
 </div>
 </div>
-<div id="outline-container-orgf0e9307" class="outline-2">
-<h2 id="orgf0e9307"><span class="section-number-2">3.</span> We are now ready to compile our first example program</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-orgb64bd0f" class="outline-2">
+<h2 id="orgb64bd0f">We are now ready to compile our first example program</h2>
+<div class="outline-text-2" id="text-orgb64bd0f">
 <p>
 We will use the <code>abro.tt</code> program in <code>Timetide_tests</code> directory as our
 first program.
@@ -284,12 +270,12 @@ first program.
   <span style="color: #6ae4b9;">int</span> <span style="color: #00d3d0;">channel</span> O delay 1;
   {
     <span style="font-weight: bold;">for</span> (<span style="color: #6ae4b9;">int</span> <span style="color: #00d3d0;">i</span>:1:99) {
-      abort(R) {                <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">preemption when channel has data</span><span style="color: #d8af7a;"> */</span>
-        <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">Wait for A and B in parallel</span><span style="color: #d8af7a;"> */</span>
-        {<span style="color: #6ae4b9;">run</span> <span style="color: #ffa00f;">waitA</span>(A);}&lt;&gt;{<span style="color: #6ae4b9;">run</span> <span style="color: #ffa00f;">waitB</span>(B);};
-        <span style="color: #6ae4b9;">send</span> <span style="color: #ffa00f;">O</span>(100);            <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">send O once both are received</span><span style="color: #d8af7a;"> */</span>
-        <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">abort when R is present and restart</span><span style="color: #d8af7a;"> */</span>
-        task(period=1,duration=0,offset=0){;} <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">halt</span><span style="color: #d8af7a;"> */</span>
+      abort(R) {    <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">preemption when channel has data</span><span style="color: #d8af7a;"> */</span>
+  <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">Wait for A and B in parallel</span><span style="color: #d8af7a;"> */</span>
+  {<span style="color: #6ae4b9;">run</span> <span style="color: #ffa00f;">waitA</span>(A);}&lt;&gt;{<span style="color: #6ae4b9;">run</span> <span style="color: #ffa00f;">waitB</span>(B);};
+  <span style="color: #6ae4b9;">send</span> <span style="color: #ffa00f;">O</span>(100);    <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">send O once both are received</span><span style="color: #d8af7a;"> */</span>
+  <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">abort when R is present and restart</span><span style="color: #d8af7a;"> */</span>
+  task(period=1,duration=0,offset=0){;} <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">halt</span><span style="color: #d8af7a;"> */</span>
       }
     } <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">loop back</span><span style="color: #d8af7a;"> */</span>
   }&lt;&gt; <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">synchronous parallel concurrency</span><span style="color: #d8af7a;"> */</span>
@@ -322,9 +308,9 @@ available after a single so called <code>tick</code>.</li>
 <li>Tick is the synchronous (logical) clock running the whole program.</li>
 </ol>
 </div>
-<div id="outline-container-org0cc8fb8" class="outline-3">
-<h3 id="org0cc8fb8"><span class="section-number-3">3.1.</span> Compiling the abro.tt (shared memory) program</h3>
-<div class="outline-text-3" id="text-3-1">
+<div id="outline-container-orgd712fc8" class="outline-3">
+<h3 id="orgd712fc8">Compiling the abro.tt (shared memory) program</h3>
+<div class="outline-text-3" id="text-orgd712fc8">
 <ol class="org-ol">
 <li>Run the command: <code>COMPILE_SWITCH=sysrs FNAME="abro"
       SYSRUST_DIR=&lt;path-of-sysrust-compiler-dir&gt;
@@ -345,9 +331,9 @@ and output functions.
 <pre class="src src-C++"><span style="font-weight: bold;">namespace</span> <span style="color: #82b0ec;">abro</span> {
   <span style="color: #d8af7a;">//</span><span style="color: #d8af7a;">....</span>
   <span style="color: #6ae4b9;">int</span> <span style="color: #ffa00f;">main</span>(<span style="color: #6ae4b9;">void</span>) {
-    read_inputs();              <span style="color: #d8af7a;">// </span><span style="color: #d8af7a;">provide this function</span>
+    read_inputs();    <span style="color: #d8af7a;">// </span><span style="color: #d8af7a;">provide this function</span>
     <span style="color: #d8af7a;">//</span><span style="color: #d8af7a;">...</span>
-    write_outputs();            <span style="color: #d8af7a;">// </span><span style="color: #d8af7a;">provide this function</span>
+    write_outputs();    <span style="color: #d8af7a;">// </span><span style="color: #d8af7a;">provide this function</span>
     pre_eq_curr();
     reset_curr();
     <span style="font-weight: bold;">return</span> 0;
@@ -401,8 +387,9 @@ to a binary using the command: <code>COMPILE_SWITCH=sysrs FNAME="abro"
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Author: Avinash Malik</p>
-<p class="date">Created: 2025-06-20 Fri 10:08</p>
+<p class="author">Author: Dr. Avinash Malik</p>
+<p class="email">Email: <a href="mailto:amal029@avinashmac.local">amal029@avinashmac.local</a></p>
+<p class="creator">Emacs 27.0.50 (Org mode 9.1.13)</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

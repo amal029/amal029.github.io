@@ -1,3 +1,30 @@
+#+Author: Dr. Avinash Malik
+#+OPTIONS: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline author:t
+#+OPTIONS: c:nil creator:comment d:(not "LOGBOOK") date:t e:t email:t
+#+OPTIONS: f:t inline:nil num:nil p:nil pri:nil stat:nil tags:t tasks:nil tex:t
+#+OPTIONS: timestamp:nil toc:nil todo:nil |:t reveal_slide_number:nil org-html-indent:nil
+#+DESCRIPTION:
+#+EXCLUDE_TAGS: noexport
+#+KEYWORDS:
+#+LANGUAGE: en
+#+Babel: :results silent
+#+REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/3.0.0/
+#+REVEAL_THEME: simple
+#+REVEAL_HLEVEL: 2
+#+REVEAL_PLUGINS: (highlight)
+# #+reveal_highlight_css: solarized-light.css
+# #+OPTIONS: reveal_single_file:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://thomasf.github.io/solarized-css/solarized-light.min.css" />
+#+LATEX_CLASS: article
+#+LATEX_CLASS_OPTIONS:[11pt]
+#+LATEX_HEADER:\usepackage[utf8]{inputenc}
+#+LATEX_HEADER:\usepackage{amsmath}
+#+LATEX_HEADER:\usepackage{agda}
+#+LATEX_HEADER:\inputencoding{utf8}
+# #+LATEX_HEADER:\usepackage{fancyhdr}
+# #+LATEX_HEADER:\pagestyle{fancy}
+
+
 * Time tide is a new programming language
   1. It allows building finite state machines.
   2. It allows developing synchronous concurrent programs.
