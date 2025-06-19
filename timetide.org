@@ -1,0 +1,8 @@
+* Time tide is a new programming language
+  1. It allows building finite state machines.
+  2. It allows developing synchronous concurrent programs.
+  3. It allows for shared memory or distributed memory concurrency.
+  4. Time tide language and tool suite is a work in progress -- expect
+     bugs and things to change daily
+
+* 
