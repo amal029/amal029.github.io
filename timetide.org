@@ -595,7 +595,7 @@ that produces the inputs for the system.
     6. Channel status is read using the name of the channel (Line
        [[(status)]])
     7. Channel value is read using =?<channel-name>= (Line [[(val)]])
-    8. Examples follows:
+    8. Examples follow:
     #+begin_src C -n -r
       int channel K delay 3;		/* Channel K of type int with delay 3 */
       struct Y channel C delay 2;	/* Channel C of type struct Y with delay 2 */
@@ -606,9 +606,9 @@ that produces the inputs for the system.
           					 type struct Y[100] with delay 7*/
       send K(10);			/* Will be available at receiver after 3 logical ticks */ (ref:send)
       if (K) { (ref:status)
-        mut int uu = 0 {
-         uu = ?K (ref:val)
-        }
+        mut int uu = 0 {		/* Definig a mutable integer uu, scope starts at {*/
+         uu = ?K 		/* Updating the value of uu by reading the value of channel K */(ref:val)
+        }			/* scope of variable uu ends */
         /* body... */
        }
     #+end_src
@@ -727,7 +727,8 @@ that produces the inputs for the system.
     4. Major difference to ~C~
        - Checking *value* of variable/channel requires one to write:
 	 #+begin_src C -n
-	   if(<var-name>/<?channel-name> == <some-value>){/*body*/}
+	   if(<var-name> == <some-expression>){/*body*/}
+	   if(<?channel-name> == <some-expression>){/*body*/}
 	 #+end_src
        - Checking the *status* of the channel requires one to write:
 	 #+begin_src C -n
@@ -782,3 +783,272 @@ that produces the inputs for the system.
          elements get updated in the same logical tick of the module.
 
 **** Parallel loops
+   1. Parallel loops execute statement in synchronous parallel -- update
+      values together.
+   2. Parallel loops in Time tide are always bounded.
+   3. Parallel loops are of two types:
+      + Yielding, where every loop iteration produces results in
+        completion of module' tick
+      + Instantaneous, where the whole loop gets unrolled.
+   4. Parallel loops should work on *disjoint* memory locations.
+   5. Examples follow:
+      #+begin_src C -n -r
+	mut int[4] g = {0, 0, 0, 0} { 	/* start of a parallel loop */ (ref:pstart)
+	    /* Instantaneous parallel loop */
+	    par(int i : 0:4) {
+		g[i] = g[i] + i;		/* working on disjoint memory */ (ref:pupdate)
+	    } /* end of a parallel loop */ (ref:pend)
+	}
+	mut int[4] g = {0, 0, 0, 0} { 
+	    /* Non instantaneous parallel loop */
+	    par(int i : 0:4) {(ref:pstart2)
+		task(period=1, duration=0, offset=0) { /* update g in parallel and complete tick */
+		    g[i] = g[i] + i;		       /* working on disjoint memory */
+		}
+	    }(ref:pend2)
+	}
+
+	/* Incorrect parallel loop */
+	mut int v1 = 0 { 
+	    par(int j : 0:10) {(ref:pstart3)
+		v1 = v1 + j;		/* updating the same location in parallel */
+	    }
+	}
+	/* Incorrect parallel loop */
+	int channel FH delay 1;
+	mut int v1 = 0 {
+	    par(int j : 0:10) { (ref:pstart4)
+		send FH(10);		/* sending in parallel is not allowed */
+	    }
+	}
+
+	/* Potentially incorrect parallel loop */
+	mut int[4] g = {0, 0, 0, 0} {
+	  par(int i : 0:4) { (ref:pstart5)
+	   g[i] = g[i-1] + i; /* Loop carried dependency */ (ref:pupdate2)
+	  }
+	}
+      #+end_src
+
+      + Line [[(pupdate)]], in the code above, updates different memory
+	locations of array =g= in parallel.
+      + Loop on Line [[(pstart)]] runs instantaneously without generating a
+        logical tick.
+      + Loop on Line [[(pstart2)]] updates the disjoint memory locations and
+        then completes a logical tick.
+      + Loop on Line [[(pstart3)]] is incorrect since it is updating the
+        same memory location =v1= in parallel.
+      + Loop on Line [[(pstart4)]] is incorrect since it is sending on the
+        same channel =FH= in parallel.
+      + Loop on Line [[(pstart5)]] is _potentially_ incorrect, because the
+        loop carried dependency on Line [[(pupdate2)]]. It is unclear what
+        the programmer intends.
+      + Incorrect loops, writing to the same memory location, raise a
+        compiler warning.
+      + Incorrect loops, sending on channels in parallel, raise a
+        compiler error.
+      + Compiler warnings are overestimates, not exact.
+	
+*** The Task construct
+     1. Tasks are the primary construct to introduce state (tick) in a
+        Time tide program.
+     2. Tasks have a =period=, which determines how often the body of
+        the task ticks.
+     3. Tasks have a =duration=, which determines how many ticks does
+        the body of the task takes.
+     4. Tasks have an =offset=, which determines a starting offset (in
+        number of logical ticks) the body of the task.
+     5. Tasks *cannot* be nested.
+     6. Task bodies have to be instantaneous.
+     7. Task =period= has to be greater than or equal to the
+        =duration= + =offset= specified.
+     8. The channel delays interact in complex ways with the task
+        =period=, please follow compiler output when sending on channels
+        inside tasks.
+     9. Examples follow:
+	#+begin_src C -n
+	  motorA (output int MOTOR_A_SPEED,
+	  	input int LIGHT_LOW_1,
+	  	input int LIGHT_HIGH_1) {
+	    for(int i: 0:99) {
+	      send MOTOR_A_SPEED(100);
+	      abort(LIGHT_LOW_1) {		    /* preempt when LIGHT_LOW_1 channel status is true */
+	        task(period=1,duration=0,offset=0){;} /* self loop on state */
+	      }
+	      send MOTOR_A_SPEED(20);
+	      abort(LIGHT_HIGH_1) {		     /* preempt when LIGHT_HIGH_1 channel status is true */
+	        task(period=1,duration=0,offset=0) {;} /* self loop on state */
+	      }
+	    }
+	  };
+	  int channel C delay 3;
+	  /* Incorrect channel send, delay-1 != task' period */
+	  task(period=3, duration=2, offset=1) {
+	    send C(1);
+	  } /* compiler will raise an error in the above case */
+
+	  /* Incorrect task, because period is not >= duration + offset */
+	  task(period=2, duration=2, offset=1) {
+	    send C(1);
+	  }
+	#+end_src
+
+*** The Abort construct
+     1. =abort(logical-expression){/* body */}= is the way to preempt a halted system.
+     2. Example follows:
+	#+begin_src C -n
+	  mut int yt = 100 {
+	    /* We check for the value of channel C and status both*/
+	    abort(?C == yt || C) {	     /* preempt when the logical expression is true */
+	      task(period=2, duration=1, offset=1) {;} /* halted forever */
+	    }
+	    yt = yt + ?C;			/* make progress here only after preeemption */
+	  }
+	#+end_src
+
+*** The Synchronous parallel construct
+    1. ={/*thread body 1*/}<>{/*thread body 2*/}<>{/*thread body
+       3*/}...= is the way to execute multiple bodies in parallel.
+    2. All requirements of =par= loop also apply to synchronous
+       parallel execution.
+    3. Examples follow:
+       #+begin_src C -n
+	 h(input const int T, output int I, input int L)
+	 {
+	   /* const int U11 = 100; */
+	   {run m(T, I);} <> {run m1(T, L);} /* m and m1 are some modules/functions */
+	 };
+
+	 /* Another example -- snippet from the abro example */
+	 main() {
+	   int channel A delay 1;
+	   int channel B delay 1;
+	   int channel R delay 2;
+	   int channel O delay 1;
+	   {
+	     for (int i:1:99) {
+	       abort(R) {
+	 	/* Wait for A and B in parallel */
+	 	{run waitA(A);}<>{run waitB(B);};
+	 	send O(100);		/* send O once both are received */
+	 	/* abort when R is present and restart */
+	 	task(period=1,duration=0,offset=0){;} /* halt */
+	       }
+	     } /* loop back */
+	   }<> /* synchronous parallel */
+	     {/*The environment*/
+	       {send A(1);}<>{send B(1);}; /* another sychronous parallel */
+	     }
+	 }
+       #+end_src
+
+*** Function/module definition
+    1. Function/module definition is similar to =C=.
+    2. Functions can take as arguments constant and channels.
+    3. The programmer needs to specify whether this is an =input= or
+       =output= channel or constant.
+    4. =main= is the entry point of the program.
+    5. Structures and functions are declared at the same _level_ inside
+       a =.tt= file, i.e., one cannot define structures inside functions.
+    6. Functions and structures are departed with a semicolon.
+    7. A robot motor controller example follows:
+       
+       #+begin_src C -n
+	 main () {
+	   /* declare the required channels and constants */
+	   int channel LIGHT_LOW_1 delay 1;
+	   int channel LIGHT_HIGH_1 delay 1;
+	   int channel LIGHT_LOW_2 delay 1;
+	   int channel LIGHT_HIGH_2 delay 1;
+	   
+	   /* Output/Input channels to the observer? */
+	   int channel MOTOR_A_SPEED delay 1;
+	   int channel MOTOR_C_SPEED delay 1;
+
+	   /* These are initialisations? */
+	   int channel MOTOR_A_DIR delay 1;
+	   int channel MOTOR_C_DIR delay 1;
+
+	   int channel SET_LIGHT_1_THRESHHOLD delay 1;
+	   int channel SET_LIGHT_2_THRESHHOLD delay 1;
+
+	   send SET_LIGHT_1_THRESHHOLD(80);
+	   send SET_LIGHT_2_THRESHHOLD(80);
+	   send MOTOR_A_DIR(0);
+	   send MOTOR_C_DIR(0);
+	   
+	   /* Run the modules */
+	   {run motorA(MOTOR_A_SPEED, LIGHT_LOW_1, LIGHT_HIGH_1);}
+	     <> {run motorC( MOTOR_C_SPEED, LIGHT_LOW_2, LIGHT_HIGH_2);}
+	     <>{run env1(LIGHT_LOW_2);}
+	     <>{run env2(LIGHT_LOW_1);}
+	     <>{run env3(LIGHT_HIGH_1);}
+	     <>{run env4(LIGHT_HIGH_2);}	/* running things in parallel */
+	 };
+
+	 motorA (output int MOTOR_A_SPEED, /* the arguments are the channels */
+	         input int LIGHT_LOW_1,
+	         input int LIGHT_HIGH_1) {
+	   for(int i: 0:99) {
+	     send MOTOR_A_SPEED(100);
+	     abort(LIGHT_LOW_1) {
+	       task(period=1,duration=0,offset=0){;}
+	     }
+	     send MOTOR_A_SPEED(20);
+	     abort(LIGHT_HIGH_1) {
+	       task(period=1,duration=0,offset=0) {;}
+	     }
+	   }
+	 };
+
+	 motorC (output int MOTOR_C_SPEED, /* channels with inputs or outputs */
+	         input int LIGHT_LOW_2,
+	         input int LIGHT_HIGH_2) {
+	   for(int i: 0:99) {
+	     send MOTOR_C_SPEED(100);
+	     abort(LIGHT_LOW_2) {
+	       task(period=1,duration=0,offset=0){;}
+	     }
+	     send MOTOR_C_SPEED(20);
+	     abort(LIGHT_HIGH_2) {
+	       task(period=1,duration=0,offset=0) {;}
+	     }
+	   }
+	 };				/* notice the semicolon */
+
+	 env1(output int LIGHT_LOW_2) {
+	   for(int j: 0:99) {
+	     send LIGHT_LOW_2(1);
+	     for(int i: 0:1) {
+	       task(period=1,duration=1,offset=0) {;}
+	     }
+	     send LIGHT_LOW_2(1);
+	   }
+	 };
+
+	 env2(output int LIGHT_LOW_1) {
+	   for(int j: 0:99) {
+	     for(int i:0:1) {
+	       task(period=1,duration=1,offset=0) {;}
+	     }
+	     send LIGHT_LOW_1(1);}
+	 };
+
+	 env3(output int LIGHT_HIGH_1) {
+	   for(int j: 0:99) {
+	     for(int i:0:4) { /* Wait for 5 delays */
+	       task(period=1,duration=1,offset=0) {;} /* halt forever */
+	     }
+	     send LIGHT_HIGH_1(1);
+	   }
+	 };
+
+	 env4(output int LIGHT_HIGH_2) {
+	   for(int j: 0:99) { /* Wait for 6 delays */
+	     for(int i:0:5) {
+	       task(period=1,duration=1,offset=0) {;}
+	     }
+	     send LIGHT_HIGH_2(1);
+	   }
+	 }
+       #+end_src
