@@ -1,29 +1,15 @@
 #+Author: Dr. Avinash Malik
+#+Email: avinash.malik@auckland.ac.nz
 #+OPTIONS: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline author:t
 #+OPTIONS: c:nil creator:comment d:(not "LOGBOOK") date:t e:t email:t
 #+OPTIONS: f:t inline:nil num:nil p:nil pri:nil stat:nil tags:t tasks:nil tex:t
-#+OPTIONS: timestamp:nil toc:nil todo:nil |:t reveal_slide_number:nil org-html-indent:nil
+#+OPTIONS: timestamp:nil toc:t todo:nil |:t reveal_slide_number:nil org-html-indent:nil
 #+DESCRIPTION:
 #+EXCLUDE_TAGS: noexport
 #+KEYWORDS:
 #+LANGUAGE: en
-#+Babel: :results silent
-#+REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/3.0.0/
-#+REVEAL_THEME: simple
-#+REVEAL_HLEVEL: 2
-#+REVEAL_PLUGINS: (highlight)
-# #+reveal_highlight_css: solarized-light.css
-# #+OPTIONS: reveal_single_file:t
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://thomasf.github.io/solarized-css/solarized-light.min.css" />
-#+LATEX_CLASS: article
-#+LATEX_CLASS_OPTIONS:[11pt]
-#+LATEX_HEADER:\usepackage[utf8]{inputenc}
-#+LATEX_HEADER:\usepackage{amsmath}
-#+LATEX_HEADER:\usepackage{agda}
-#+LATEX_HEADER:\inputencoding{utf8}
-# #+LATEX_HEADER:\usepackage{fancyhdr}
-# #+LATEX_HEADER:\pagestyle{fancy}
-
+#+Title: Time tide
+#+SETUPFILE: https://github.com/fniessen/org-html-themes/tree/master/org/theme-bigblow-local.setup
 
 * Time tide is a new programming language
   1. It allows building finite state machines.
@@ -121,7 +107,7 @@
   10. The concept of a ~tick~ is central to programming in Time tide.
   11. Tick is the synchronous (logical) clock running the whole program.
 
-** Compiling the abro.tt (shared memory) program
+** Compiling the abro (shared memory) program
    1. Run the command: ~COMPILE_SWITCH=sysrs FNAME="abro"
       SYSRUST_DIR=<path-of-sysrust-compiler-dir>
       TIMETIDE_DIR=<path-of-timetide-compiler-dir> make~ -- this will
@@ -185,3 +171,346 @@
       SYSRUST_DIR=<path-of-sysrust-compiler-dir>
       TIMETIDE_DIR=<path-of-timetide-compiler-dir> EXTRA_FLAGS="-DDEBUG"
       run~
+
+** Compiling the abro example (distributed memory) program
+    The primary idea is to divide the ~abro~ program into two parts: (a)
+    ~abro_sys.tt~, which captures the system waiting for the data to
+    arrive from input channels, and (b) the environment ~abro_env.tt~
+    that produces the inputs for the system.
+
+   1. In this case we will write two different modules/files
+      ~abro_sys.tt~ and ~abro_env.tt~. These individual modules are
+      presented below:
+      
+      #+begin_src C
+	/* abro_sys.tt */
+	main(input int A, input int B, input int R, output int O) {
+	  for (int i:1:99) {
+	    abort(R) {
+	      /* Wait for A and B in parallel */
+	      {run waitA(A);}<>{run waitB(B);};
+	      send O(100);		/* send O once both are received */
+	      /* abort when R is present and restart */
+	      task(period=1,duration=0,offset=0){;} /* halt */
+	    }
+	  } /* loop back */
+	};
+	waitA(input int A) {abort(A) {task(period=1,duration=0,offset=0){;}}};
+	waitB(input int B) {abort(B) {task(period=1,duration=0,offset=0){;}}}
+      #+end_src
+
+      #+begin_src C
+	/* abro_env.tt */
+	main(output int A, output int B, output int R) {
+	  {send A(1);}<>{send B(1);};
+	  send R(1);
+	}
+      #+end_src
+
+   2. Important point to notice:
+      + Each of these modules are written in their individual files
+         ~abro_sys.tt~ and ~abro_env.tt~.
+      + Each module has an individual ~main~ function/reaction.
+      + The ~main~ function takes inputs and outputs as required.
+	
+   3. In order to compile these individual modules we execute the
+      following command: ~COMPILE_SWITCH=sysrs FNAME="abro_sys abro_env"
+      SYSRUST_DIR=<path-of-sysrust-compiler-dir>
+      TIMETIDE_DIR=<path-of-timetide-compiler-dir> make
+      EXTRA_FLAGS="-DDEBUG"~ -- notice that we specify the individual
+      module names in ~FNAME~ environment variable for compiling both
+      modules together.
+
+   4. Upon success we get files: ~abro_sys.sysrs~, ~abro_env.sysrs~,
+      ~abro_sys.cpp~, ~abro_sys.h~, ~abro_env.cpp~, and finally
+      ~abro_env.h~.
+
+   5. We now need to provide the input and output read write functions:
+      ~abro_sys::read_inputs~, ~abro_sys::write_outputs~,
+      ~abro_env::read_inputs~, and ~abro_env::write_outputs~ in the
+      ~main.cpp~ file for these individual modules to communicate with
+      each other.
+
+   6. These functions are presented below:
+      
+      - The ~abro_env::write_outputs~ function:
+	#+begin_src C++
+	  // This function serializes and then send the data from output port to
+	  // the input port.
+	  template <typename In, typename Out, typename Q>
+	  void In2Out(In *in, Out *out, Q *q) {
+	    Qpush(q, (void *)in, out);
+	  }
+	  // We always write the current value from one to the previous value of
+	  // the next.
+	  void abro_env::write_outputs() {
+	    // Then we write the outputs for the tick done.
+	    In2Out(abro_env::A_curr_ptr, abro_sys::A_prev_ptr, abro_sys::qA_ptr);
+	    In2Out(abro_env::B_curr_ptr, abro_sys::B_prev_ptr, abro_sys::qB_ptr);
+	    In2Out(abro_env::R_curr_ptr, abro_sys::R_prev_ptr, abro_sys::qR_ptr);
+	  }
+	#+end_src
+      - Function ~abro_env::write_outputs~ passes the outputs from
+        module ~abro_env~ to module ~abro_sys~.
+      - This function *binds* the output from ~abro_env~ module to
+        ~abro_sys~ module.
+      - The output channel ~A~ in module ~abro_env~ (specifically
+        ~abro_env::A_curr_ptr~) is bound to input channel ~A~ in module
+        ~abro_sys~ (specifically ~abro_env::A_prev_ptr~).
+      - Same for channels ~B~ and ~R~.
+      - Function ~In2Out~ achieves this binding via queue on the
+        receiving side -- in this case module ~abro_sys~.
+      - The third argument in function ~In2Out~ is this receiving queue
+        for each channel.
+      - The size of the queue is determined by the delay $\delta$
+        connecting the channels, and is determined by the system
+        designer.
+      - The ~Qpush~ function is provided in the library (which we will
+        see later) for pushing into the queue of the receiver.
+	
+      - The ~abro_env::read_inputs~ function:
+	#+begin_src C++
+	  // No inputs needed, because main module in abro_env.tt has no inputs
+	  void abro_env::read_inputs() {}
+	#+end_src
+
+   7. The channels being used to connect the two modules along with the
+      queue functions are provided in:
+      - ~abro_env.h~, ~abro_sys.h~, ~includes/lib.h~, and
+        ~includes/mQueue.h~ in the ~Timetide_tests~ directory.
+      - The ~abro_env.h~ and ~abro_sys.h~ headers are generated by the
+        compiler and are specific to the modules being compiled.
+      - The headers in the ~includes~ folder form the part of the
+        library used to compile distributed memory systems.
+
+   8. The important parts of the generated ~abro_env.h~ header is shown
+      below:
+      #+begin_src C++
+	namespace abro_env {
+	  // ....
+	  struct signal_A;
+	  // The below are the opaque pointers used for communication
+	  extern signal_A *A_curr_ptr, *A_prev_ptr;
+	  // A_curr_ptr is a pointer to status/value of channel A for current tick.
+	  // A_prev_ptr is a pointer to status/value of channel A for previous tick.
+	  struct signal_B;
+	  extern signal_B *B_curr_ptr, *B_prev_ptr;
+
+	  struct signal_R;
+	  extern signal_R *R_curr_ptr, *R_prev_ptr;
+
+	  // Templates for opaque channel pointers
+	  template <typename T> size_t get_sizeof_value(T *);
+	  template <typename T> size_t get_sizeof_status(T *);
+	  template <typename T> bool get_status(T *);
+	  template <typename T> void get_value(void *dest, T *signal);
+	  template <typename T> void set_status(T *signal, unsigned char v);
+	  template <typename T> void set_value(T *signal, void *src);
+	  template <typename T, typename S> void Qpush(T *, void *, S *);
+	  template <typename T, typename S> size_t Qpull(T *, S *);
+	  void write_outputs();
+	  void read_inputs();
+	}
+      #+end_src
+
+   9. The implementation of these header functions is provided in
+      ~includes/lib.h~ and is provided below:
+      #+begin_src C++
+	template <typename T> size_t get_sizeof_value(T *obj) {
+	  return sizeof(obj->value);
+	}
+
+	template <typename T> size_t get_sizeof_status(T *obj) {
+	  return sizeof(obj->status);
+	}
+
+	template <typename T> bool get_status(T *obj) { return obj->status; }
+
+	template <typename T> void get_value(void *dest, T *obj) {
+	  memcpy(dest, &(obj->value), get_sizeof_value(obj));
+	}
+
+	template <typename T> void set_status(T *obj, unsigned char v) {
+	  memcpy(&(obj->status), &v, get_sizeof_status(obj));
+	}
+
+	template <typename T> void set_value(T *obj, void *src) {
+	  memcpy(&(obj->value), src, get_sizeof_value(obj));
+	}
+
+	template <typename Q, typename S> void Qpush(Q *q, void *src, S *s) {
+	  const std::size_t size = sizeof(s->status) + sizeof(s->value);
+	  // This array is stack allocated
+	  std::array<unsigned char, size> arr{0};
+	  memcpy(arr.data(), &((S *)src)->status, size);
+	  memcpy(arr.data() + 1, &((S *)src)->value, size - 1);
+	  q->v->push(std::move(arr));
+	}
+
+	template <typename Q, typename S> std::size_t Qpull(Q *q, S *s) {
+	  const std::size_t size = sizeof(s->status) + sizeof(s->value);
+	  using at = std::array<unsigned char, size>;
+	  at *res = q->v->front(); // the pointer to the top of the queue.
+	  s->status = (*res)[0]; // the first value in the returned array
+	                         // pointer
+	  set_value(s, &(*res)[1]);
+	  q->v->pop();
+	  return size;
+	}
+      #+end_src
+
+   10. The templated library function implementations are specialised
+       for each channel in generated C++ code from the Time tide
+       modules. Example shown below from ~abro_env.cpp~:
+       #+begin_src C++
+	 namespace abro_env {
+	 //...
+	 #include "lib.h"
+
+	   // Sig decls
+	   typedef struct signal_A {
+	     int value = 0;
+	     bool status = false;
+	     // We should never need the combinator operator
+	     std::plus<int> op{};
+	     // tag is for fresh value updates
+	     bool tag = false;
+	   } signal_A;
+	   signal_A A_curr, A_prev;
+	   signal_A *A_curr_ptr = &A_curr;
+	   signal_A *A_prev_ptr = &A_prev;
+	   // Below are template specilisations for working with channel A
+	   template size_t get_sizeof_value(signal_A *);
+	   template size_t get_sizeof_status(signal_A *);
+	   template bool get_status(signal_A *);
+	   template void get_value(void *, signal_A *);
+	   template void set_value(signal_A *, void *);
+	   template void set_status(signal_A *, unsigned char v);
+	   // ......
+	 }
+       #+end_src
+
+   11. Similarly, the receiving Queue' opaque queue pointers (e.g.,
+       ~abro_sys::qA_ptr~) are declared and the ~Qpush~ and ~Qpull~
+       template functions specialised in the generated C++ files. See
+       below for a snippet of the generated ~abro_sys.cpp~:
+       #+begin_src C++
+	 #include "mQueue.h"
+	 namespace abro_sys {
+	   // ....
+	 #include "lib.h"
+	   // ......
+	   using qA_t = mQueue<std::array<unsigned char, sizeof(A_prev_ptr->status) +
+	     				 sizeof(A_prev_ptr->value)>>; // mQueue is defined in includes/mQueue.h
+	   // mQueue.h provides a lockfree queue implementation, so it can be used with many threads
+	   qA_t qA(A_DELAY, {});
+	   struct QA {
+	     qA_t *v;
+	     QA(qA_t *p) : v(p) {}
+	   };
+	   QA qA_var(&qA);
+	   QA *qA_ptr = &qA_var;
+	   template void Qpush(QA *, void *, signal_A *); // template specilisation
+	   template size_t Qpull(QA *, signal_A *);	 // template specilisation
+	   // ....
+	 }
+       #+end_src
+
+   12. *Never* include standard library headers in ~includes/lib.h~,
+       because it is included in the module' namespace.
+
+   13. The delay $\delta$ determining the size of the queues is defined
+       in file ~delays.cpp~. For the current example the code is shown
+       below:
+       #+begin_src C++
+	 #include "abro_sys.h"
+	 int abro_sys::A_DELAY = 4;	// size of queue connecting channel A
+	 int abro_sys::B_DELAY = 2;	// size of queue connecting channel B
+	 int abro_sys::R_DELAY = 5;	// size of queue connecting channel R
+       #+end_src
+
+   14. Finally, we can now write the main function that runs the two
+       modules. This function is written in ~main.cpp~ and is shown
+       below:
+       #+begin_src C++
+	 #include "abro_env.h"
+	 #include "abro_sys.h"
+	 #include <atomic>
+	 #include <cassert>
+	 #include <iostream>
+	 #include <thread>
+	 void abro_run(std::atomic<int> &&barrier = 0) {
+	   std::cout << "running two threads\n";
+	   auto env = std::thread([&barrier]() {
+	     while (barrier != 1) {
+	       std::this_thread::yield();
+	     }
+	     barrier--;
+	     // First we read from the buffer for all inputs
+	     std::cout << "Running the abro env \n";
+	     abro_env::main();
+	     std::cout << "Done running the abro env\n";
+	   });
+
+	   auto sys = std::thread([&barrier]() {
+	     while (barrier != 2) {
+	       std::this_thread::yield();
+	     }
+	     barrier--;
+	     std::cout << "Running the abro sys\n";
+	     abro_sys::main();
+	     std::cout << "Done running the abro sys\n";
+	   });
+	   // XXX: you can change this to change the order of execution.
+	   // barrier = 2, makes sys run first.
+	   // barrier = 1, makes the env run first.
+	   // think of barrier as a token that is passed to threads to make then
+	   // execute an LSN.
+	   barrier = 2;
+	   while (barrier != 0)
+	     ; // spin until both the modules/threads are done -- the barrier
+	   env.join();
+	   sys.join();
+	 }
+	 int main(void) {
+	   while (1) {
+	     abro_run();
+	     // Then we are done with the tick.
+	     if (mtick() == 'd')
+	       break;
+	   }
+	   return 0;
+	 }
+       #+end_src
+       + Notice that we are using threads to run the two modules.
+       + The first thread runs ~abro_env::main~
+       + The second thread runs ~abro_sys::main~
+       + The two threads execute one tick each before reaching a barrier
+       + It is *essential* that all modules in the Time tide program
+         execute using barriers, because they all need to be
+         synchronised.
+       + Every module reaching the barrier indicates the end of a global
+         tick.
+	 
+   15. Once all the required files and functions are in place we can
+       generate the binary to execute using the command:
+       ~COMPILE_SWITCH=sysrs FNAME="abro_sys abro_env"
+       SYSRUST_DIR=<path-of-sysrust-compiler-dir>
+       TIMETIDE_DIR=<path-of-timetide-compiler-dir> make
+       EXTRA_FLAGS="-DDEBUG delays.cpp" exe~
+
+   16. We can then run the program like so:
+       ~COMPILE_SWITCH=sysrs FNAME="abro_sys abro_env"
+       SYSRUST_DIR=<path-of-sysrust-compiler-dir>
+       TIMETIDE_DIR=<path-of-timetide-compiler-dir> make
+       EXTRA_FLAGS="-DDEBUG delays.cpp" run~
+
+   17. One needs to write a new library header/C++ file to send data
+       across network leveraging ~includes/lib.h~. This can be via
+       sockets, UART, etc.
+
+   18. When the modules are implemented on physically different
+       machines, make sure that modules still execute using barrier
+       synchronisation.
+
+* The Time tide language

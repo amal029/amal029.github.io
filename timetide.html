@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>&lrm;</title>
+<title>Time tide</title>
 <meta name="author" content="Dr. Avinash Malik" />
 <meta name="generator" content="Org Mode" />
 <style type="text/css">
@@ -192,13 +192,61 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { }
 </style>
-<link rel="stylesheet" type="text/css" href="http://thomasf.github.io/solarized-css/solarized-light.min.css" />
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
 </head>
 <body>
 <div id="content" class="content">
-<div id="outline-container-org146b85b" class="outline-2">
-<h2 id="org146b85b">Time tide is a new programming language</h2>
-<div class="outline-text-2" id="text-org146b85b">
+<h1 class="title">Time tide</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgbcad157">Time tide is a new programming language</a></li>
+<li><a href="#org6286b59">Installing the Time tide compiler(s)</a></li>
+<li><a href="#orgd48a473">We are now ready to compile our first example program</a>
+<ul>
+<li><a href="#org3f8550a">Compiling the abro (shared memory) program</a></li>
+<li><a href="#org91c0622">Compiling the abro example (distributed memory) program</a></li>
+</ul>
+</li>
+<li><a href="#org4a65718">The Time tide language</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgbcad157" class="outline-2">
+<h2 id="orgbcad157">Time tide is a new programming language</h2>
+<div class="outline-text-2" id="text-orgbcad157">
 <ol class="org-ol">
 <li>It allows building finite state machines.</li>
 <li>It allows developing synchronous concurrent programs.</li>
@@ -210,9 +258,9 @@ bugs and things to change daily</li>
 </ol>
 </div>
 </div>
-<div id="outline-container-orgfb91611" class="outline-2">
-<h2 id="orgfb91611">Installing the Time tide compiler(s)</h2>
-<div class="outline-text-2" id="text-orgfb91611">
+<div id="outline-container-org6286b59" class="outline-2">
+<h2 id="org6286b59">Installing the Time tide compiler(s)</h2>
+<div class="outline-text-2" id="text-org6286b59">
 <ol class="org-ol">
 <li>Time tide uses multiple compiler tool chains.</li>
 <li>You are expected to have installed C++ compilers with support for
@@ -254,38 +302,38 @@ compilers.</li>
 </ol>
 </div>
 </div>
-<div id="outline-container-orgb64bd0f" class="outline-2">
-<h2 id="orgb64bd0f">We are now ready to compile our first example program</h2>
-<div class="outline-text-2" id="text-orgb64bd0f">
+<div id="outline-container-orgd48a473" class="outline-2">
+<h2 id="orgd48a473">We are now ready to compile our first example program</h2>
+<div class="outline-text-2" id="text-orgd48a473">
 <p>
 We will use the <code>abro.tt</code> program in <code>Timetide_tests</code> directory as our
 first program.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #ffa00f;">main</span>() {
-  <span style="color: #6ae4b9;">int</span> <span style="color: #00d3d0;">channel</span> A delay 1;
-  <span style="color: #6ae4b9;">int</span> <span style="color: #00d3d0;">channel</span> B delay 1;
-  <span style="color: #6ae4b9;">int</span> <span style="color: #00d3d0;">channel</span> R delay 2;
-  <span style="color: #6ae4b9;">int</span> <span style="color: #00d3d0;">channel</span> O delay 1;
+<pre class="src src-C"><span style="color: #973300;">main</span>() {
+  <span style="color: #005f5f;">int</span> <span style="color: #005e8b;">channel</span> A delay 1;
+  <span style="color: #005f5f;">int</span> <span style="color: #005e8b;">channel</span> B delay 1;
+  <span style="color: #005f5f;">int</span> <span style="color: #005e8b;">channel</span> R delay 2;
+  <span style="color: #005f5f;">int</span> <span style="color: #005e8b;">channel</span> O delay 1;
   {
-    <span style="font-weight: bold;">for</span> (<span style="color: #6ae4b9;">int</span> <span style="color: #00d3d0;">i</span>:1:99) {
-      abort(R) {    <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">preemption when channel has data</span><span style="color: #d8af7a;"> */</span>
-  <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">Wait for A and B in parallel</span><span style="color: #d8af7a;"> */</span>
-  {<span style="color: #6ae4b9;">run</span> <span style="color: #ffa00f;">waitA</span>(A);}&lt;&gt;{<span style="color: #6ae4b9;">run</span> <span style="color: #ffa00f;">waitB</span>(B);};
-  <span style="color: #6ae4b9;">send</span> <span style="color: #ffa00f;">O</span>(100);    <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">send O once both are received</span><span style="color: #d8af7a;"> */</span>
-  <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">abort when R is present and restart</span><span style="color: #d8af7a;"> */</span>
-  task(period=1,duration=0,offset=0){;} <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">halt</span><span style="color: #d8af7a;"> */</span>
+    <span style="font-weight: bold;">for</span> (<span style="color: #005f5f;">int</span> <span style="color: #005e8b;">i</span>:1:99) {
+      abort(R) {                <span style="color: #77492f;">/* </span><span style="color: #77492f;">preemption when channel has data</span><span style="color: #77492f;"> */</span>
+        <span style="color: #77492f;">/* </span><span style="color: #77492f;">Wait for A and B in parallel</span><span style="color: #77492f;"> */</span>
+        {<span style="color: #005f5f;">run</span> <span style="color: #973300;">waitA</span>(A);}&lt;&gt;{<span style="color: #005f5f;">run</span> <span style="color: #973300;">waitB</span>(B);};
+        <span style="color: #005f5f;">send</span> <span style="color: #973300;">O</span>(100);            <span style="color: #77492f;">/* </span><span style="color: #77492f;">send O once both are received</span><span style="color: #77492f;"> */</span>
+        <span style="color: #77492f;">/* </span><span style="color: #77492f;">abort when R is present and restart</span><span style="color: #77492f;"> */</span>
+        task(period=1,duration=0,offset=0){;} <span style="color: #77492f;">/* </span><span style="color: #77492f;">halt</span><span style="color: #77492f;"> */</span>
       }
-    } <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">loop back</span><span style="color: #d8af7a;"> */</span>
-  }&lt;&gt; <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">synchronous parallel concurrency</span><span style="color: #d8af7a;"> */</span>
-    {<span style="color: #d8af7a;">/*</span><span style="color: #d8af7a;">The environment</span><span style="color: #d8af7a;">*/</span>
-      {<span style="color: #6ae4b9;">send</span> <span style="color: #ffa00f;">A</span>(1);}&lt;&gt;{<span style="color: #6ae4b9;">send</span> <span style="color: #ffa00f;">B</span>(1);};
+    } <span style="color: #77492f;">/* </span><span style="color: #77492f;">loop back</span><span style="color: #77492f;"> */</span>
+  }&lt;&gt; <span style="color: #77492f;">/* </span><span style="color: #77492f;">synchronous parallel concurrency</span><span style="color: #77492f;"> */</span>
+    {<span style="color: #77492f;">/*</span><span style="color: #77492f;">The environment</span><span style="color: #77492f;">*/</span>
+      {<span style="color: #005f5f;">send</span> <span style="color: #973300;">A</span>(1);}&lt;&gt;{<span style="color: #005f5f;">send</span> <span style="color: #973300;">B</span>(1);};
     }
 };
-<span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">Other functions/reactions being used inside main</span><span style="color: #d8af7a;"> */</span>
-<span style="color: #ffa00f;">waitA</span>(input <span style="color: #6ae4b9;">int</span> <span style="color: #00d3d0;">A</span>) {abort(A) {task(period=1,duration=0,offset=0){;}}};
-<span style="color: #ffa00f;">waitB</span>(input <span style="color: #6ae4b9;">int</span> <span style="color: #00d3d0;">B</span>) {abort(B) {task(period=1,duration=0,offset=0){;}}}
+<span style="color: #77492f;">/* </span><span style="color: #77492f;">Other functions/reactions being used inside main</span><span style="color: #77492f;"> */</span>
+<span style="color: #973300;">waitA</span>(input <span style="color: #005f5f;">int</span> <span style="color: #005e8b;">A</span>) {abort(A) {task(period=1,duration=0,offset=0){;}}};
+<span style="color: #973300;">waitB</span>(input <span style="color: #005f5f;">int</span> <span style="color: #005e8b;">B</span>) {abort(B) {task(period=1,duration=0,offset=0){;}}}
 </pre>
 </div>
 
@@ -308,9 +356,9 @@ available after a single so called <code>tick</code>.</li>
 <li>Tick is the synchronous (logical) clock running the whole program.</li>
 </ol>
 </div>
-<div id="outline-container-orgd712fc8" class="outline-3">
-<h3 id="orgd712fc8">Compiling the abro.tt (shared memory) program</h3>
-<div class="outline-text-3" id="text-orgd712fc8">
+<div id="outline-container-org3f8550a" class="outline-3">
+<h3 id="org3f8550a">Compiling the abro (shared memory) program</h3>
+<div class="outline-text-3" id="text-org3f8550a">
 <ol class="org-ol">
 <li>Run the command: <code>COMPILE_SWITCH=sysrs FNAME="abro"
       SYSRUST_DIR=&lt;path-of-sysrust-compiler-dir&gt;
@@ -328,12 +376,12 @@ You need to now write a <code>main.cpp</code> file that provides the input
 and output functions.
 </p>
 <div class="org-src-container">
-<pre class="src src-C++"><span style="font-weight: bold;">namespace</span> <span style="color: #82b0ec;">abro</span> {
-  <span style="color: #d8af7a;">//</span><span style="color: #d8af7a;">....</span>
-  <span style="color: #6ae4b9;">int</span> <span style="color: #ffa00f;">main</span>(<span style="color: #6ae4b9;">void</span>) {
-    read_inputs();    <span style="color: #d8af7a;">// </span><span style="color: #d8af7a;">provide this function</span>
-    <span style="color: #d8af7a;">//</span><span style="color: #d8af7a;">...</span>
-    write_outputs();    <span style="color: #d8af7a;">// </span><span style="color: #d8af7a;">provide this function</span>
+<pre class="src src-C++"><span style="font-weight: bold;">namespace</span> <span style="color: #003497;">abro</span> {
+  <span style="color: #77492f;">//</span><span style="color: #77492f;">....</span>
+  <span style="color: #005f5f;">int</span> <span style="color: #973300;">main</span>(<span style="color: #005f5f;">void</span>) {
+    read_inputs();              <span style="color: #77492f;">// </span><span style="color: #77492f;">provide this function</span>
+    <span style="color: #77492f;">//</span><span style="color: #77492f;">...</span>
+    write_outputs();            <span style="color: #77492f;">// </span><span style="color: #77492f;">provide this function</span>
     pre_eq_curr();
     reset_curr();
     <span style="font-weight: bold;">return</span> 0;
@@ -346,25 +394,25 @@ The example <code>main.cpp</code> file is below. The file is available in
 <code>Timetide_tests</code> directory to modify.
 </p>
 <div class="org-src-container">
-<pre class="src src-C++"><span style="color: #b6a0ff;">#include</span> <span style="color: #79a8ff;">"abro.h"</span>
-<span style="color: #b6a0ff;">#include</span> <span style="color: #79a8ff;">&lt;cassert&gt;</span>
-<span style="color: #b6a0ff;">#include</span> <span style="color: #79a8ff;">&lt;iostream&gt;</span>
-<span style="color: #6ae4b9;">int</span> <span style="color: #ffa00f;">mtick</span>() {
-  <span style="color: #6ae4b9;">char</span> <span style="color: #00d3d0;">b</span> = <span style="color: #79a8ff;">'\0'</span>;
-  <span style="color: #6ae4b9;">int</span> <span style="color: #00d3d0;">k</span> = scanf(<span style="color: #79a8ff;">"%c"</span>, &amp;b);
+<pre class="src src-C++"><span style="color: #531ab6;">#include</span> <span style="color: #3548cf;">"abro.h"</span>
+<span style="color: #531ab6;">#include</span> <span style="color: #3548cf;">&lt;cassert&gt;</span>
+<span style="color: #531ab6;">#include</span> <span style="color: #3548cf;">&lt;iostream&gt;</span>
+<span style="color: #005f5f;">int</span> <span style="color: #973300;">mtick</span>() {
+  <span style="color: #005f5f;">char</span> <span style="color: #005e8b;">b</span> = <span style="color: #3548cf;">'\0'</span>;
+  <span style="color: #005f5f;">int</span> <span style="color: #005e8b;">k</span> = scanf(<span style="color: #3548cf;">"%c"</span>, &amp;b);
   <span style="font-weight: bold;">return</span> b;
 }
-<span style="color: #d8af7a;">// </span><span style="color: #d8af7a;">In this case there are no inputs and outputs to abro.tt</span>
-<span style="color: #6ae4b9;">void</span> <span style="color: #82b0ec;">abro</span>::<span style="color: #ffa00f;">read_inputs</span>() {}
-<span style="color: #6ae4b9;">void</span> <span style="color: #82b0ec;">abro</span>::<span style="color: #ffa00f;">write_outputs</span>() {}
+<span style="color: #77492f;">// </span><span style="color: #77492f;">In this case there are no inputs and outputs to abro.tt</span>
+<span style="color: #005f5f;">void</span> <span style="color: #003497;">abro</span>::<span style="color: #973300;">read_inputs</span>() {}
+<span style="color: #005f5f;">void</span> <span style="color: #003497;">abro</span>::<span style="color: #973300;">write_outputs</span>() {}
 
-<span style="color: #d8af7a;">// </span><span style="color: #d8af7a;">The main function</span>
-<span style="color: #6ae4b9;">int</span> <span style="color: #ffa00f;">main</span>(<span style="color: #6ae4b9;">void</span>) {
+<span style="color: #77492f;">// </span><span style="color: #77492f;">The main function</span>
+<span style="color: #005f5f;">int</span> <span style="color: #973300;">main</span>(<span style="color: #005f5f;">void</span>) {
   <span style="font-weight: bold;">while</span> (1) {
-    <span style="color: #d8af7a;">// </span><span style="color: #d8af7a;">Run the abro program</span>
-    <span style="color: #82b0ec;">abro</span>::main();
-    <span style="color: #d8af7a;">// </span><span style="color: #d8af7a;">Then we are done with the tick.</span>
-    <span style="font-weight: bold;">if</span> (mtick() == <span style="color: #79a8ff;">'d'</span>)
+    <span style="color: #77492f;">// </span><span style="color: #77492f;">Run the abro program</span>
+    <span style="color: #003497;">abro</span>::main();
+    <span style="color: #77492f;">// </span><span style="color: #77492f;">Then we are done with the tick.</span>
+    <span style="font-weight: bold;">if</span> (mtick() == <span style="color: #3548cf;">'d'</span>)
       <span style="font-weight: bold;">break</span>;
   }
   <span style="font-weight: bold;">return</span> 0;
@@ -384,12 +432,399 @@ to a binary using the command: <code>COMPILE_SWITCH=sysrs FNAME="abro"
 </ol>
 </div>
 </div>
+<div id="outline-container-org91c0622" class="outline-3">
+<h3 id="org91c0622">Compiling the abro example (distributed memory) program</h3>
+<div class="outline-text-3" id="text-org91c0622">
+<p>
+The primary idea is to divide the <code>abro</code> program into two parts: (a)
+<code>abro_sys.tt</code>, which captures the system waiting for the data to
+arrive from input channels, and (b) the environment <code>abro_env.tt</code>
+that produces the inputs for the system.
+</p>
+
+<ol class="org-ol">
+<li><p>
+In this case we will write two different modules/files
+<code>abro_sys.tt</code> and <code>abro_env.tt</code>. These individual modules are
+presented below:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #77492f;">/* </span><span style="color: #77492f;">abro_sys.tt</span><span style="color: #77492f;"> */</span>
+<span style="color: #973300;">main</span>(input <span style="color: #005f5f;">int</span> <span style="color: #005e8b;">A</span>, input <span style="color: #005f5f;">int</span> <span style="color: #005e8b;">B</span>, input <span style="color: #005f5f;">int</span> <span style="color: #005e8b;">R</span>, output <span style="color: #005f5f;">int</span> <span style="color: #005e8b;">O</span>) {
+  <span style="font-weight: bold;">for</span> (<span style="color: #005f5f;">int</span> <span style="color: #005e8b;">i</span>:1:99) {
+    abort(R) {
+      <span style="color: #77492f;">/* </span><span style="color: #77492f;">Wait for A and B in parallel</span><span style="color: #77492f;"> */</span>
+      {<span style="color: #005f5f;">run</span> <span style="color: #973300;">waitA</span>(A);}&lt;&gt;{<span style="color: #005f5f;">run</span> <span style="color: #973300;">waitB</span>(B);};
+      <span style="color: #005f5f;">send</span> <span style="color: #973300;">O</span>(100);              <span style="color: #77492f;">/* </span><span style="color: #77492f;">send O once both are received</span><span style="color: #77492f;"> */</span>
+      <span style="color: #77492f;">/* </span><span style="color: #77492f;">abort when R is present and restart</span><span style="color: #77492f;"> */</span>
+      task(period=1,duration=0,offset=0){;} <span style="color: #77492f;">/* </span><span style="color: #77492f;">halt</span><span style="color: #77492f;"> */</span>
+    }
+  } <span style="color: #77492f;">/* </span><span style="color: #77492f;">loop back</span><span style="color: #77492f;"> */</span>
+};
+<span style="color: #973300;">waitA</span>(input <span style="color: #005f5f;">int</span> <span style="color: #005e8b;">A</span>) {abort(A) {task(period=1,duration=0,offset=0){;}}};
+<span style="color: #973300;">waitB</span>(input <span style="color: #005f5f;">int</span> <span style="color: #005e8b;">B</span>) {abort(B) {task(period=1,duration=0,offset=0){;}}}
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #77492f;">/* </span><span style="color: #77492f;">abro_env.tt</span><span style="color: #77492f;"> */</span>
+<span style="color: #973300;">main</span>(output <span style="color: #005f5f;">int</span> <span style="color: #005e8b;">A</span>, output <span style="color: #005f5f;">int</span> <span style="color: #005e8b;">B</span>, output <span style="color: #005f5f;">int</span> <span style="color: #005e8b;">R</span>) {
+  {<span style="color: #005f5f;">send</span> <span style="color: #973300;">A</span>(1);}&lt;&gt;{<span style="color: #005f5f;">send</span> <span style="color: #973300;">B</span>(1);};
+  <span style="color: #005f5f;">send</span> <span style="color: #973300;">R</span>(1);
+}
+</pre>
+</div></li>
+
+<li>Important point to notice:
+<ul class="org-ul">
+<li>Each of these modules are written in their individual files
+<code>abro_sys.tt</code> and <code>abro_env.tt</code>.</li>
+<li>Each module has an individual <code>main</code> function/reaction.</li>
+<li>The <code>main</code> function takes inputs and outputs as required.</li>
+</ul></li>
+
+<li>In order to compile these individual modules we execute the
+following command: <code>COMPILE_SWITCH=sysrs FNAME="abro_sys abro_env"
+      SYSRUST_DIR=&lt;path-of-sysrust-compiler-dir&gt;
+      TIMETIDE_DIR=&lt;path-of-timetide-compiler-dir&gt; make
+      EXTRA_FLAGS="-DDEBUG"</code> &#x2013; notice that we specify the individual
+module names in <code>FNAME</code> environment variable for compiling both
+modules together.</li>
+
+<li>Upon success we get files: <code>abro_sys.sysrs</code>, <code>abro_env.sysrs</code>,
+<code>abro_sys.cpp</code>, <code>abro_sys.h</code>, <code>abro_env.cpp</code>, and finally
+<code>abro_env.h</code>.</li>
+
+<li>We now need to provide the input and output read write functions:
+<code>abro_sys::read_inputs</code>, <code>abro_sys::write_outputs</code>,
+<code>abro_env::read_inputs</code>, and <code>abro_env::write_outputs</code> in the
+<code>main.cpp</code> file for these individual modules to communicate with
+each other.</li>
+
+<li>These functions are presented below:
+
+<ul class="org-ul">
+<li><p>
+The <code>abro_env::write_outputs</code> function:
+</p>
+<div class="org-src-container">
+<pre class="src src-C++"><span style="color: #77492f;">// </span><span style="color: #77492f;">This function serializes and then send the data from output port to</span>
+<span style="color: #77492f;">// </span><span style="color: #77492f;">the input port.</span>
+<span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #005f5f;">In</span>, <span style="font-weight: bold;">typename</span> <span style="color: #005f5f;">Out</span>, <span style="font-weight: bold;">typename</span> <span style="color: #005f5f;">Q</span>&gt;
+<span style="color: #005f5f;">void</span> <span style="color: #973300;">In2Out</span>(<span style="color: #005f5f;">In</span> *<span style="color: #005e8b;">in</span>, <span style="color: #005f5f;">Out</span> *<span style="color: #005e8b;">out</span>, <span style="color: #005f5f;">Q</span> *<span style="color: #005e8b;">q</span>) {
+  Qpush(q, (<span style="color: #005f5f;">void</span> *)in, out);
+}
+<span style="color: #77492f;">// </span><span style="color: #77492f;">We always write the current value from one to the previous value of</span>
+<span style="color: #77492f;">// </span><span style="color: #77492f;">the next.</span>
+<span style="color: #005f5f;">void</span> <span style="color: #003497;">abro_env</span>::<span style="color: #973300;">write_outputs</span>() {
+  <span style="color: #77492f;">// </span><span style="color: #77492f;">Then we write the outputs for the tick done.</span>
+  In2Out(<span style="color: #003497;">abro_env</span>::A_curr_ptr, <span style="color: #003497;">abro_sys</span>::A_prev_ptr, <span style="color: #003497;">abro_sys</span>::qA_ptr);
+  In2Out(<span style="color: #003497;">abro_env</span>::B_curr_ptr, <span style="color: #003497;">abro_sys</span>::B_prev_ptr, <span style="color: #003497;">abro_sys</span>::qB_ptr);
+  In2Out(<span style="color: #003497;">abro_env</span>::R_curr_ptr, <span style="color: #003497;">abro_sys</span>::R_prev_ptr, <span style="color: #003497;">abro_sys</span>::qR_ptr);
+}
+</pre>
+</div></li>
+<li>Function <code>abro_env::write_outputs</code> passes the outputs from
+module <code>abro_env</code> to module <code>abro_sys</code>.</li>
+<li>This function <b>binds</b> the output from <code>abro_env</code> module to
+<code>abro_sys</code> module.</li>
+<li>The output channel <code>A</code> in module <code>abro_env</code> (specifically
+<code>abro_env::A_curr_ptr</code>) is bound to input channel <code>A</code> in module
+<code>abro_sys</code> (specifically <code>abro_env::A_prev_ptr</code>).</li>
+<li>Same for channels <code>B</code> and <code>R</code>.</li>
+<li>Function <code>In2Out</code> achieves this binding via queue on the
+receiving side &#x2013; in this case module <code>abro_sys</code>.</li>
+<li>The third argument in function <code>In2Out</code> is this receiving queue
+for each channel.</li>
+<li>The size of the queue is determined by the delay \(\delta\)
+connecting the channels, and is determined by the system
+designer.</li>
+<li>The <code>Qpush</code> function is provided in the library (which we will
+see later) for pushing into the queue of the receiver.</li>
+
+<li><p>
+The <code>abro_env::read_inputs</code> function:
+</p>
+<div class="org-src-container">
+<pre class="src src-C++"><span style="color: #77492f;">// </span><span style="color: #77492f;">No inputs needed, because main module in abro_env.tt has no inputs</span>
+<span style="color: #005f5f;">void</span> <span style="color: #003497;">abro_env</span>::<span style="color: #973300;">read_inputs</span>() {}
+</pre>
+</div></li>
+</ul></li>
+
+<li>The channels being used to connect the two modules along with the
+queue functions are provided in:
+<ul class="org-ul">
+<li><code>abro_env.h</code>, <code>abro_sys.h</code>, <code>includes/lib.h</code>, and
+<code>includes/mQueue.h</code> in the <code>Timetide_tests</code> directory.</li>
+<li>The <code>abro_env.h</code> and <code>abro_sys.h</code> headers are generated by the
+compiler and are specific to the modules being compiled.</li>
+<li>The headers in the <code>includes</code> folder form the part of the
+library used to compile distributed memory systems.</li>
+</ul></li>
+
+<li><p>
+The important parts of the generated <code>abro_env.h</code> header is shown
+below:
+</p>
+<div class="org-src-container">
+<pre class="src src-C++"><span style="font-weight: bold;">namespace</span> <span style="color: #003497;">abro_env</span> {
+  <span style="color: #77492f;">// </span><span style="color: #77492f;">....</span>
+  <span style="font-weight: bold;">struct</span> <span style="color: #005f5f;">signal_A</span>;
+  <span style="color: #77492f;">// </span><span style="color: #77492f;">The below are the opaque pointers used for communication</span>
+  <span style="font-weight: bold;">extern</span> <span style="color: #005f5f;">signal_A</span> *<span style="color: #005e8b;">A_curr_ptr</span>, *<span style="color: #005e8b;">A_prev_ptr</span>;
+  <span style="color: #77492f;">// </span><span style="color: #77492f;">A_curr_ptr is a pointer to status/value of channel A for current tick.</span>
+  <span style="color: #77492f;">// </span><span style="color: #77492f;">A_prev_ptr is a pointer to status/value of channel A for previous tick.</span>
+  <span style="font-weight: bold;">struct</span> <span style="color: #005f5f;">signal_B</span>;
+  <span style="font-weight: bold;">extern</span> <span style="color: #005f5f;">signal_B</span> *<span style="color: #005e8b;">B_curr_ptr</span>, *<span style="color: #005e8b;">B_prev_ptr</span>;
+
+  <span style="font-weight: bold;">struct</span> <span style="color: #005f5f;">signal_R</span>;
+  <span style="font-weight: bold;">extern</span> <span style="color: #005f5f;">signal_R</span> *<span style="color: #005e8b;">R_curr_ptr</span>, *<span style="color: #005e8b;">R_prev_ptr</span>;
+
+  <span style="color: #77492f;">// </span><span style="color: #77492f;">Templates for opaque channel pointers</span>
+  <span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #005f5f;">T</span>&gt; <span style="color: #005f5f;">size_t</span> <span style="color: #973300;">get_sizeof_value</span>(<span style="color: #005f5f;">T</span> *);
+  <span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #005f5f;">T</span>&gt; <span style="color: #005f5f;">size_t</span> <span style="color: #973300;">get_sizeof_status</span>(<span style="color: #005f5f;">T</span> *);
+  <span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #005f5f;">T</span>&gt; <span style="color: #005f5f;">bool</span> <span style="color: #973300;">get_status</span>(<span style="color: #005f5f;">T</span> *);
+  <span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #005f5f;">T</span>&gt; <span style="color: #005f5f;">void</span> <span style="color: #973300;">get_value</span>(<span style="color: #005f5f;">void</span> *<span style="color: #005e8b;">dest</span>, <span style="color: #005f5f;">T</span> *<span style="color: #005e8b;">signal</span>);
+  <span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #005f5f;">T</span>&gt; <span style="color: #005f5f;">void</span> <span style="color: #973300;">set_status</span>(<span style="color: #005f5f;">T</span> *<span style="color: #005e8b;">signal</span>, <span style="color: #005f5f;">unsigned</span> <span style="color: #005f5f;">char</span> <span style="color: #005e8b;">v</span>);
+  <span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #005f5f;">T</span>&gt; <span style="color: #005f5f;">void</span> <span style="color: #973300;">set_value</span>(<span style="color: #005f5f;">T</span> *<span style="color: #005e8b;">signal</span>, <span style="color: #005f5f;">void</span> *<span style="color: #005e8b;">src</span>);
+  <span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #005f5f;">T</span>, <span style="font-weight: bold;">typename</span> <span style="color: #005f5f;">S</span>&gt; <span style="color: #005f5f;">void</span> <span style="color: #973300;">Qpush</span>(<span style="color: #005f5f;">T</span> *, <span style="color: #005f5f;">void</span> *, <span style="color: #005f5f;">S</span> *);
+  <span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #005f5f;">T</span>, <span style="font-weight: bold;">typename</span> <span style="color: #005f5f;">S</span>&gt; <span style="color: #005f5f;">size_t</span> <span style="color: #973300;">Qpull</span>(<span style="color: #005f5f;">T</span> *, <span style="color: #005f5f;">S</span> *);
+  <span style="color: #005f5f;">void</span> <span style="color: #973300;">write_outputs</span>();
+  <span style="color: #005f5f;">void</span> <span style="color: #973300;">read_inputs</span>();
+}
+</pre>
+</div></li>
+
+<li><p>
+The implementation of these header functions is provided in
+<code>includes/lib.h</code> and is provided below:
+</p>
+<div class="org-src-container">
+<pre class="src src-C++"><span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #005f5f;">T</span>&gt; <span style="color: #005f5f;">size_t</span> <span style="color: #973300;">get_sizeof_value</span>(<span style="color: #005f5f;">T</span> *<span style="color: #005e8b;">obj</span>) {
+  <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">sizeof</span>(obj-&gt;value);
+}
+
+<span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #005f5f;">T</span>&gt; <span style="color: #005f5f;">size_t</span> <span style="color: #973300;">get_sizeof_status</span>(<span style="color: #005f5f;">T</span> *<span style="color: #005e8b;">obj</span>) {
+  <span style="font-weight: bold;">return</span> <span style="font-weight: bold;">sizeof</span>(obj-&gt;status);
+}
+
+<span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #005f5f;">T</span>&gt; <span style="color: #005f5f;">bool</span> <span style="color: #973300;">get_status</span>(<span style="color: #005f5f;">T</span> *<span style="color: #005e8b;">obj</span>) { <span style="font-weight: bold;">return</span> obj-&gt;status; }
+
+<span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #005f5f;">T</span>&gt; <span style="color: #005f5f;">void</span> <span style="color: #973300;">get_value</span>(<span style="color: #005f5f;">void</span> *<span style="color: #005e8b;">dest</span>, <span style="color: #005f5f;">T</span> *<span style="color: #005e8b;">obj</span>) {
+  memcpy(dest, &amp;(obj-&gt;value), get_sizeof_value(obj));
+}
+
+<span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #005f5f;">T</span>&gt; <span style="color: #005f5f;">void</span> <span style="color: #973300;">set_status</span>(<span style="color: #005f5f;">T</span> *<span style="color: #005e8b;">obj</span>, <span style="color: #005f5f;">unsigned</span> <span style="color: #005f5f;">char</span> <span style="color: #005e8b;">v</span>) {
+  memcpy(&amp;(obj-&gt;status), &amp;v, get_sizeof_status(obj));
+}
+
+<span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #005f5f;">T</span>&gt; <span style="color: #005f5f;">void</span> <span style="color: #973300;">set_value</span>(<span style="color: #005f5f;">T</span> *<span style="color: #005e8b;">obj</span>, <span style="color: #005f5f;">void</span> *<span style="color: #005e8b;">src</span>) {
+  memcpy(&amp;(obj-&gt;value), src, get_sizeof_value(obj));
+}
+
+<span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #005f5f;">Q</span>, <span style="font-weight: bold;">typename</span> <span style="color: #005f5f;">S</span>&gt; <span style="color: #005f5f;">void</span> <span style="color: #973300;">Qpush</span>(<span style="color: #005f5f;">Q</span> *<span style="color: #005e8b;">q</span>, <span style="color: #005f5f;">void</span> *<span style="color: #005e8b;">src</span>, <span style="color: #005f5f;">S</span> *<span style="color: #005e8b;">s</span>) {
+  <span style="font-weight: bold;">const</span> <span style="color: #003497;">std</span>::<span style="color: #005f5f;">size_t</span> <span style="color: #005e8b;">size</span> = <span style="font-weight: bold;">sizeof</span>(s-&gt;status) + <span style="font-weight: bold;">sizeof</span>(s-&gt;value);
+  <span style="color: #77492f;">// </span><span style="color: #77492f;">This array is stack allocated</span>
+  <span style="color: #003497;">std</span>::<span style="color: #005f5f;">array</span>&lt;<span style="color: #005f5f;">unsigned</span> <span style="color: #005f5f;">char</span>, size&gt; <span style="color: #005e8b;">arr</span>{0};
+  memcpy(arr.data(), &amp;((<span style="color: #005f5f;">S</span> *)src)-&gt;status, size);
+  memcpy(arr.data() + 1, &amp;((<span style="color: #005f5f;">S</span> *)src)-&gt;value, size - 1);
+  q-&gt;v-&gt;push(<span style="color: #003497;">std</span>::move(arr));
+}
+
+<span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #005f5f;">Q</span>, <span style="font-weight: bold;">typename</span> <span style="color: #005f5f;">S</span>&gt; <span style="color: #003497;">std</span>::<span style="color: #005f5f;">size_t</span> <span style="color: #973300;">Qpull</span>(<span style="color: #005f5f;">Q</span> *<span style="color: #005e8b;">q</span>, <span style="color: #005f5f;">S</span> *<span style="color: #005e8b;">s</span>) {
+  <span style="font-weight: bold;">const</span> <span style="color: #003497;">std</span>::<span style="color: #005f5f;">size_t</span> <span style="color: #005e8b;">size</span> = <span style="font-weight: bold;">sizeof</span>(s-&gt;status) + <span style="font-weight: bold;">sizeof</span>(s-&gt;value);
+  <span style="font-weight: bold;">using</span> <span style="color: #005f5f;">at</span> = <span style="color: #003497;">std</span>::<span style="color: #005f5f;">array</span>&lt;<span style="color: #005f5f;">unsigned</span> <span style="color: #005f5f;">char</span>, size&gt;;
+  <span style="color: #005f5f;">at</span> *<span style="color: #005e8b;">res</span> = q-&gt;v-&gt;front(); <span style="color: #77492f;">// </span><span style="color: #77492f;">the pointer to the top of the queue.</span>
+  s-&gt;status = (*res)[0]; <span style="color: #77492f;">// </span><span style="color: #77492f;">the first value in the returned array</span>
+                         <span style="color: #77492f;">// </span><span style="color: #77492f;">pointer</span>
+  set_value(s, &amp;(*res)[1]);
+  q-&gt;v-&gt;pop();
+  <span style="font-weight: bold;">return</span> size;
+}
+</pre>
+</div></li>
+
+<li><p>
+The templated library function implementations are specialised
+for each channel in generated C++ code from the Time tide
+modules. Example shown below from <code>abro_env.cpp</code>:
+</p>
+<div class="org-src-container">
+<pre class="src src-C++"><span style="font-weight: bold;">namespace</span> <span style="color: #003497;">abro_env</span> {
+<span style="color: #77492f;">//</span><span style="color: #77492f;">...</span>
+<span style="color: #531ab6;">#include</span> <span style="color: #3548cf;">"lib.h"</span>
+
+  <span style="color: #77492f;">// </span><span style="color: #77492f;">Sig decls</span>
+  <span style="font-weight: bold;">typedef</span> <span style="font-weight: bold;">struct</span> <span style="color: #005f5f;">signal_A</span> {
+    <span style="color: #005f5f;">int</span> <span style="color: #005e8b;">value</span> = 0;
+    <span style="color: #005f5f;">bool</span> <span style="color: #005e8b;">status</span> = <span style="color: #003497;">false</span>;
+    <span style="color: #77492f;">// </span><span style="color: #77492f;">We should never need the combinator operator</span>
+    <span style="color: #003497;">std</span>::<span style="color: #005f5f;">plus</span>&lt;<span style="color: #005f5f;">int</span>&gt; <span style="color: #005e8b;">op</span>{};
+    <span style="color: #77492f;">// </span><span style="color: #77492f;">tag is for fresh value updates</span>
+    <span style="color: #005f5f;">bool</span> <span style="color: #005e8b;">tag</span> = <span style="color: #003497;">false</span>;
+  } <span style="color: #005f5f;">signal_A</span>;
+  <span style="color: #005f5f;">signal_A</span> <span style="color: #005e8b;">A_curr</span>, <span style="color: #005e8b;">A_prev</span>;
+  <span style="color: #005f5f;">signal_A</span> *<span style="color: #005e8b;">A_curr_ptr</span> = &amp;A_curr;
+  <span style="color: #005f5f;">signal_A</span> *<span style="color: #005e8b;">A_prev_ptr</span> = &amp;A_prev;
+  <span style="color: #77492f;">// </span><span style="color: #77492f;">Below are template specilisations for working with channel A</span>
+  <span style="font-weight: bold;">template</span> <span style="color: #005f5f;">size_t</span> <span style="color: #973300;">get_sizeof_value</span>(<span style="color: #005f5f;">signal_A</span> *);
+  <span style="font-weight: bold;">template</span> <span style="color: #005f5f;">size_t</span> <span style="color: #973300;">get_sizeof_status</span>(<span style="color: #005f5f;">signal_A</span> *);
+  <span style="font-weight: bold;">template</span> <span style="color: #005f5f;">bool</span> <span style="color: #973300;">get_status</span>(<span style="color: #005f5f;">signal_A</span> *);
+  <span style="font-weight: bold;">template</span> <span style="color: #005f5f;">void</span> <span style="color: #973300;">get_value</span>(<span style="color: #005f5f;">void</span> *, <span style="color: #005f5f;">signal_A</span> *);
+  <span style="font-weight: bold;">template</span> <span style="color: #005f5f;">void</span> <span style="color: #973300;">set_value</span>(<span style="color: #005f5f;">signal_A</span> *, <span style="color: #005f5f;">void</span> *);
+  <span style="font-weight: bold;">template</span> <span style="color: #005f5f;">void</span> <span style="color: #973300;">set_status</span>(<span style="color: #005f5f;">signal_A</span> *, <span style="color: #005f5f;">unsigned</span> <span style="color: #005f5f;">char</span> <span style="color: #005e8b;">v</span>);
+  <span style="color: #77492f;">// </span><span style="color: #77492f;">......</span>
+}
+</pre>
+</div></li>
+
+<li><p>
+Similarly, the receiving Queue' opaque queue pointers (e.g.,
+<code>abro_sys::qA_ptr</code>) are declared and the <code>Qpush</code> and <code>Qpull</code>
+template functions specialised in the generated C++ files. See
+below for a snippet of the generated <code>abro_sys.cpp</code>:
+</p>
+<div class="org-src-container">
+<pre class="src src-C++"><span style="color: #531ab6;">#include</span> <span style="color: #3548cf;">"mQueue.h"</span>
+<span style="font-weight: bold;">namespace</span> <span style="color: #003497;">abro_sys</span> {
+  <span style="color: #77492f;">// </span><span style="color: #77492f;">....</span>
+<span style="color: #531ab6;">#include</span> <span style="color: #3548cf;">"lib.h"</span>
+  <span style="color: #77492f;">// </span><span style="color: #77492f;">......</span>
+  <span style="font-weight: bold;">using</span> <span style="color: #005f5f;">qA_t</span> = <span style="color: #005f5f;">mQueue</span>&lt;<span style="color: #003497;">std</span>::<span style="color: #005f5f;">array</span>&lt;<span style="color: #005f5f;">unsigned</span> <span style="color: #005f5f;">char</span>, <span style="font-weight: bold;">sizeof</span>(A_prev_ptr-&gt;status) +
+                                 <span style="font-weight: bold;">sizeof</span>(A_prev_ptr-&gt;value)&gt;&gt;; <span style="color: #77492f;">// </span><span style="color: #77492f;">mQueue is defined in includes/mQueue.h</span>
+  <span style="color: #77492f;">// </span><span style="color: #77492f;">mQueue.h provides a lockfree queue implementation, so it can be used with many threads</span>
+  <span style="color: #005f5f;">qA_t</span> <span style="color: #005e8b;">qA</span>(A_DELAY, {});
+  <span style="font-weight: bold;">struct</span> <span style="color: #005f5f;">QA</span> {
+    <span style="color: #005f5f;">qA_t</span> *<span style="color: #005e8b;">v</span>;
+    <span style="color: #973300;">QA</span>(<span style="color: #005f5f;">qA_t</span> *<span style="color: #005e8b;">p</span>) : v(p) {}
+  };
+  <span style="color: #005f5f;">QA</span> <span style="color: #005e8b;">qA_var</span>(&amp;qA);
+  <span style="color: #005f5f;">QA</span> *<span style="color: #005e8b;">qA_ptr</span> = &amp;qA_var;
+  <span style="font-weight: bold;">template</span> <span style="color: #005f5f;">void</span> <span style="color: #973300;">Qpush</span>(<span style="color: #005f5f;">QA</span> *, <span style="color: #005f5f;">void</span> *, <span style="color: #005f5f;">signal_A</span> *); <span style="color: #77492f;">// </span><span style="color: #77492f;">template specilisation</span>
+  <span style="font-weight: bold;">template</span> <span style="color: #005f5f;">size_t</span> <span style="color: #973300;">Qpull</span>(<span style="color: #005f5f;">QA</span> *, <span style="color: #005f5f;">signal_A</span> *);       <span style="color: #77492f;">// </span><span style="color: #77492f;">template specilisation</span>
+  <span style="color: #77492f;">// </span><span style="color: #77492f;">....</span>
+}
+</pre>
+</div></li>
+
+<li><b>Never</b> include standard library headers in <code>includes/lib.h</code>,
+because it is included in the module' namespace.</li>
+
+<li><p>
+The delay \(\delta\) determining the size of the queues is defined
+in file <code>delays.cpp</code>. For the current example the code is shown
+below:
+</p>
+<div class="org-src-container">
+<pre class="src src-C++"><span style="color: #531ab6;">#include</span> <span style="color: #3548cf;">"abro_sys.h"</span>
+<span style="color: #005f5f;">int</span> <span style="color: #003497;">abro_sys</span>::<span style="color: #005e8b;">A_DELAY</span> = 4;      <span style="color: #77492f;">// </span><span style="color: #77492f;">size of queue connecting channel A</span>
+<span style="color: #005f5f;">int</span> <span style="color: #003497;">abro_sys</span>::<span style="color: #005e8b;">B_DELAY</span> = 2;      <span style="color: #77492f;">// </span><span style="color: #77492f;">size of queue connecting channel B</span>
+<span style="color: #005f5f;">int</span> <span style="color: #003497;">abro_sys</span>::<span style="color: #005e8b;">R_DELAY</span> = 5;      <span style="color: #77492f;">// </span><span style="color: #77492f;">size of queue connecting channel R</span>
+</pre>
+</div></li>
+
+<li><p>
+Finally, we can now write the main function that runs the two
+modules. This function is written in <code>main.cpp</code> and is shown
+below:
+</p>
+<div class="org-src-container">
+<pre class="src src-C++"><span style="color: #531ab6;">#include</span> <span style="color: #3548cf;">"abro_env.h"</span>
+<span style="color: #531ab6;">#include</span> <span style="color: #3548cf;">"abro_sys.h"</span>
+<span style="color: #531ab6;">#include</span> <span style="color: #3548cf;">&lt;atomic&gt;</span>
+<span style="color: #531ab6;">#include</span> <span style="color: #3548cf;">&lt;cassert&gt;</span>
+<span style="color: #531ab6;">#include</span> <span style="color: #3548cf;">&lt;iostream&gt;</span>
+<span style="color: #531ab6;">#include</span> <span style="color: #3548cf;">&lt;thread&gt;</span>
+<span style="color: #005f5f;">void</span> <span style="color: #973300;">abro_run</span>(<span style="color: #003497;">std</span>::<span style="color: #005f5f;">atomic</span>&lt;<span style="color: #005f5f;">int</span>&gt; &amp;&amp;<span style="color: #005e8b;">barrier</span> = 0) {
+  <span style="color: #003497;">std</span>::cout &lt;&lt; <span style="color: #3548cf;">"running two threads\n"</span>;
+  <span style="font-weight: bold;">auto</span> <span style="color: #005e8b;">env</span> = <span style="color: #003497;">std</span>::thread([&amp;<span style="color: #005e8b;">barrier</span>]() {
+    <span style="font-weight: bold;">while</span> (barrier != 1) {
+      <span style="color: #003497;">std</span>::<span style="color: #003497;">this_thread</span>::yield();
+    }
+    barrier--;
+    <span style="color: #77492f;">// </span><span style="color: #77492f;">First we read from the buffer for all inputs</span>
+    <span style="color: #003497;">std</span>::cout &lt;&lt; <span style="color: #3548cf;">"Running the abro env \n"</span>;
+    <span style="color: #003497;">abro_env</span>::main();
+    <span style="color: #003497;">std</span>::cout &lt;&lt; <span style="color: #3548cf;">"Done running the abro env\n"</span>;
+  });
+
+  <span style="font-weight: bold;">auto</span> <span style="color: #005e8b;">sys</span> = <span style="color: #003497;">std</span>::thread([&amp;<span style="color: #005e8b;">barrier</span>]() {
+    <span style="font-weight: bold;">while</span> (barrier != 2) {
+      <span style="color: #003497;">std</span>::<span style="color: #003497;">this_thread</span>::yield();
+    }
+    barrier--;
+    <span style="color: #003497;">std</span>::cout &lt;&lt; <span style="color: #3548cf;">"Running the abro sys\n"</span>;
+    <span style="color: #003497;">abro_sys</span>::main();
+    <span style="color: #003497;">std</span>::cout &lt;&lt; <span style="color: #3548cf;">"Done running the abro sys\n"</span>;
+  });
+  <span style="color: #77492f;">// </span><span style="color: #77492f;">XXX: you can change this to change the order of execution.</span>
+  <span style="color: #77492f;">// </span><span style="color: #77492f;">barrier = 2, makes sys run first.</span>
+  <span style="color: #77492f;">// </span><span style="color: #77492f;">barrier = 1, makes the env run first.</span>
+  <span style="color: #77492f;">// </span><span style="color: #77492f;">think of barrier as a token that is passed to threads to make then</span>
+  <span style="color: #77492f;">// </span><span style="color: #77492f;">execute an LSN.</span>
+  barrier = 2;
+  <span style="font-weight: bold;">while</span> (barrier != 0)
+    ; <span style="color: #77492f;">// </span><span style="color: #77492f;">spin until both the modules/threads are done -- the barrier</span>
+  env.join();
+  sys.join();
+}
+<span style="color: #005f5f;">int</span> <span style="color: #973300;">main</span>(<span style="color: #005f5f;">void</span>) {
+  <span style="font-weight: bold;">while</span> (1) {
+    abro_run();
+    <span style="color: #77492f;">// </span><span style="color: #77492f;">Then we are done with the tick.</span>
+    <span style="font-weight: bold;">if</span> (mtick() == <span style="color: #3548cf;">'d'</span>)
+      <span style="font-weight: bold;">break</span>;
+  }
+  <span style="font-weight: bold;">return</span> 0;
+}
+</pre>
+</div>
+<ul class="org-ul">
+<li>Notice that we are using threads to run the two modules.</li>
+<li>The first thread runs <code>abro_env::main</code></li>
+<li>The second thread runs <code>abro_sys::main</code></li>
+<li>The two threads execute one tick each before reaching a barrier</li>
+<li>It is <b>essential</b> that all modules in the Time tide program
+execute using barriers, because they all need to be
+synchronised.</li>
+<li>Every module reaching the barrier indicates the end of a global
+tick.</li>
+</ul></li>
+
+<li>Once all the required files and functions are in place we can
+generate the binary to execute using the command:
+<code>COMPILE_SWITCH=sysrs FNAME="abro_sys abro_env"
+       SYSRUST_DIR=&lt;path-of-sysrust-compiler-dir&gt;
+       TIMETIDE_DIR=&lt;path-of-timetide-compiler-dir&gt; make
+       EXTRA_FLAGS="-DDEBUG delays.cpp" exe</code></li>
+
+<li>We can then run the program like so:
+<code>COMPILE_SWITCH=sysrs FNAME="abro_sys abro_env"
+       SYSRUST_DIR=&lt;path-of-sysrust-compiler-dir&gt;
+       TIMETIDE_DIR=&lt;path-of-timetide-compiler-dir&gt; make
+       EXTRA_FLAGS="-DDEBUG delays.cpp" run</code></li>
+
+<li>One needs to write a new library header/C++ file to send data
+across network leveraging <code>includes/lib.h</code>. This can be via
+sockets, UART, etc.</li>
+
+<li>When the modules are implemented on physically different
+machines, make sure that modules still execute using barrier
+synchronisation.</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="outline-container-org4a65718" class="outline-2">
+<h2 id="org4a65718">The Time tide language</h2>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Dr. Avinash Malik</p>
-<p class="email">Email: <a href="mailto:amal029@avinashmac.local">amal029@avinashmac.local</a></p>
-<p class="creator">Emacs 27.0.50 (Org mode 9.1.13)</p>
+<p class="email">Email: <a href="mailto:avinash.malik@auckland.ac.nz">avinash.malik@auckland.ac.nz</a></p>
+<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 31.0.50 (<a href="https://orgmode.org">Org</a> mode 9.7.11)</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
