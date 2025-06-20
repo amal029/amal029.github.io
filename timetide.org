@@ -1,4 +1,4 @@
-#+Author: Dr. Avinash Malik
+#+Author: Avinash Malik
 #+Email: avinash.malik@auckland.ac.nz
 #+OPTIONS: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline author:t
 #+OPTIONS: c:nil creator:comment d:(not "LOGBOOK") date:t e:t email:t
@@ -659,8 +659,7 @@ that produces the inputs for the system.
   !(a == 0)			/* logical not */
   (int)1.0			/* casting C style */
     
-  channel int K;			/* int type channel */
-  channel int I1;			/* int type channel */
+  channel int K delay 1;			/* int type channel */
   
   extern f(1.0+(float)?K * (float)?I1); /* calling an external C function */ (ref:ext)
 #+end_src
