@@ -56,29 +56,35 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org5f7b422">Time tide is a new programming language</a></li>
-<li><a href="#org8a35494">Installing the Time tide compiler(s)</a></li>
-<li><a href="#org9ff3543">Compiling first example program</a>
+<li><a href="#orgb2329ac">Time tide is a new programming language</a></li>
+<li><a href="#org902e034">Installing the Time tide compiler(s)</a></li>
+<li><a href="#org9d54c9b">Compiling first example program</a>
 <ul>
-<li><a href="#org4f60e1b">Compiling the abro (shared memory) program</a></li>
-<li><a href="#org3508cef">Compiling the abro example (distributed memory) program</a></li>
+<li><a href="#orgf9d5df4">Compiling the abro (shared memory) program</a></li>
+<li><a href="#orgfb92d14">Compiling the abro example (distributed memory) program</a></li>
 </ul>
 </li>
-<li><a href="#orgc083ef3">The Time tide language</a>
+<li><a href="#org6b9ede1">The Time tide language</a>
 <ul>
-<li><a href="#org0477737">Types</a>
+<li><a href="#orgba051e6">Types and variables</a>
 <ul>
-<li><a href="#org3b40a36">Primitive types</a></li>
-<li><a href="#orgc2c4c4b">User defined structures</a></li>
-<li><a href="#orgc8d4a7a">Array types</a></li>
-<li><a href="#org68be789">Channels</a></li>
+<li><a href="#org60973eb">Primitive types</a></li>
+<li><a href="#org7a48d69">User defined structures</a></li>
+<li><a href="#org8410946">Array types</a></li>
+<li><a href="#org5ccaeba">Channels</a></li>
 </ul>
 </li>
-<li><a href="#org0ac9d15">Statements</a>
+<li><a href="#org91a41a9">Operators and expressions in Time tide</a>
 <ul>
-<li><a href="#org3d203dc">Variable declaration</a></li>
-<li><a href="#org5d7c21d">Conditionals</a></li>
-<li><a href="#org3d31463">Loops</a></li>
+<li><a href="#orgd405c38">Operators in Time tide</a></li>
+<li><a href="#orgdebf7b5">Expressions in Time tide</a></li>
+</ul>
+</li>
+<li><a href="#org1f02f4d">Statements</a>
+<ul>
+<li><a href="#orge5bf52d">Variable declaration and updates</a></li>
+<li><a href="#org804a825">Conditionals</a></li>
+<li><a href="#org75ba6ba">Loops</a></li>
 </ul>
 </li>
 </ul>
@@ -86,9 +92,9 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org5f7b422" class="outline-2">
-<h2 id="org5f7b422">Time tide is a new programming language</h2>
-<div class="outline-text-2" id="text-org5f7b422">
+<div id="outline-container-orgb2329ac" class="outline-2">
+<h2 id="orgb2329ac">Time tide is a new programming language</h2>
+<div class="outline-text-2" id="text-orgb2329ac">
 <ol class="org-ol">
 <li>It allows building finite state machines.</li>
 <li>It allows developing synchronous concurrent programs.</li>
@@ -100,9 +106,9 @@ bugs and things to change daily</li>
 </ol>
 </div>
 </div>
-<div id="outline-container-org8a35494" class="outline-2">
-<h2 id="org8a35494">Installing the Time tide compiler(s)</h2>
-<div class="outline-text-2" id="text-org8a35494">
+<div id="outline-container-org902e034" class="outline-2">
+<h2 id="org902e034">Installing the Time tide compiler(s)</h2>
+<div class="outline-text-2" id="text-org902e034">
 <ol class="org-ol">
 <li>Time tide uses multiple compiler tool chains.</li>
 <li>You are expected to have installed C++ compilers with support for
@@ -147,9 +153,8 @@ Now run the command:
 </p>
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #00603f;">COMPILE_SWITCH</span>=sysrs <span style="color: #00603f;">FNAME</span>=<span style="color: #00598b;">"abro"</span> <span style="color: #00598b;">\</span>
-<span style="color: #00603f;">SYSRUST_DIR</span>=&lt;path-of-sysrust-compiler-dir&gt; <span style="color: #00598b;">\</span>
-<span style="color: #00603f;">TIMETIDE_DIR</span>=&lt;path-of-timetide-compiler-dir&gt;
-compilers       
+                     <span style="color: #00603f;">SYSRUST_DIR</span>=&lt;path-of-sysrust-compiler-dir&gt; <span style="color: #00598b;">\</span>
+                     <span style="color: #00603f;">TIMETIDE_DIR</span>=&lt;path-of-timetide-compiler-dir&gt; compilers
 </pre>
 </div>
 <ul class="org-ul">
@@ -158,38 +163,38 @@ compilers
 </ol>
 </div>
 </div>
-<div id="outline-container-org9ff3543" class="outline-2">
-<h2 id="org9ff3543">Compiling first example program</h2>
-<div class="outline-text-2" id="text-org9ff3543">
+<div id="outline-container-org9d54c9b" class="outline-2">
+<h2 id="org9d54c9b">Compiling first example program</h2>
+<div class="outline-text-2" id="text-org9d54c9b">
 <p>
 We will use the <code>abro.tt</code> program in <code>Timetide_tests</code> directory as our
 first program.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #602938;">main</span>() {
-  <span style="color: #306010;">int</span> <span style="color: #00603f;">channel</span> A delay 1;
-  <span style="color: #306010;">int</span> <span style="color: #00603f;">channel</span> B delay 1;
-  <span style="color: #306010;">int</span> <span style="color: #00603f;">channel</span> R delay 2;
-  <span style="color: #306010;">int</span> <span style="color: #00603f;">channel</span> O delay 1;
-  {
-    <span style="font-weight: bold;">for</span> (<span style="color: #306010;">int</span> <span style="color: #00603f;">i</span>:1:99) {
-      abort(R) {                <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">preemption when channel has data</span><span style="color: #7f0000;"> */</span>
-        <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Wait for A and B in parallel</span><span style="color: #7f0000;"> */</span>
-        {<span style="color: #306010;">run</span> <span style="color: #602938;">waitA</span>(A);}&lt;&gt;{<span style="color: #306010;">run</span> <span style="color: #602938;">waitB</span>(B);};
-        <span style="color: #306010;">send</span> <span style="color: #602938;">O</span>(100);            <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">send O once both are received</span><span style="color: #7f0000;"> */</span>
-        <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">abort when R is present and restart</span><span style="color: #7f0000;"> */</span>
-        task(period=1,duration=0,offset=0){;} <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">halt</span><span style="color: #7f0000;"> */</span>
-      }
-    } <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">loop back</span><span style="color: #7f0000;"> */</span>
-  }&lt;&gt; <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">synchronous parallel concurrency</span><span style="color: #7f0000;"> */</span>
-    {<span style="color: #7f0000;">/*</span><span style="color: #7f0000;">The environment</span><span style="color: #7f0000;">*/</span>
-      {<span style="color: #306010;">send</span> <span style="color: #602938;">A</span>(1);}&lt;&gt;{<span style="color: #306010;">send</span> <span style="color: #602938;">B</span>(1);};
-    }
-};
-<span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Other functions/reactions being used inside main</span><span style="color: #7f0000;"> */</span>
-<span style="color: #602938;">waitA</span>(input <span style="color: #306010;">int</span> <span style="color: #00603f;">A</span>) {abort(A) {task(period=1,duration=0,offset=0){;}}};
-<span style="color: #602938;">waitB</span>(input <span style="color: #306010;">int</span> <span style="color: #00603f;">B</span>) {abort(B) {task(period=1,duration=0,offset=0){;}}}
+<pre class="src src-C"><span class="linenr"> 1: </span><span style="color: #602938;">main</span>() {
+<span class="linenr"> 2: </span>  <span style="color: #306010;">int</span> <span style="color: #00603f;">channel</span> A delay 1;
+<span class="linenr"> 3: </span>  <span style="color: #306010;">int</span> <span style="color: #00603f;">channel</span> B delay 1;
+<span class="linenr"> 4: </span>  <span style="color: #306010;">int</span> <span style="color: #00603f;">channel</span> R delay 2;
+<span class="linenr"> 5: </span>  <span style="color: #306010;">int</span> <span style="color: #00603f;">channel</span> O delay 1;
+<span class="linenr"> 6: </span>  {
+<span class="linenr"> 7: </span>    <span style="font-weight: bold;">for</span> (<span style="color: #306010;">int</span> <span style="color: #00603f;">i</span>:1:99) {
+<span class="linenr"> 8: </span>      abort(R) {                <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">preemption when channel has data</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 9: </span>        <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Wait for A and B in parallel</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">10: </span>        {<span style="color: #306010;">run</span> <span style="color: #602938;">waitA</span>(A);}&lt;&gt;{<span style="color: #306010;">run</span> <span style="color: #602938;">waitB</span>(B);};
+<span class="linenr">11: </span>        <span style="color: #306010;">send</span> <span style="color: #602938;">O</span>(100);            <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">send O once both are received</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">12: </span>        <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">abort when R is present and restart</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">13: </span>        task(period=1,duration=0,offset=0){;} <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">halt</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">14: </span>      }
+<span class="linenr">15: </span>    } <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">loop back</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">16: </span>  }&lt;&gt; <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">synchronous parallel concurrency</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">17: </span>    {<span style="color: #7f0000;">/*</span><span style="color: #7f0000;">The environment</span><span style="color: #7f0000;">*/</span>
+<span class="linenr">18: </span>      {<span style="color: #306010;">send</span> <span style="color: #602938;">A</span>(1);}&lt;&gt;{<span style="color: #306010;">send</span> <span style="color: #602938;">B</span>(1);};
+<span class="linenr">19: </span>    }
+<span class="linenr">20: </span>};
+<span class="linenr">21: </span><span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Other functions/reactions being used inside main</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">22: </span><span style="color: #602938;">waitA</span>(input <span style="color: #306010;">int</span> <span style="color: #00603f;">A</span>) {abort(A) {task(period=1,duration=0,offset=0){;}}};
+<span class="linenr">23: </span><span style="color: #602938;">waitB</span>(input <span style="color: #306010;">int</span> <span style="color: #00603f;">B</span>) {abort(B) {task(period=1,duration=0,offset=0){;}}}
 </pre>
 </div>
 
@@ -212,9 +217,9 @@ available after a single so called <code>tick</code>.</li>
 <li>Tick is the synchronous (logical) clock running the whole program.</li>
 </ol>
 </div>
-<div id="outline-container-org4f60e1b" class="outline-3">
-<h3 id="org4f60e1b">Compiling the abro (shared memory) program</h3>
-<div class="outline-text-3" id="text-org4f60e1b">
+<div id="outline-container-orgf9d5df4" class="outline-3">
+<h3 id="orgf9d5df4">Compiling the abro (shared memory) program</h3>
+<div class="outline-text-3" id="text-orgf9d5df4">
 <ol class="org-ol">
 <li><p>
 Run the command:
@@ -241,17 +246,17 @@ You need to now write a <code>main.cpp</code> file that provides the input
 and output functions.
 </p>
 <div class="org-src-container">
-<pre class="src src-C++"><span style="font-weight: bold;">namespace</span> <span style="color: #531ab6;">abro</span> {
-  <span style="color: #7f0000;">//</span><span style="color: #7f0000;">....</span>
-  <span style="color: #306010;">int</span> <span style="color: #602938;">main</span>(<span style="color: #306010;">void</span>) {
-    read_inputs();              <span style="color: #7f0000;">// </span><span style="color: #7f0000;">provide this function</span>
-    <span style="color: #7f0000;">//</span><span style="color: #7f0000;">...</span>
-    write_outputs();            <span style="color: #7f0000;">// </span><span style="color: #7f0000;">provide this function</span>
-    pre_eq_curr();
-    reset_curr();
-    <span style="font-weight: bold;">return</span> 0;
-  }
-}
+<pre class="src src-C++"><span class="linenr"> 1: </span><span style="font-weight: bold;">namespace</span> <span style="color: #531ab6;">abro</span> {
+<span class="linenr"> 2: </span>  <span style="color: #7f0000;">//</span><span style="color: #7f0000;">....</span>
+<span class="linenr"> 3: </span>  <span style="color: #306010;">int</span> <span style="color: #602938;">main</span>(<span style="color: #306010;">void</span>) {
+<span class="linenr"> 4: </span>    read_inputs();              <span style="color: #7f0000;">// </span><span style="color: #7f0000;">provide this function</span>
+<span class="linenr"> 5: </span>    <span style="color: #7f0000;">//</span><span style="color: #7f0000;">...</span>
+<span class="linenr"> 6: </span>    write_outputs();            <span style="color: #7f0000;">// </span><span style="color: #7f0000;">provide this function</span>
+<span class="linenr"> 7: </span>    pre_eq_curr();
+<span class="linenr"> 8: </span>    reset_curr();
+<span class="linenr"> 9: </span>    <span style="font-weight: bold;">return</span> 0;
+<span class="linenr">10: </span>  }
+<span class="linenr">11: </span>}
 </pre>
 </div></li>
 <li><p>
@@ -259,29 +264,29 @@ The example <code>main.cpp</code> file is below. The file is available in
 <code>Timetide_tests</code> directory to modify.
 </p>
 <div class="org-src-container">
-<pre class="src src-C++"><span style="color: #894000;">#include</span> <span style="color: #00598b;">"abro.h"</span>
-<span style="color: #894000;">#include</span> <span style="color: #00598b;">&lt;cassert&gt;</span>
-<span style="color: #894000;">#include</span> <span style="color: #00598b;">&lt;iostream&gt;</span>
-<span style="color: #306010;">int</span> <span style="color: #602938;">mtick</span>() {
-  <span style="color: #306010;">char</span> <span style="color: #00603f;">b</span> = <span style="color: #00598b;">'\0'</span>;
-  <span style="color: #306010;">int</span> <span style="color: #00603f;">k</span> = scanf(<span style="color: #00598b;">"%c"</span>, &amp;b);
-  <span style="font-weight: bold;">return</span> b;
-}
-<span style="color: #7f0000;">// </span><span style="color: #7f0000;">In this case there are no inputs and outputs to abro.tt</span>
-<span style="color: #306010;">void</span> <span style="color: #531ab6;">abro</span>::<span style="color: #602938;">read_inputs</span>() {}
-<span style="color: #306010;">void</span> <span style="color: #531ab6;">abro</span>::<span style="color: #602938;">write_outputs</span>() {}
-
-<span style="color: #7f0000;">// </span><span style="color: #7f0000;">The main function</span>
-<span style="color: #306010;">int</span> <span style="color: #602938;">main</span>(<span style="color: #306010;">void</span>) {
-  <span style="font-weight: bold;">while</span> (1) {
-    <span style="color: #7f0000;">// </span><span style="color: #7f0000;">Run the abro program</span>
-    <span style="color: #531ab6;">abro</span>::main();
-    <span style="color: #7f0000;">// </span><span style="color: #7f0000;">Then we are done with the tick.</span>
-    <span style="font-weight: bold;">if</span> (mtick() == <span style="color: #00598b;">'d'</span>)
-      <span style="font-weight: bold;">break</span>;
-  }
-  <span style="font-weight: bold;">return</span> 0;
-}
+<pre class="src src-C++"><span class="linenr"> 1: </span><span style="color: #894000;">#include</span> <span style="color: #00598b;">"abro.h"</span>
+<span class="linenr"> 2: </span><span style="color: #894000;">#include</span> <span style="color: #00598b;">&lt;cassert&gt;</span>
+<span class="linenr"> 3: </span><span style="color: #894000;">#include</span> <span style="color: #00598b;">&lt;iostream&gt;</span>
+<span class="linenr"> 4: </span><span style="color: #306010;">int</span> <span style="color: #602938;">mtick</span>() {
+<span class="linenr"> 5: </span>  <span style="color: #306010;">char</span> <span style="color: #00603f;">b</span> = <span style="color: #00598b;">'\0'</span>;
+<span class="linenr"> 6: </span>  <span style="color: #306010;">int</span> <span style="color: #00603f;">k</span> = scanf(<span style="color: #00598b;">"%c"</span>, &amp;b);
+<span class="linenr"> 7: </span>  <span style="font-weight: bold;">return</span> b;
+<span class="linenr"> 8: </span>}
+<span class="linenr"> 9: </span><span style="color: #7f0000;">// </span><span style="color: #7f0000;">In this case there are no inputs and outputs to abro.tt</span>
+<span class="linenr">10: </span><span style="color: #306010;">void</span> <span style="color: #531ab6;">abro</span>::<span style="color: #602938;">read_inputs</span>() {}
+<span class="linenr">11: </span><span style="color: #306010;">void</span> <span style="color: #531ab6;">abro</span>::<span style="color: #602938;">write_outputs</span>() {}
+<span class="linenr">12: </span>
+<span class="linenr">13: </span><span style="color: #7f0000;">// </span><span style="color: #7f0000;">The main function</span>
+<span class="linenr">14: </span><span style="color: #306010;">int</span> <span style="color: #602938;">main</span>(<span style="color: #306010;">void</span>) {
+<span class="linenr">15: </span>  <span style="font-weight: bold;">while</span> (1) {
+<span class="linenr">16: </span>    <span style="color: #7f0000;">// </span><span style="color: #7f0000;">Run the abro program</span>
+<span class="linenr">17: </span>    <span style="color: #531ab6;">abro</span>::main();
+<span class="linenr">18: </span>    <span style="color: #7f0000;">// </span><span style="color: #7f0000;">Then we are done with the tick.</span>
+<span class="linenr">19: </span>    <span style="font-weight: bold;">if</span> (mtick() == <span style="color: #00598b;">'d'</span>)
+<span class="linenr">20: </span>      <span style="font-weight: bold;">break</span>;
+<span class="linenr">21: </span>  }
+<span class="linenr">22: </span>  <span style="font-weight: bold;">return</span> 0;
+<span class="linenr">23: </span>}
 </pre>
 </div></li>
 
@@ -292,8 +297,7 @@ to a binary using the command:
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #00603f;">COMPILE_SWITCH</span>=sysrs <span style="color: #00603f;">FNAME</span>=<span style="color: #00598b;">"abro"</span> <span style="color: #00598b;">\</span>
                      <span style="color: #00603f;">SYSRUST_DIR</span>=&lt;path-of-sysrust-compiler-dir&gt; <span style="color: #00598b;">\</span>
-                     <span style="color: #00603f;">TIMETIDE_DIR</span>=&lt;path-of-timetide-compiler-dir&gt; <span style="color: #00603f;">EXTRA_FLAGS</span>=<span style="color: #00598b;">"-DDEBUG"</span>
-exe
+                     <span style="color: #00603f;">TIMETIDE_DIR</span>=&lt;path-of-timetide-compiler-dir&gt; <span style="color: #00603f;">EXTRA_FLAGS</span>=<span style="color: #00598b;">"-DDEBUG"</span> exe
 </pre>
 </div>
 <ul class="org-ul">
@@ -306,16 +310,15 @@ We can finally run the program using the command:
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #00603f;">COMPILE_SWITCH</span>=sysrs <span style="color: #00603f;">FNAME</span>=<span style="color: #00598b;">"abro"</span> <span style="color: #00598b;">\</span>
                     <span style="color: #00603f;">SYSRUST_DIR</span>=&lt;path-of-sysrust-compiler-dir&gt; <span style="color: #00598b;">\</span>
-                    <span style="color: #00603f;">TIMETIDE_DIR</span>=&lt;path-of-timetide-compiler-dir&gt; <span style="color: #00603f;">EXTRA_FLAGS</span>=<span style="color: #00598b;">"-DDEBUG"</span>
-run
+                    <span style="color: #00603f;">TIMETIDE_DIR</span>=&lt;path-of-timetide-compiler-dir&gt; <span style="color: #00603f;">EXTRA_FLAGS</span>=<span style="color: #00598b;">"-DDEBUG"</span> run
 </pre>
 </div></li>
 </ol>
 </div>
 </div>
-<div id="outline-container-org3508cef" class="outline-3">
-<h3 id="org3508cef">Compiling the abro example (distributed memory) program</h3>
-<div class="outline-text-3" id="text-org3508cef">
+<div id="outline-container-orgfb92d14" class="outline-3">
+<h3 id="orgfb92d14">Compiling the abro example (distributed memory) program</h3>
+<div class="outline-text-3" id="text-orgfb92d14">
 <p>
 The primary idea is to divide the <code>abro</code> program into two parts: (a)
 <code>abro_sys.tt</code>, which captures the system waiting for the data to
@@ -331,29 +334,29 @@ presented below:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #7f0000;">/* </span><span style="color: #7f0000;">abro_sys.tt</span><span style="color: #7f0000;"> */</span>
-<span style="color: #602938;">main</span>(input <span style="color: #306010;">int</span> <span style="color: #00603f;">A</span>, input <span style="color: #306010;">int</span> <span style="color: #00603f;">B</span>, input <span style="color: #306010;">int</span> <span style="color: #00603f;">R</span>, output <span style="color: #306010;">int</span> <span style="color: #00603f;">O</span>) {
-  <span style="font-weight: bold;">for</span> (<span style="color: #306010;">int</span> <span style="color: #00603f;">i</span>:1:99) {
-         abort(R) {
-           <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Wait for A and B in parallel</span><span style="color: #7f0000;"> */</span>
-           {<span style="color: #306010;">run</span> <span style="color: #602938;">waitA</span>(A);}&lt;&gt;{<span style="color: #306010;">run</span> <span style="color: #602938;">waitB</span>(B);};
-           <span style="color: #306010;">send</span> <span style="color: #602938;">O</span>(100);         <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">send O once both are received</span><span style="color: #7f0000;"> */</span>
-           <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">abort when R is present and restart</span><span style="color: #7f0000;"> */</span>
-           task(period=1,duration=0,offset=0){;} <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">halt</span><span style="color: #7f0000;"> */</span>
-         }
-  } <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">loop back</span><span style="color: #7f0000;"> */</span>
-};
-<span style="color: #602938;">waitA</span>(input <span style="color: #306010;">int</span> <span style="color: #00603f;">A</span>) {abort(A) {task(period=1,duration=0,offset=0){;}}};
-<span style="color: #602938;">waitB</span>(input <span style="color: #306010;">int</span> <span style="color: #00603f;">B</span>) {abort(B) {task(period=1,duration=0,offset=0){;}}}
+<pre class="src src-C"><span class="linenr"> 1: </span><span style="color: #7f0000;">/* </span><span style="color: #7f0000;">abro_sys.tt</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 2: </span><span style="color: #602938;">main</span>(input <span style="color: #306010;">int</span> <span style="color: #00603f;">A</span>, input <span style="color: #306010;">int</span> <span style="color: #00603f;">B</span>, input <span style="color: #306010;">int</span> <span style="color: #00603f;">R</span>, output <span style="color: #306010;">int</span> <span style="color: #00603f;">O</span>) {
+<span class="linenr"> 3: </span>  <span style="font-weight: bold;">for</span> (<span style="color: #306010;">int</span> <span style="color: #00603f;">i</span>:1:99) {
+<span class="linenr"> 4: </span>         abort(R) {
+<span class="linenr"> 5: </span>           <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Wait for A and B in parallel</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 6: </span>           {<span style="color: #306010;">run</span> <span style="color: #602938;">waitA</span>(A);}&lt;&gt;{<span style="color: #306010;">run</span> <span style="color: #602938;">waitB</span>(B);};
+<span class="linenr"> 7: </span>           <span style="color: #306010;">send</span> <span style="color: #602938;">O</span>(100);         <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">send O once both are received</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 8: </span>           <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">abort when R is present and restart</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 9: </span>           task(period=1,duration=0,offset=0){;} <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">halt</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">10: </span>         }
+<span class="linenr">11: </span>  } <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">loop back</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">12: </span>};
+<span class="linenr">13: </span><span style="color: #602938;">waitA</span>(input <span style="color: #306010;">int</span> <span style="color: #00603f;">A</span>) {abort(A) {task(period=1,duration=0,offset=0){;}}};
+<span class="linenr">14: </span><span style="color: #602938;">waitB</span>(input <span style="color: #306010;">int</span> <span style="color: #00603f;">B</span>) {abort(B) {task(period=1,duration=0,offset=0){;}}}
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #7f0000;">/* </span><span style="color: #7f0000;">abro_env.tt</span><span style="color: #7f0000;"> */</span>
-<span style="color: #602938;">main</span>(output <span style="color: #306010;">int</span> <span style="color: #00603f;">A</span>, output <span style="color: #306010;">int</span> <span style="color: #00603f;">B</span>, output <span style="color: #306010;">int</span> <span style="color: #00603f;">R</span>) {
-  {<span style="color: #306010;">send</span> <span style="color: #602938;">A</span>(1);}&lt;&gt;{<span style="color: #306010;">send</span> <span style="color: #602938;">B</span>(1);};
-  <span style="color: #306010;">send</span> <span style="color: #602938;">R</span>(1);
-}
+<pre class="src src-C"><span class="linenr">1: </span><span style="color: #7f0000;">/* </span><span style="color: #7f0000;">abro_env.tt</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">2: </span><span style="color: #602938;">main</span>(output <span style="color: #306010;">int</span> <span style="color: #00603f;">A</span>, output <span style="color: #306010;">int</span> <span style="color: #00603f;">B</span>, output <span style="color: #306010;">int</span> <span style="color: #00603f;">R</span>) {
+<span class="linenr">3: </span>  {<span style="color: #306010;">send</span> <span style="color: #602938;">A</span>(1);}&lt;&gt;{<span style="color: #306010;">send</span> <span style="color: #602938;">B</span>(1);};
+<span class="linenr">4: </span>  <span style="color: #306010;">send</span> <span style="color: #602938;">R</span>(1);
+<span class="linenr">5: </span>}
 </pre>
 </div></li>
 
@@ -376,7 +379,6 @@ following command:
                           <span style="color: #00603f;">EXTRA_FLAGS</span>=<span style="color: #00598b;">"-DDEBUG"</span>
 </pre>
 </div>
-
 <ul class="org-ul">
 <li>Notice that we specify the individual module names in <code>FNAME</code>
 environment variable for compiling both modules together.</li>
@@ -399,39 +401,38 @@ each other.</li>
 The <code>abro_env::write_outputs</code> function:
 </p>
 <div class="org-src-container">
-<pre class="src src-C++"><span style="color: #7f0000;">// </span><span style="color: #7f0000;">This function serializes and then send the data from output port to</span>
-<span style="color: #7f0000;">// </span><span style="color: #7f0000;">the input port.</span>
-<span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #306010;">In</span>, <span style="font-weight: bold;">typename</span> <span style="color: #306010;">Out</span>, <span style="font-weight: bold;">typename</span> <span style="color: #306010;">Q</span>&gt;
-<span style="color: #306010;">void</span> <span style="color: #602938;">In2Out</span>(<span style="color: #306010;">In</span> *<span style="color: #00603f;">in</span>, <span style="color: #306010;">Out</span> *<span style="color: #00603f;">out</span>, <span style="color: #306010;">Q</span> *<span style="color: #00603f;">q</span>) {
-         Qpush(q, (<span style="color: #306010;">void</span> *)in, out);
-}
-<span style="color: #7f0000;">// </span><span style="color: #7f0000;">We always write the current value from one to the previous value of</span>
-<span style="color: #7f0000;">// </span><span style="color: #7f0000;">the next.</span>
-<span style="color: #306010;">void</span> <span style="color: #531ab6;">abro_env</span>::<span style="color: #602938;">write_outputs</span>() {
-         <span style="color: #7f0000;">// </span><span style="color: #7f0000;">Then we write the outputs for the tick done.</span>
-         In2Out(<span style="color: #531ab6;">abro_env</span>::A_curr_ptr, <span style="color: #531ab6;">abro_sys</span>::A_prev_ptr, <span style="color: #531ab6;">abro_sys</span>::qA_ptr);
-         In2Out(<span style="color: #531ab6;">abro_env</span>::B_curr_ptr, <span style="color: #531ab6;">abro_sys</span>::B_prev_ptr, <span style="color: #531ab6;">abro_sys</span>::qB_ptr);
-         In2Out(<span style="color: #531ab6;">abro_env</span>::R_curr_ptr, <span style="color: #531ab6;">abro_sys</span>::R_prev_ptr, <span style="color: #531ab6;">abro_sys</span>::qR_ptr);
-}
+<pre class="src src-C++"><span class="linenr"> 1: </span><span style="color: #7f0000;">// </span><span style="color: #7f0000;">This function serializes and then send the data from output port to</span>
+<span class="linenr"> 2: </span><span style="color: #7f0000;">// </span><span style="color: #7f0000;">the input port.</span>
+<span class="linenr"> 3: </span><span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #306010;">In</span>, <span style="font-weight: bold;">typename</span> <span style="color: #306010;">Out</span>, <span style="font-weight: bold;">typename</span> <span style="color: #306010;">Q</span>&gt;
+<span id="coderef-queue" class="coderef-off"><span class="linenr"> 4: </span><span style="color: #306010;">void</span> <span style="color: #602938;">In2Out</span>(<span style="color: #306010;">In</span> *<span style="color: #00603f;">in</span>, <span style="color: #306010;">Out</span> *<span style="color: #00603f;">out</span>, <span style="color: #306010;">Q</span> *<span style="color: #00603f;">q</span>) {Qpush(q, (<span style="color: #306010;">void</span> *)in, out);}</span>
+<span class="linenr"> 5: </span><span style="color: #7f0000;">// </span><span style="color: #7f0000;">We always write the current value from one to the previous value of</span>
+<span class="linenr"> 6: </span><span style="color: #7f0000;">// </span><span style="color: #7f0000;">the next.</span>
+<span id="coderef-writeo" class="coderef-off"><span class="linenr"> 7: </span><span style="color: #306010;">void</span> <span style="color: #531ab6;">abro_env</span>::<span style="color: #602938;">write_outputs</span>() {</span>
+<span class="linenr"> 8: </span>         <span style="color: #7f0000;">// </span><span style="color: #7f0000;">Then we write the outputs for the tick done.</span>
+<span class="linenr"> 9: </span>         In2Out(<span style="color: #531ab6;">abro_env</span>::A_curr_ptr, <span style="color: #531ab6;">abro_sys</span>::A_prev_ptr, <span style="color: #531ab6;">abro_sys</span>::qA_ptr);
+<span class="linenr">10: </span>         In2Out(<span style="color: #531ab6;">abro_env</span>::B_curr_ptr, <span style="color: #531ab6;">abro_sys</span>::B_prev_ptr, <span style="color: #531ab6;">abro_sys</span>::qB_ptr);
+<span class="linenr">11: </span>         In2Out(<span style="color: #531ab6;">abro_env</span>::R_curr_ptr, <span style="color: #531ab6;">abro_sys</span>::R_prev_ptr, <span style="color: #531ab6;">abro_sys</span>::qR_ptr);
+<span class="linenr">12: </span>}
 </pre>
 </div></li>
-<li>Function <code>abro_env::write_outputs</code> passes the outputs from
-module <code>abro_env</code> to module <code>abro_sys</code>.</li>
+<li>Function <code>abro_env::write_outputs</code> (Line <a href="#coderef-writeo" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-writeo');" onmouseout="CodeHighlightOff(this, 'coderef-writeo');">7</a>) passes the
+outputs from module <code>abro_env</code> to module <code>abro_sys</code>.</li>
 <li>This function <b>binds</b> the output from <code>abro_env</code> module to
 <code>abro_sys</code> module.</li>
 <li>The output channel <code>A</code> in module <code>abro_env</code> (specifically
 <code>abro_env::A_curr_ptr</code>) is bound to input channel <code>A</code> in module
-<code>abro_sys</code> (specifically <code>abro_env::A_prev_ptr</code>).</li>
-<li>Same for channels <code>B</code> and <code>R</code>.</li>
+<code>abro_sys</code> (specifically <code>abro_env::A_prev_ptr</code>). Same for channels
+<code>B</code> and <code>R</code>.</li>
 <li>Function <code>In2Out</code> achieves this binding via queue on the
 receiving side &#x2013; in this case module <code>abro_sys</code>.</li>
-<li>The third argument in function <code>In2Out</code> is this receiving queue
-for each channel.</li>
+<li>The third argument in function <code>In2Out</code> (Line <a href="#coderef-queue" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-queue');" onmouseout="CodeHighlightOff(this, 'coderef-queue');">4</a>) is this
+receiving queue for each channel.</li>
 <li>The size of the queue is determined by the delay \(\delta\)
 connecting the channels, and is determined by the system
 designer.</li>
-<li>The <code>Qpush</code> function is provided in the library (which we will
-see later) for pushing into the queue of the receiver.</li>
+<li>The <code>Qpush</code> function (Line <a href="#coderef-queue" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-queue');" onmouseout="CodeHighlightOff(this, 'coderef-queue');">4</a>) is provided in the library
+(which we will see later) for pushing into the queue of the
+receiver.</li>
 
 <li><p>
 The <code>abro_env::read_inputs</code> function:
@@ -444,7 +445,7 @@ The <code>abro_env::read_inputs</code> function:
 </ul></li>
 
 <li>The channels being used to connect the two modules along with the
-queue functions are provided in:
+queue functions are provided in files:
 <ul class="org-ul">
 <li><code>abro_env.h</code>, <code>abro_sys.h</code>, <code>includes/lib.h</code>, and
 <code>includes/mQueue.h</code> in the <code>Timetide_tests</code> directory.</li>
@@ -459,31 +460,31 @@ The important parts of the generated <code>abro_env.h</code> header is shown
 below:
 </p>
 <div class="org-src-container">
-<pre class="src src-C++"><span style="font-weight: bold;">namespace</span> <span style="color: #531ab6;">abro_env</span> {
-  <span style="color: #7f0000;">// </span><span style="color: #7f0000;">....</span>
-  <span style="font-weight: bold;">struct</span> <span style="color: #306010;">signal_A</span>;
-  <span style="color: #7f0000;">// </span><span style="color: #7f0000;">The below are the opaque pointers used for communication</span>
-  <span style="font-weight: bold;">extern</span> <span style="color: #306010;">signal_A</span> *<span style="color: #00603f;">A_curr_ptr</span>, *<span style="color: #00603f;">A_prev_ptr</span>;
-  <span style="color: #7f0000;">// </span><span style="color: #7f0000;">A_curr_ptr is a pointer to status/value of channel A for current tick.</span>
-  <span style="color: #7f0000;">// </span><span style="color: #7f0000;">A_prev_ptr is a pointer to status/value of channel A for previous tick.</span>
-  <span style="font-weight: bold;">struct</span> <span style="color: #306010;">signal_B</span>;
-  <span style="font-weight: bold;">extern</span> <span style="color: #306010;">signal_B</span> *<span style="color: #00603f;">B_curr_ptr</span>, *<span style="color: #00603f;">B_prev_ptr</span>;
-
-  <span style="font-weight: bold;">struct</span> <span style="color: #306010;">signal_R</span>;
-  <span style="font-weight: bold;">extern</span> <span style="color: #306010;">signal_R</span> *<span style="color: #00603f;">R_curr_ptr</span>, *<span style="color: #00603f;">R_prev_ptr</span>;
-
-  <span style="color: #7f0000;">// </span><span style="color: #7f0000;">Templates for opaque channel pointers</span>
-  <span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #306010;">T</span>&gt; <span style="color: #306010;">size_t</span> <span style="color: #602938;">get_sizeof_value</span>(<span style="color: #306010;">T</span> *);
-  <span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #306010;">T</span>&gt; <span style="color: #306010;">size_t</span> <span style="color: #602938;">get_sizeof_status</span>(<span style="color: #306010;">T</span> *);
-  <span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #306010;">T</span>&gt; <span style="color: #306010;">bool</span> <span style="color: #602938;">get_status</span>(<span style="color: #306010;">T</span> *);
-  <span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #306010;">T</span>&gt; <span style="color: #306010;">void</span> <span style="color: #602938;">get_value</span>(<span style="color: #306010;">void</span> *<span style="color: #00603f;">dest</span>, <span style="color: #306010;">T</span> *<span style="color: #00603f;">signal</span>);
-  <span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #306010;">T</span>&gt; <span style="color: #306010;">void</span> <span style="color: #602938;">set_status</span>(<span style="color: #306010;">T</span> *<span style="color: #00603f;">signal</span>, <span style="color: #306010;">unsigned</span> <span style="color: #306010;">char</span> <span style="color: #00603f;">v</span>);
-  <span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #306010;">T</span>&gt; <span style="color: #306010;">void</span> <span style="color: #602938;">set_value</span>(<span style="color: #306010;">T</span> *<span style="color: #00603f;">signal</span>, <span style="color: #306010;">void</span> *<span style="color: #00603f;">src</span>);
-  <span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #306010;">T</span>, <span style="font-weight: bold;">typename</span> <span style="color: #306010;">S</span>&gt; <span style="color: #306010;">void</span> <span style="color: #602938;">Qpush</span>(<span style="color: #306010;">T</span> *, <span style="color: #306010;">void</span> *, <span style="color: #306010;">S</span> *);
-  <span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #306010;">T</span>, <span style="font-weight: bold;">typename</span> <span style="color: #306010;">S</span>&gt; <span style="color: #306010;">size_t</span> <span style="color: #602938;">Qpull</span>(<span style="color: #306010;">T</span> *, <span style="color: #306010;">S</span> *);
-  <span style="color: #306010;">void</span> <span style="color: #602938;">write_outputs</span>();
-  <span style="color: #306010;">void</span> <span style="color: #602938;">read_inputs</span>();
-}
+<pre class="src src-C++"><span class="linenr"> 1: </span><span style="font-weight: bold;">namespace</span> <span style="color: #531ab6;">abro_env</span> {
+<span class="linenr"> 2: </span>  <span style="color: #7f0000;">// </span><span style="color: #7f0000;">....</span>
+<span class="linenr"> 3: </span>  <span style="font-weight: bold;">struct</span> <span style="color: #306010;">signal_A</span>;
+<span class="linenr"> 4: </span>  <span style="color: #7f0000;">// </span><span style="color: #7f0000;">The below are the opaque pointers used for communication</span>
+<span class="linenr"> 5: </span>  <span style="font-weight: bold;">extern</span> <span style="color: #306010;">signal_A</span> *<span style="color: #00603f;">A_curr_ptr</span>, *<span style="color: #00603f;">A_prev_ptr</span>;
+<span class="linenr"> 6: </span>  <span style="color: #7f0000;">// </span><span style="color: #7f0000;">A_curr_ptr is a pointer to status/value of channel A for current tick.</span>
+<span class="linenr"> 7: </span>  <span style="color: #7f0000;">// </span><span style="color: #7f0000;">A_prev_ptr is a pointer to status/value of channel A for previous tick.</span>
+<span class="linenr"> 8: </span>  <span style="font-weight: bold;">struct</span> <span style="color: #306010;">signal_B</span>;
+<span class="linenr"> 9: </span>  <span style="font-weight: bold;">extern</span> <span style="color: #306010;">signal_B</span> *<span style="color: #00603f;">B_curr_ptr</span>, *<span style="color: #00603f;">B_prev_ptr</span>;
+<span class="linenr">10: </span>
+<span class="linenr">11: </span>  <span style="font-weight: bold;">struct</span> <span style="color: #306010;">signal_R</span>;
+<span class="linenr">12: </span>  <span style="font-weight: bold;">extern</span> <span style="color: #306010;">signal_R</span> *<span style="color: #00603f;">R_curr_ptr</span>, *<span style="color: #00603f;">R_prev_ptr</span>;
+<span class="linenr">13: </span>
+<span class="linenr">14: </span>  <span style="color: #7f0000;">// </span><span style="color: #7f0000;">Templates for opaque channel pointers</span>
+<span class="linenr">15: </span>  <span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #306010;">T</span>&gt; <span style="color: #306010;">size_t</span> <span style="color: #602938;">get_sizeof_value</span>(<span style="color: #306010;">T</span> *);
+<span class="linenr">16: </span>  <span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #306010;">T</span>&gt; <span style="color: #306010;">size_t</span> <span style="color: #602938;">get_sizeof_status</span>(<span style="color: #306010;">T</span> *);
+<span class="linenr">17: </span>  <span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #306010;">T</span>&gt; <span style="color: #306010;">bool</span> <span style="color: #602938;">get_status</span>(<span style="color: #306010;">T</span> *);
+<span class="linenr">18: </span>  <span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #306010;">T</span>&gt; <span style="color: #306010;">void</span> <span style="color: #602938;">get_value</span>(<span style="color: #306010;">void</span> *<span style="color: #00603f;">dest</span>, <span style="color: #306010;">T</span> *<span style="color: #00603f;">signal</span>);
+<span class="linenr">19: </span>  <span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #306010;">T</span>&gt; <span style="color: #306010;">void</span> <span style="color: #602938;">set_status</span>(<span style="color: #306010;">T</span> *<span style="color: #00603f;">signal</span>, <span style="color: #306010;">unsigned</span> <span style="color: #306010;">char</span> <span style="color: #00603f;">v</span>);
+<span class="linenr">20: </span>  <span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #306010;">T</span>&gt; <span style="color: #306010;">void</span> <span style="color: #602938;">set_value</span>(<span style="color: #306010;">T</span> *<span style="color: #00603f;">signal</span>, <span style="color: #306010;">void</span> *<span style="color: #00603f;">src</span>);
+<span class="linenr">21: </span>  <span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #306010;">T</span>, <span style="font-weight: bold;">typename</span> <span style="color: #306010;">S</span>&gt; <span style="color: #306010;">void</span> <span style="color: #602938;">Qpush</span>(<span style="color: #306010;">T</span> *, <span style="color: #306010;">void</span> *, <span style="color: #306010;">S</span> *);
+<span class="linenr">22: </span>  <span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #306010;">T</span>, <span style="font-weight: bold;">typename</span> <span style="color: #306010;">S</span>&gt; <span style="color: #306010;">size_t</span> <span style="color: #602938;">Qpull</span>(<span style="color: #306010;">T</span> *, <span style="color: #306010;">S</span> *);
+<span class="linenr">23: </span>  <span style="color: #306010;">void</span> <span style="color: #602938;">write_outputs</span>();
+<span class="linenr">24: </span>  <span style="color: #306010;">void</span> <span style="color: #602938;">read_inputs</span>();
+<span class="linenr">25: </span>}
 </pre>
 </div></li>
 
@@ -542,33 +543,36 @@ for each channel in generated C++ code from the Time tide
 modules. Example shown below from <code>abro_env.cpp</code>:
 </p>
 <div class="org-src-container">
-<pre class="src src-C++"><span style="font-weight: bold;">namespace</span> <span style="color: #531ab6;">abro_env</span> {
-        <span style="color: #7f0000;">//</span><span style="color: #7f0000;">...</span>
-<span style="color: #894000;">#include</span> <span style="color: #00598b;">"lib.h"</span>
-
-        <span style="color: #7f0000;">// </span><span style="color: #7f0000;">Sig decls</span>
-        <span style="font-weight: bold;">typedef</span> <span style="font-weight: bold;">struct</span> <span style="color: #306010;">signal_A</span> {
-          <span style="color: #306010;">int</span> <span style="color: #00603f;">value</span> = 0;
-          <span style="color: #306010;">bool</span> <span style="color: #00603f;">status</span> = <span style="color: #531ab6;">false</span>;
-          <span style="color: #7f0000;">// </span><span style="color: #7f0000;">We should never need the combinator operator</span>
-          <span style="color: #531ab6;">std</span>::<span style="color: #306010;">plus</span>&lt;<span style="color: #306010;">int</span>&gt; <span style="color: #00603f;">op</span>{};
-          <span style="color: #7f0000;">// </span><span style="color: #7f0000;">tag is for fresh value updates</span>
-          <span style="color: #306010;">bool</span> <span style="color: #00603f;">tag</span> = <span style="color: #531ab6;">false</span>;
-        } <span style="color: #306010;">signal_A</span>;
-        <span style="color: #306010;">signal_A</span> <span style="color: #00603f;">A_curr</span>, <span style="color: #00603f;">A_prev</span>;
-        <span style="color: #306010;">signal_A</span> *<span style="color: #00603f;">A_curr_ptr</span> = &amp;A_curr;
-        <span style="color: #306010;">signal_A</span> *<span style="color: #00603f;">A_prev_ptr</span> = &amp;A_prev;
-        <span style="color: #7f0000;">// </span><span style="color: #7f0000;">Below are template specilisations for working with channel A</span>
-        <span style="font-weight: bold;">template</span> <span style="color: #306010;">size_t</span> <span style="color: #602938;">get_sizeof_value</span>(<span style="color: #306010;">signal_A</span> *);
-        <span style="font-weight: bold;">template</span> <span style="color: #306010;">size_t</span> <span style="color: #602938;">get_sizeof_status</span>(<span style="color: #306010;">signal_A</span> *);
-        <span style="font-weight: bold;">template</span> <span style="color: #306010;">bool</span> <span style="color: #602938;">get_status</span>(<span style="color: #306010;">signal_A</span> *);
-        <span style="font-weight: bold;">template</span> <span style="color: #306010;">void</span> <span style="color: #602938;">get_value</span>(<span style="color: #306010;">void</span> *, <span style="color: #306010;">signal_A</span> *);
-        <span style="font-weight: bold;">template</span> <span style="color: #306010;">void</span> <span style="color: #602938;">set_value</span>(<span style="color: #306010;">signal_A</span> *, <span style="color: #306010;">void</span> *);
-        <span style="font-weight: bold;">template</span> <span style="color: #306010;">void</span> <span style="color: #602938;">set_status</span>(<span style="color: #306010;">signal_A</span> *, <span style="color: #306010;">unsigned</span> <span style="color: #306010;">char</span> <span style="color: #00603f;">v</span>);
-        <span style="color: #7f0000;">// </span><span style="color: #7f0000;">......</span>
-}
+<pre class="src src-C++"><span class="linenr"> 1: </span><span style="font-weight: bold;">namespace</span> <span style="color: #531ab6;">abro_env</span> {
+<span class="linenr"> 2: </span>        <span style="color: #7f0000;">//</span><span style="color: #7f0000;">...</span>
+<span class="linenr"> 3: </span><span style="color: #894000;">#include</span> <span style="color: #00598b;">"lib.h"</span>
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span>        <span style="color: #7f0000;">// </span><span style="color: #7f0000;">Sig decls</span>
+<span class="linenr"> 6: </span>        <span style="font-weight: bold;">typedef</span> <span style="font-weight: bold;">struct</span> <span style="color: #306010;">signal_A</span> {
+<span class="linenr"> 7: </span>          <span style="color: #306010;">int</span> <span style="color: #00603f;">value</span> = 0;
+<span class="linenr"> 8: </span>          <span style="color: #306010;">bool</span> <span style="color: #00603f;">status</span> = <span style="color: #531ab6;">false</span>;
+<span class="linenr"> 9: </span>          <span style="color: #7f0000;">// </span><span style="color: #7f0000;">We should never need the combinator operator</span>
+<span class="linenr">10: </span>          <span style="color: #531ab6;">std</span>::<span style="color: #306010;">plus</span>&lt;<span style="color: #306010;">int</span>&gt; <span style="color: #00603f;">op</span>{};
+<span class="linenr">11: </span>          <span style="color: #7f0000;">// </span><span style="color: #7f0000;">tag is for fresh value updates</span>
+<span class="linenr">12: </span>          <span style="color: #306010;">bool</span> <span style="color: #00603f;">tag</span> = <span style="color: #531ab6;">false</span>;
+<span class="linenr">13: </span>        } <span style="color: #306010;">signal_A</span>;
+<span class="linenr">14: </span>        <span style="color: #306010;">signal_A</span> <span style="color: #00603f;">A_curr</span>, <span style="color: #00603f;">A_prev</span>;
+<span class="linenr">15: </span>        <span style="color: #306010;">signal_A</span> *<span style="color: #00603f;">A_curr_ptr</span> = &amp;A_curr;
+<span class="linenr">16: </span>        <span style="color: #306010;">signal_A</span> *<span style="color: #00603f;">A_prev_ptr</span> = &amp;A_prev;
+<span class="linenr">17: </span>        <span style="color: #7f0000;">// </span><span style="color: #7f0000;">Below are template specilisations for working with channel A</span>
+<span id="coderef-start" class="coderef-off"><span class="linenr">18: </span>        <span style="font-weight: bold;">template</span> <span style="color: #306010;">size_t</span> <span style="color: #602938;">get_sizeof_value</span>(<span style="color: #306010;">signal_A</span> *);</span>
+<span class="linenr">19: </span>        <span style="font-weight: bold;">template</span> <span style="color: #306010;">size_t</span> <span style="color: #602938;">get_sizeof_status</span>(<span style="color: #306010;">signal_A</span> *);
+<span class="linenr">20: </span>        <span style="font-weight: bold;">template</span> <span style="color: #306010;">bool</span> <span style="color: #602938;">get_status</span>(<span style="color: #306010;">signal_A</span> *);
+<span class="linenr">21: </span>        <span style="font-weight: bold;">template</span> <span style="color: #306010;">void</span> <span style="color: #602938;">get_value</span>(<span style="color: #306010;">void</span> *, <span style="color: #306010;">signal_A</span> *);
+<span class="linenr">22: </span>        <span style="font-weight: bold;">template</span> <span style="color: #306010;">void</span> <span style="color: #602938;">set_value</span>(<span style="color: #306010;">signal_A</span> *, <span style="color: #306010;">void</span> *);
+<span id="coderef-end" class="coderef-off"><span class="linenr">23: </span>        <span style="font-weight: bold;">template</span> <span style="color: #306010;">void</span> <span style="color: #602938;">set_status</span>(<span style="color: #306010;">signal_A</span> *, <span style="color: #306010;">unsigned</span> <span style="color: #306010;">char</span> <span style="color: #00603f;">v</span>);</span>
+<span class="linenr">24: </span>        <span style="color: #7f0000;">// </span><span style="color: #7f0000;">......</span>
+<span class="linenr">25: </span>}
 </pre>
-</div></li>
+</div>
+<ul class="org-ul">
+<li>Notice the template specialisation from (Line <a href="#coderef-start" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-start');" onmouseout="CodeHighlightOff(this, 'coderef-start');">18</a> &#x2013; Line <a href="#coderef-end" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-end');" onmouseout="CodeHighlightOff(this, 'coderef-end');">23</a>)</li>
+</ul></li>
 
 <li><p>
 Similarly, the receiving Queue' opaque queue pointers (e.g.,
@@ -577,26 +581,26 @@ template functions specialised in the generated C++ files. See
 below for a snippet of the generated <code>abro_sys.cpp</code>:
 </p>
 <div class="org-src-container">
-<pre class="src src-C++"><span style="color: #894000;">#include</span> <span style="color: #00598b;">"mQueue.h"</span>
-<span style="font-weight: bold;">namespace</span> <span style="color: #531ab6;">abro_sys</span> {
-  <span style="color: #7f0000;">// </span><span style="color: #7f0000;">....</span>
-<span style="color: #894000;">#include</span> <span style="color: #00598b;">"lib.h"</span>
-  <span style="color: #7f0000;">// </span><span style="color: #7f0000;">......</span>
-  <span style="color: #7f0000;">// </span><span style="color: #7f0000;">mQueue is defined in includes/mQueue.h</span>
-  <span style="font-weight: bold;">using</span> <span style="color: #306010;">qA_t</span> = <span style="color: #306010;">mQueue</span>&lt;<span style="color: #531ab6;">std</span>::<span style="color: #306010;">array</span>&lt;<span style="color: #306010;">unsigned</span> <span style="color: #306010;">char</span>, <span style="font-weight: bold;">sizeof</span>(A_prev_ptr-&gt;status) +
-                                 <span style="font-weight: bold;">sizeof</span>(A_prev_ptr-&gt;value)&gt;&gt;;
-  <span style="color: #7f0000;">// </span><span style="color: #7f0000;">mQueue.h provides a lockfree queue implementation, so it can be used with many threads</span>
-  <span style="color: #306010;">qA_t</span> <span style="color: #00603f;">qA</span>(A_DELAY, {});
-  <span style="font-weight: bold;">struct</span> <span style="color: #306010;">QA</span> {
-    <span style="color: #306010;">qA_t</span> *<span style="color: #00603f;">v</span>;
-    <span style="color: #602938;">QA</span>(<span style="color: #306010;">qA_t</span> *<span style="color: #00603f;">p</span>) : v(p) {}
-  };
-  <span style="color: #306010;">QA</span> <span style="color: #00603f;">qA_var</span>(&amp;qA);
-  <span style="color: #306010;">QA</span> *<span style="color: #00603f;">qA_ptr</span> = &amp;qA_var;
-  <span style="font-weight: bold;">template</span> <span style="color: #306010;">void</span> <span style="color: #602938;">Qpush</span>(<span style="color: #306010;">QA</span> *, <span style="color: #306010;">void</span> *, <span style="color: #306010;">signal_A</span> *); <span style="color: #7f0000;">// </span><span style="color: #7f0000;">template specilisation</span>
-  <span style="font-weight: bold;">template</span> <span style="color: #306010;">size_t</span> <span style="color: #602938;">Qpull</span>(<span style="color: #306010;">QA</span> *, <span style="color: #306010;">signal_A</span> *);       <span style="color: #7f0000;">// </span><span style="color: #7f0000;">template specilisation</span>
-  <span style="color: #7f0000;">// </span><span style="color: #7f0000;">....</span>
-}
+<pre class="src src-C++"><span class="linenr"> 1: </span><span style="color: #894000;">#include</span> <span style="color: #00598b;">"mQueue.h"</span>
+<span class="linenr"> 2: </span><span style="font-weight: bold;">namespace</span> <span style="color: #531ab6;">abro_sys</span> {
+<span class="linenr"> 3: </span>  <span style="color: #7f0000;">// </span><span style="color: #7f0000;">....</span>
+<span class="linenr"> 4: </span><span style="color: #894000;">#include</span> <span style="color: #00598b;">"lib.h"</span>
+<span class="linenr"> 5: </span>  <span style="color: #7f0000;">// </span><span style="color: #7f0000;">......</span>
+<span class="linenr"> 6: </span>  <span style="color: #7f0000;">// </span><span style="color: #7f0000;">mQueue is defined in includes/mQueue.h</span>
+<span class="linenr"> 7: </span>  <span style="font-weight: bold;">using</span> <span style="color: #306010;">qA_t</span> = <span style="color: #306010;">mQueue</span>&lt;<span style="color: #531ab6;">std</span>::<span style="color: #306010;">array</span>&lt;<span style="color: #306010;">unsigned</span> <span style="color: #306010;">char</span>, <span style="font-weight: bold;">sizeof</span>(A_prev_ptr-&gt;status) +
+<span class="linenr"> 8: </span>                                 <span style="font-weight: bold;">sizeof</span>(A_prev_ptr-&gt;value)&gt;&gt;;
+<span class="linenr"> 9: </span>  <span style="color: #7f0000;">// </span><span style="color: #7f0000;">mQueue.h provides a lockfree queue implementation, so it can be used with many threads</span>
+<span class="linenr">10: </span>  <span style="color: #306010;">qA_t</span> <span style="color: #00603f;">qA</span>(A_DELAY, {});
+<span class="linenr">11: </span>  <span style="font-weight: bold;">struct</span> <span style="color: #306010;">QA</span> {
+<span class="linenr">12: </span>    <span style="color: #306010;">qA_t</span> *<span style="color: #00603f;">v</span>;
+<span class="linenr">13: </span>    <span style="color: #602938;">QA</span>(<span style="color: #306010;">qA_t</span> *<span style="color: #00603f;">p</span>) : v(p) {}
+<span class="linenr">14: </span>  };
+<span class="linenr">15: </span>  <span style="color: #306010;">QA</span> <span style="color: #00603f;">qA_var</span>(&amp;qA);
+<span class="linenr">16: </span>  <span style="color: #306010;">QA</span> *<span style="color: #00603f;">qA_ptr</span> = &amp;qA_var;
+<span class="linenr">17: </span>  <span style="font-weight: bold;">template</span> <span style="color: #306010;">void</span> <span style="color: #602938;">Qpush</span>(<span style="color: #306010;">QA</span> *, <span style="color: #306010;">void</span> *, <span style="color: #306010;">signal_A</span> *); <span style="color: #7f0000;">// </span><span style="color: #7f0000;">template specilisation</span>
+<span class="linenr">18: </span>  <span style="font-weight: bold;">template</span> <span style="color: #306010;">size_t</span> <span style="color: #602938;">Qpull</span>(<span style="color: #306010;">QA</span> *, <span style="color: #306010;">signal_A</span> *);       <span style="color: #7f0000;">// </span><span style="color: #7f0000;">template specilisation</span>
+<span class="linenr">19: </span>  <span style="color: #7f0000;">// </span><span style="color: #7f0000;">....</span>
+<span class="linenr">20: </span>}
 </pre>
 </div></li>
 
@@ -609,10 +613,10 @@ in file <code>delays.cpp</code>. For the current example the code is shown
 below:
 </p>
 <div class="org-src-container">
-<pre class="src src-C++"><span style="color: #894000;">#include</span> <span style="color: #00598b;">"abro_sys.h"</span>
-<span style="color: #306010;">int</span> <span style="color: #531ab6;">abro_sys</span>::<span style="color: #00603f;">A_DELAY</span> = 4;      <span style="color: #7f0000;">// </span><span style="color: #7f0000;">size of queue connecting channel A</span>
-<span style="color: #306010;">int</span> <span style="color: #531ab6;">abro_sys</span>::<span style="color: #00603f;">B_DELAY</span> = 2;      <span style="color: #7f0000;">// </span><span style="color: #7f0000;">size of queue connecting channel B</span>
-<span style="color: #306010;">int</span> <span style="color: #531ab6;">abro_sys</span>::<span style="color: #00603f;">R_DELAY</span> = 5;      <span style="color: #7f0000;">// </span><span style="color: #7f0000;">size of queue connecting channel R</span>
+<pre class="src src-C++"><span class="linenr">1: </span><span style="color: #894000;">#include</span> <span style="color: #00598b;">"abro_sys.h"</span>
+<span class="linenr">2: </span><span style="color: #306010;">int</span> <span style="color: #531ab6;">abro_sys</span>::<span style="color: #00603f;">A_DELAY</span> = 4;      <span style="color: #7f0000;">// </span><span style="color: #7f0000;">size of queue connecting channel A</span>
+<span class="linenr">3: </span><span style="color: #306010;">int</span> <span style="color: #531ab6;">abro_sys</span>::<span style="color: #00603f;">B_DELAY</span> = 2;      <span style="color: #7f0000;">// </span><span style="color: #7f0000;">size of queue connecting channel B</span>
+<span class="linenr">4: </span><span style="color: #306010;">int</span> <span style="color: #531ab6;">abro_sys</span>::<span style="color: #00603f;">R_DELAY</span> = 5;      <span style="color: #7f0000;">// </span><span style="color: #7f0000;">size of queue connecting channel R</span>
 </pre>
 </div></li>
 
@@ -622,61 +626,62 @@ modules. This function is written in <code>main.cpp</code> and is shown
 below:
 </p>
 <div class="org-src-container">
-<pre class="src src-C++"><span style="color: #894000;">#include</span> <span style="color: #00598b;">"abro_env.h"</span>
-<span style="color: #894000;">#include</span> <span style="color: #00598b;">"abro_sys.h"</span>
-<span style="color: #894000;">#include</span> <span style="color: #00598b;">&lt;atomic&gt;</span>
-<span style="color: #894000;">#include</span> <span style="color: #00598b;">&lt;cassert&gt;</span>
-<span style="color: #894000;">#include</span> <span style="color: #00598b;">&lt;iostream&gt;</span>
-<span style="color: #894000;">#include</span> <span style="color: #00598b;">&lt;thread&gt;</span>
-<span style="color: #306010;">void</span> <span style="color: #602938;">abro_run</span>(<span style="color: #531ab6;">std</span>::<span style="color: #306010;">atomic</span>&lt;<span style="color: #306010;">int</span>&gt; &amp;&amp;<span style="color: #00603f;">barrier</span> = 0) {
-  <span style="color: #531ab6;">std</span>::cout &lt;&lt; <span style="color: #00598b;">"running two threads\n"</span>;
-  <span style="font-weight: bold;">auto</span> <span style="color: #00603f;">env</span> = <span style="color: #531ab6;">std</span>::thread([&amp;<span style="color: #00603f;">barrier</span>]() {
-    <span style="font-weight: bold;">while</span> (barrier != 1) {
-      <span style="color: #531ab6;">std</span>::<span style="color: #531ab6;">this_thread</span>::yield();
-    }
-    barrier--;
-    <span style="color: #7f0000;">// </span><span style="color: #7f0000;">First we read from the buffer for all inputs</span>
-    <span style="color: #531ab6;">std</span>::cout &lt;&lt; <span style="color: #00598b;">"Running the abro env \n"</span>;
-    <span style="color: #531ab6;">abro_env</span>::main();
-    <span style="color: #531ab6;">std</span>::cout &lt;&lt; <span style="color: #00598b;">"Done running the abro env\n"</span>;
-  });
-
-  <span style="font-weight: bold;">auto</span> <span style="color: #00603f;">sys</span> = <span style="color: #531ab6;">std</span>::thread([&amp;<span style="color: #00603f;">barrier</span>]() {
-    <span style="font-weight: bold;">while</span> (barrier != 2) {
-      <span style="color: #531ab6;">std</span>::<span style="color: #531ab6;">this_thread</span>::yield();
-    }
-    barrier--;
-    <span style="color: #531ab6;">std</span>::cout &lt;&lt; <span style="color: #00598b;">"Running the abro sys\n"</span>;
-    <span style="color: #531ab6;">abro_sys</span>::main();
-    <span style="color: #531ab6;">std</span>::cout &lt;&lt; <span style="color: #00598b;">"Done running the abro sys\n"</span>;
-  });
-  <span style="color: #7f0000;">// </span><span style="color: #7f0000;">XXX: you can change this to change the order of execution.</span>
-  <span style="color: #7f0000;">// </span><span style="color: #7f0000;">barrier = 2, makes sys run first.</span>
-  <span style="color: #7f0000;">// </span><span style="color: #7f0000;">barrier = 1, makes the env run first.</span>
-  <span style="color: #7f0000;">// </span><span style="color: #7f0000;">think of barrier as a token that is passed to threads to make then</span>
-  <span style="color: #7f0000;">// </span><span style="color: #7f0000;">execute an LSN.</span>
-  barrier = 2;
-  <span style="font-weight: bold;">while</span> (barrier != 0)
-    ; <span style="color: #7f0000;">// </span><span style="color: #7f0000;">spin until both the modules/threads are done -- the barrier</span>
-  env.join();
-  sys.join();
-}
-<span style="color: #306010;">int</span> <span style="color: #602938;">main</span>(<span style="color: #306010;">void</span>) {
-  <span style="font-weight: bold;">while</span> (1) {
-    abro_run();
-    <span style="color: #7f0000;">// </span><span style="color: #7f0000;">Then we are done with the tick.</span>
-    <span style="font-weight: bold;">if</span> (mtick() == <span style="color: #00598b;">'d'</span>)
-      <span style="font-weight: bold;">break</span>;
-  }
-  <span style="font-weight: bold;">return</span> 0;
-}
+<pre class="src src-C++"><span class="linenr"> 1: </span><span style="color: #894000;">#include</span> <span style="color: #00598b;">"abro_env.h"</span>
+<span class="linenr"> 2: </span><span style="color: #894000;">#include</span> <span style="color: #00598b;">"abro_sys.h"</span>
+<span class="linenr"> 3: </span><span style="color: #894000;">#include</span> <span style="color: #00598b;">&lt;atomic&gt;</span>
+<span class="linenr"> 4: </span><span style="color: #894000;">#include</span> <span style="color: #00598b;">&lt;cassert&gt;</span>
+<span class="linenr"> 5: </span><span style="color: #894000;">#include</span> <span style="color: #00598b;">&lt;iostream&gt;</span>
+<span class="linenr"> 6: </span><span style="color: #894000;">#include</span> <span style="color: #00598b;">&lt;thread&gt;</span>
+<span class="linenr"> 7: </span><span style="color: #306010;">void</span> <span style="color: #602938;">abro_run</span>(<span style="color: #531ab6;">std</span>::<span style="color: #306010;">atomic</span>&lt;<span style="color: #306010;">int</span>&gt; &amp;&amp;<span style="color: #00603f;">barrier</span> = 0) {
+<span class="linenr"> 8: </span>  <span style="color: #531ab6;">std</span>::cout &lt;&lt; <span style="color: #00598b;">"running two threads\n"</span>;
+<span id="coderef-thread1" class="coderef-off"><span class="linenr"> 9: </span>  <span style="font-weight: bold;">auto</span> <span style="color: #00603f;">env</span> = <span style="color: #531ab6;">std</span>::thread([&amp;<span style="color: #00603f;">barrier</span>]() {</span>
+<span class="linenr">10: </span>    <span style="font-weight: bold;">while</span> (barrier != 1) {
+<span class="linenr">11: </span>      <span style="color: #531ab6;">std</span>::<span style="color: #531ab6;">this_thread</span>::yield();
+<span class="linenr">12: </span>    }
+<span class="linenr">13: </span>    barrier--;
+<span class="linenr">14: </span>    <span style="color: #7f0000;">// </span><span style="color: #7f0000;">First we read from the buffer for all inputs</span>
+<span class="linenr">15: </span>    <span style="color: #531ab6;">std</span>::cout &lt;&lt; <span style="color: #00598b;">"Running the abro env \n"</span>;
+<span class="linenr">16: </span>    <span style="color: #531ab6;">abro_env</span>::main();
+<span class="linenr">17: </span>    <span style="color: #531ab6;">std</span>::cout &lt;&lt; <span style="color: #00598b;">"Done running the abro env\n"</span>;
+<span class="linenr">18: </span>  });
+<span class="linenr">19: </span>
+<span id="coderef-thread2" class="coderef-off"><span class="linenr">20: </span>  <span style="font-weight: bold;">auto</span> <span style="color: #00603f;">sys</span> = <span style="color: #531ab6;">std</span>::thread([&amp;<span style="color: #00603f;">barrier</span>]() {</span>
+<span class="linenr">21: </span>    <span style="font-weight: bold;">while</span> (barrier != 2) {
+<span class="linenr">22: </span>      <span style="color: #531ab6;">std</span>::<span style="color: #531ab6;">this_thread</span>::yield();
+<span class="linenr">23: </span>    }
+<span class="linenr">24: </span>    barrier--;
+<span class="linenr">25: </span>    <span style="color: #531ab6;">std</span>::cout &lt;&lt; <span style="color: #00598b;">"Running the abro sys\n"</span>;
+<span class="linenr">26: </span>    <span style="color: #531ab6;">abro_sys</span>::main();
+<span class="linenr">27: </span>    <span style="color: #531ab6;">std</span>::cout &lt;&lt; <span style="color: #00598b;">"Done running the abro sys\n"</span>;
+<span class="linenr">28: </span>  });
+<span class="linenr">29: </span>  <span style="color: #7f0000;">// </span><span style="color: #7f0000;">XXX: you can change this to change the order of execution.</span>
+<span class="linenr">30: </span>  <span style="color: #7f0000;">// </span><span style="color: #7f0000;">barrier = 2, makes sys run first.</span>
+<span class="linenr">31: </span>  <span style="color: #7f0000;">// </span><span style="color: #7f0000;">barrier = 1, makes the env run first.</span>
+<span class="linenr">32: </span>  <span style="color: #7f0000;">// </span><span style="color: #7f0000;">think of barrier as a token that is passed to threads to make then</span>
+<span class="linenr">33: </span>  <span style="color: #7f0000;">// </span><span style="color: #7f0000;">execute an LSN.</span>
+<span class="linenr">34: </span>  barrier = 2;
+<span id="coderef-barrier" class="coderef-off"><span class="linenr">35: </span>  <span style="font-weight: bold;">while</span> (barrier != 0)</span>
+<span class="linenr">36: </span>    ; <span style="color: #7f0000;">// </span><span style="color: #7f0000;">spin until both the modules/threads are done -- the barrier</span>
+<span class="linenr">37: </span>  env.join();
+<span class="linenr">38: </span>  sys.join();
+<span class="linenr">39: </span>}
+<span class="linenr">40: </span><span style="color: #306010;">int</span> <span style="color: #602938;">main</span>(<span style="color: #306010;">void</span>) {
+<span class="linenr">41: </span>  <span style="font-weight: bold;">while</span> (1) {
+<span class="linenr">42: </span>    abro_run();
+<span class="linenr">43: </span>    <span style="color: #7f0000;">// </span><span style="color: #7f0000;">Then we are done with the tick.</span>
+<span class="linenr">44: </span>    <span style="font-weight: bold;">if</span> (mtick() == <span style="color: #00598b;">'d'</span>)
+<span class="linenr">45: </span>      <span style="font-weight: bold;">break</span>;
+<span class="linenr">46: </span>  }
+<span class="linenr">47: </span>  <span style="font-weight: bold;">return</span> 0;
+<span class="linenr">48: </span>}
 </pre>
 </div>
 <ul class="org-ul">
 <li>Notice that we are using threads to run the two modules.</li>
-<li>The first thread runs <code>abro_env::main</code></li>
-<li>The second thread runs <code>abro_sys::main</code></li>
-<li>The two threads execute one tick each before reaching a barrier</li>
+<li>The first thread runs <code>abro_env::main</code> (Line <a href="#coderef-thread1" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-thread1');" onmouseout="CodeHighlightOff(this, 'coderef-thread1');">9</a>)</li>
+<li>The second thread runs <code>abro_sys::main</code> (Line <a href="#coderef-thread2" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-thread2');" onmouseout="CodeHighlightOff(this, 'coderef-thread2');">20</a>)</li>
+<li>The two threads execute one tick each before reaching a barrier
+(Line <a href="#coderef-barrier" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-barrier');" onmouseout="CodeHighlightOff(this, 'coderef-barrier');">35</a>)</li>
 <li>It is <b>essential</b> that all modules in the Time tide program
 execute using barriers, because they all need to be
 synchronised.</li>
@@ -718,135 +723,217 @@ synchronisation.</li>
 </div>
 </div>
 </div>
-<div id="outline-container-orgc083ef3" class="outline-2">
-<h2 id="orgc083ef3">The Time tide language</h2>
-<div class="outline-text-2" id="text-orgc083ef3">
+<div id="outline-container-org6b9ede1" class="outline-2">
+<h2 id="org6b9ede1">The Time tide language</h2>
+<div class="outline-text-2" id="text-org6b9ede1">
 </div>
-<div id="outline-container-org0477737" class="outline-3">
-<h3 id="org0477737">Types</h3>
-<div class="outline-text-3" id="text-org0477737">
+<div id="outline-container-orgba051e6" class="outline-3">
+<h3 id="orgba051e6">Types and variables</h3>
+<div class="outline-text-3" id="text-orgba051e6">
 </div>
-<div id="outline-container-org3b40a36" class="outline-4">
-<h4 id="org3b40a36">Primitive types</h4>
-<div class="outline-text-4" id="text-org3b40a36">
+<div id="outline-container-org60973eb" class="outline-4">
+<h4 id="org60973eb">Primitive types</h4>
+<div class="outline-text-4" id="text-org60973eb">
 <p>
-We only support three signed types listed below
+We only support three signed primitive types listed below
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #306010;">int</span> <span style="color: #00603f;">a</span>;
-<span style="color: #306010;">char</span> <span style="color: #00603f;">b</span>;
-<span style="color: #306010;">float</span> <span style="color: #00603f;">c</span>;
+<pre class="src src-C"><span class="linenr">1: </span><span style="color: #306010;">int</span>     <span style="color: #00603f;">a</span>;                      <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">This is a comment (int is 4 bytes)</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">2: </span><span style="color: #306010;">char</span>    <span style="color: #00603f;">a</span>;                      <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">char is  1 byte</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">3: </span><span style="color: #306010;">float</span>   <span style="color: #00603f;">a</span>;                      <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Float is 4 bytes</span><span style="color: #7f0000;"> */</span>
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orgc2c4c4b" class="outline-4">
-<h4 id="orgc2c4c4b">User defined structures</h4>
-<div class="outline-text-4" id="text-orgc2c4c4b">
+<div id="outline-container-org7a48d69" class="outline-4">
+<h4 id="org7a48d69">User defined structures</h4>
+<div class="outline-text-4" id="text-org7a48d69">
 <p>
 User defined types follows the same convention as <code>C</code>. However, no
-pointers are allowed. Example follows:
+pointers are allowed. Examples follow:
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold;">struct</span> <span style="color: #306010;">Y</span> { <span style="color: #306010;">int</span> <span style="color: #00603f;">a</span>; <span style="color: #306010;">float</span> <span style="color: #00603f;">u</span>;};    <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Structure (type Y) with field varibles a and u</span><span style="color: #7f0000;"> */</span>
-<span style="font-weight: bold;">struct</span> <span style="color: #306010;">X</span> {
-  <span style="color: #306010;">int</span> <span style="color: #00603f;">yy</span>;                       <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">varible yy of type int</span><span style="color: #7f0000;"> */</span>
-  <span style="font-weight: bold;">struct</span> <span style="color: #306010;">Y</span> <span style="color: #00603f;">g</span>;                   <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">variable g of type struct Y</span><span style="color: #7f0000;"> */</span>
-}
-<span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Since there are no pointers, one cannot define self refrential structures</span><span style="color: #7f0000;"> */</span>
-<span style="font-weight: bold;">struct</span> <span style="color: #306010;">X</span> {
-  <span style="font-weight: bold;">struct</span> <span style="color: #306010;">X</span> <span style="color: #00603f;">m</span>;                   <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">not allowed</span><span style="color: #7f0000;"> */</span>
-}
+<pre class="src src-C"><span class="linenr">1: </span><span style="font-weight: bold;">struct</span> <span style="color: #306010;">Y</span> { <span style="color: #306010;">int</span> <span style="color: #00603f;">a</span>; <span style="color: #306010;">float</span> <span style="color: #00603f;">u</span>;};    <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Structure (type Y) with field varibles a and u</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">2: </span><span style="font-weight: bold;">struct</span> <span style="color: #306010;">X</span> {
+<span class="linenr">3: </span>  <span style="color: #306010;">int</span> <span style="color: #00603f;">yy</span>;                       <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">varible yy of type int</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">4: </span>  <span style="font-weight: bold;">struct</span> <span style="color: #306010;">Y</span> <span style="color: #00603f;">g</span>;                   <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">variable g of type struct Y</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">5: </span>}
+<span class="linenr">6: </span><span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Since there are no pointers, one cannot define self refrential structures</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">7: </span><span style="font-weight: bold;">struct</span> <span style="color: #306010;">X</span> {
+<span class="linenr">8: </span>  <span style="font-weight: bold;">struct</span> <span style="color: #306010;">X</span> *<span style="color: #00603f;">m</span>;                  <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">not allowed</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">9: </span>}
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orgc8d4a7a" class="outline-4">
-<h4 id="orgc8d4a7a">Array types</h4>
-<div class="outline-text-4" id="text-orgc8d4a7a">
+<div id="outline-container-org8410946" class="outline-4">
+<h4 id="org8410946">Array types</h4>
+<div class="outline-text-4" id="text-org8410946">
 <p>
 Arrays are <code>similar</code> (not the same) to those in <code>C</code>.
 Multidimensional arrays are supported. Example follows:
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold;">const</span> <span style="color: #306010;">int</span>[4] X = {0, 0, 0, 0};  <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">constant array, notice it is int[4]  not int X[4]</span><span style="color: #7f0000;">*/</span>
-<span style="font-weight: bold;">const</span> <span style="color: #306010;">int</span>[2][3] Y = {{0, 0, 0}, {0, 0, 0}} <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">2 x 3 constant array Y -- multidimensional</span><span style="color: #7f0000;"> */</span>
+<pre class="src src-C"><span class="linenr">1: </span><span style="font-weight: bold;">const</span> <span style="color: #306010;">int</span>[4] X = {0, 0, 0, 0};  <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">constant array, notice it is int[4]  not int X[4]</span><span style="color: #7f0000;">*/</span>
+<span class="linenr">2: </span><span style="font-weight: bold;">const</span> <span style="color: #306010;">int</span>[2][3] Y = {{0, 0, 0}, {0, 0, 0}} <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">2 x 3 constant array Y -- multidimensional</span><span style="color: #7f0000;"> */</span>
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org68be789" class="outline-4">
-<h4 id="org68be789">Channels</h4>
-<div class="outline-text-4" id="text-org68be789">
+<div id="outline-container-org5ccaeba" class="outline-4">
+<h4 id="org5ccaeba">Channels</h4>
+<div class="outline-text-4" id="text-org5ccaeba">
 <ol class="org-ol">
 <li>Channels are specific to Time tide and do not exist in <code>C</code>.</li>
 <li>Channels carry data.</li>
 <li>Channels also have an associated delay \(\delta\).</li>
 <li>Channels can be of any primitive, user defined, or array type.</li>
+<li>Channel status and values are set using <code>send</code> (Line <a href="#coderef-send" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-send');" onmouseout="CodeHighlightOff(this, 'coderef-send');">8</a>)</li>
+<li>Channel status is read using the name of the channel (Line
+<a href="#coderef-status" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-status');" onmouseout="CodeHighlightOff(this, 'coderef-status');">9</a>)</li>
+<li>Channel value is read using <code>?&lt;channel-name&gt;</code> (Line <a href="#coderef-val" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-val');" onmouseout="CodeHighlightOff(this, 'coderef-val');">11</a>)</li>
 <li>Examples follows:</li>
 </ol>
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #306010;">int</span> <span style="color: #00603f;">channel</span> K delay 3;          <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">channel K of type int with delay 3</span><span style="color: #7f0000;"> */</span>
-<span style="font-weight: bold;">struct</span> <span style="color: #306010;">Y</span> <span style="color: #00603f;">channel</span> C delay 2;     <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Channel C of type struct Y with delay 2</span><span style="color: #7f0000;"> */</span>
-<span style="color: #306010;">int</span>[100] channel M delay 1;     <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Channel M of type int[100] with delay 1</span><span style="color: #7f0000;">*/</span>
-
-<span style="color: #7f0000;">/* </span><span style="color: #7f0000;">TODO: Such bunching of channels  are not yet supported</span><span style="color: #7f0000;"> */</span>
-<span style="font-weight: bold;">struct</span> <span style="color: #306010;">Y</span>[100] channel M[100] delay 7; <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">100 channel M[0]...M[99] each of</span>
-<span style="color: #7f0000;">                                         type struct Y[100] with delay 7</span><span style="color: #7f0000;">*/</span>
+<pre class="src src-C"><span class="linenr"> 1: </span><span style="color: #306010;">int</span> <span style="color: #00603f;">channel</span> K delay 3;          <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Channel K of type int with delay 3</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 2: </span><span style="font-weight: bold;">struct</span> <span style="color: #306010;">Y</span> <span style="color: #00603f;">channel</span> C delay 2;     <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Channel C of type struct Y with delay 2</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 3: </span><span style="color: #306010;">int</span>[100] channel M delay 1;     <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Channel M of type int[100] with delay 1</span><span style="color: #7f0000;">*/</span>
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span><span style="color: #7f0000;">/* </span><span style="color: #7f0000;">TODO: Such bunching of channels  are not yet supported</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 6: </span><span style="font-weight: bold;">struct</span> <span style="color: #306010;">Y</span>[100] channel M[100] delay 7; <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">100 channel M[0]...M[99] each of</span>
+<span class="linenr"> 7: </span><span style="color: #7f0000;">                                         type struct Y[100] with delay 7</span><span style="color: #7f0000;">*/</span>
+<span id="coderef-send" class="coderef-off"><span class="linenr"> 8: </span><span style="color: #306010;">send</span> <span style="color: #602938;">K</span>(10);                     <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Will be available at receiver after 3 logical ticks</span><span style="color: #7f0000;"> */</span></span>
+<span id="coderef-status" class="coderef-off"><span class="linenr"> 9: </span><span style="font-weight: bold;">if</span> (K) {</span>
+<span class="linenr">10: </span>  mut <span style="color: #306010;">int</span> <span style="color: #00603f;">uu</span> = 0 {
+<span id="coderef-val" class="coderef-off"><span class="linenr">11: </span>   uu = ?K</span>
+<span class="linenr">12: </span>  }
+<span class="linenr">13: </span>  <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">body...</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">14: </span> }
 </pre>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-org0ac9d15" class="outline-3">
-<h3 id="org0ac9d15">Statements</h3>
-<div class="outline-text-3" id="text-org0ac9d15">
+<div id="outline-container-org91a41a9" class="outline-3">
+<h3 id="org91a41a9">Operators and expressions in Time tide</h3>
+<div class="outline-text-3" id="text-org91a41a9">
 </div>
-<div id="outline-container-org3d203dc" class="outline-4">
-<h4 id="org3d203dc">Variable declaration</h4>
-<div class="outline-text-4" id="text-org3d203dc">
+<div id="outline-container-orgd405c38" class="outline-4">
+<h4 id="orgd405c38">Operators in Time tide</h4>
+<div class="outline-text-4" id="text-orgd405c38">
+<div class="org-src-container">
+<pre class="src src-C"><span class="linenr"> 1: </span>a + b;                          <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">addition</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 2: </span>a - b;                          <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">subtraction</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 3: </span>a % b;                          <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Modulus</span><span style="color: #7f0000;">  */</span>
+<span class="linenr"> 4: </span><span style="color: #306010;">a</span> * <span style="color: #00603f;">b</span>;                          <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Multiply</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 5: </span>a / b;                          <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Divide</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 6: </span>a &gt;&gt; b;                         <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Right shift logical</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 7: </span>a &lt;&lt; b;                         <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Logical left shift</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 8: </span>a &gt; b;                          <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Logical greater than</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 9: </span>a &lt; b;                          <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Logical less than</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">10: </span>a &gt;= b;                         <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Logical greater than equal</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">11: </span>a &lt;= b;                         <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Logical less than equal</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">12: </span>a == b;                         <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Logical equality comparison</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">13: </span>a != b;                         <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Logical not equal to comparison</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">14: </span>a ^^ b;                         <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">a to the power of b</span><span style="color: #7f0000;"> */</span>
+</pre>
+</div>
+<ul class="org-ul">
+<li>The above operators are defined on primitive types only.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgdebf7b5" class="outline-4">
+<h4 id="orgdebf7b5">Expressions in Time tide</h4>
+<div class="outline-text-4" id="text-orgdebf7b5">
+<ul class="org-ul">
+<li>Time tide supports the usual expressions as in <code>C</code>.</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-C"><span class="linenr"> 1: </span>a + b - c                       <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">left to right precedence</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 2: </span>(a + b) * c                     <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Bracket has higher precedence</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 3: </span>a + b * c                       <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Multiply has higher precedence</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 4: </span>a * b / f                       <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Left to right precedence</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 5: </span>(a == b) &amp;&amp; (b != c)            <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Logical and expression</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 6: </span>(a == 1) || (b == 1)            <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">logical or</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 7: </span><span style="color: #a60000; font-weight: bold;">!</span>(a == 0)                       <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">logical not</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 8: </span>(<span style="color: #306010;">int</span>)1.0                        <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">casting C style</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 9: </span>
+<span class="linenr">10: </span>channel <span style="color: #306010;">int</span> K;                  <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">int type channel</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">11: </span>channel <span style="color: #306010;">int</span> <span style="color: #00603f;">I1</span>;                 <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">int type channel</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">12: </span>
+<span id="coderef-ext" class="coderef-off"><span class="linenr">13: </span><span style="font-weight: bold;">extern</span> <span style="color: #602938;">f</span>(1.0+(<span style="color: #306010;">float</span>)?K * (<span style="color: #306010;">float</span>)?I1); <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">calling an external C function</span><span style="color: #7f0000;"> */</span></span>
+</pre>
+</div>
+
+<ul class="org-ul">
+<li><code>extern</code> function calls are expressions (not statements)</li>
+<li><code>extern</code> function calls only work with primitives (not structures yet).</li>
+<li><code>extern</code> function calls are type inferred, i.e., you currently don't
+need to specify the function signature (will change in future)</li>
+<li>Might need to cast the output or arguments to correct type in
+<code>extern</code> function calls (Line <a href="#coderef-ext" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-ext');" onmouseout="CodeHighlightOff(this, 'coderef-ext');">13</a>)</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org1f02f4d" class="outline-3">
+<h3 id="org1f02f4d">Statements</h3>
+<div class="outline-text-3" id="text-org1f02f4d">
+</div>
+<div id="outline-container-orge5bf52d" class="outline-4">
+<h4 id="orge5bf52d">Variable declaration and updates</h4>
+<div class="outline-text-4" id="text-orge5bf52d">
 <ol class="org-ol">
 <li>There are two types of variables <code>const</code> and <code>mutable</code>.</li>
-<li>Constant variables cannot be updated, they are similar to <code>#define</code> in <code>C</code>.</li>
+<li>Constant variables cannot be modified.</li>
 <li>Mutable variables are like normal <code>C</code> style variables.</li>
+<li>Variables should always be initialised with literal constants (not
+expressions).</li>
+<li>Shadowing variable names is <b>not</b> allowed.</li>
 <li>Examples follow:</li>
 </ol>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold;">const</span> <span style="color: #306010;">int</span> <span style="color: #00603f;">U11</span> = 1;              <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">constant variabel U11 cannot change</span><span style="color: #7f0000;"> */</span>
-<span style="font-weight: bold;">const</span> <span style="color: #306010;">int</span> <span style="color: #00603f;">T</span> = 10;               <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">constant variable T cannot change</span><span style="color: #7f0000;"> */</span>
-mut <span style="color: #306010;">float</span> <span style="color: #00603f;">hh</span> = 1.0 {
-  <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">..... body of mutable variable</span><span style="color: #7f0000;"> */</span>
-} <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Mutable variable hh with its scope defined by {}</span><span style="color: #7f0000;"> */</span>
-mut <span style="color: #306010;">float</span> <span style="color: #00603f;">f</span>;                    <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">error, variable needs to be initialised</span><span style="color: #7f0000;"> */</span>
-<span style="color: #306010;">float</span> <span style="color: #00603f;">f</span>;                        <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">error, do not know whether this is const or mutable</span><span style="color: #7f0000;"> */</span>
-
-
-<span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Define a structure</span><span style="color: #7f0000;"> */</span>
-<span style="font-weight: bold;">struct</span> <span style="color: #306010;">X</span> {
-  <span style="color: #306010;">float</span> <span style="color: #00603f;">x</span>;                      <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">field x</span><span style="color: #7f0000;"> */</span>
-};
-
-<span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Define another structure</span><span style="color: #7f0000;"> */</span>
-<span style="font-weight: bold;">struct</span> <span style="color: #306010;">Y</span> {
-  <span style="color: #306010;">int</span> <span style="color: #00603f;">a</span>;                        <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">field a</span><span style="color: #7f0000;"> */</span>
-  <span style="font-weight: bold;">struct</span> <span style="color: #306010;">X</span> <span style="color: #00603f;">m</span>;                   <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">field m</span><span style="color: #7f0000;"> */</span>
-};
-
-<span style="font-weight: bold;">const</span> <span style="color: #306010;">int</span>[2] U1 = {1, 2};       <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Constant array U1 of type int[2] with elements 1 and 2</span><span style="color: #7f0000;">*/</span>
-<span style="font-weight: bold;">struct</span> <span style="color: #306010;">Y</span> <span style="color: #00603f;">channel</span> C delay 2;     <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Channel C of type struct Y with delay 2</span><span style="color: #7f0000;"> */</span>
-<span style="color: #7f0000;">/* </span><span style="color: #7f0000;">A mutable structure</span><span style="color: #7f0000;"> */</span>
-mut <span style="font-weight: bold;">struct</span> <span style="color: #306010;">Y</span> <span style="color: #00603f;">y</span> = {100, {9.6}} {
-  y.a = U1[0];                  <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Updating the field of y</span><span style="color: #7f0000;"> */</span>
-  <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Send on channel C</span><span style="color: #7f0000;"> */</span>
-  <span style="color: #306010;">send</span> <span style="color: #602938;">C</span>(y);                    <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Will be available at receiver after two global ticks</span><span style="color: #7f0000;"> */</span>
-}
+<pre class="src src-C"><span class="linenr"> 1: </span><span style="font-weight: bold;">const</span> <span style="color: #306010;">int</span> <span style="color: #00603f;">U11</span> = 1;              <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">constant variabel U11 cannot change</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 2: </span><span style="font-weight: bold;">const</span> <span style="color: #306010;">int</span> <span style="color: #00603f;">T</span> = 10;               <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">constant variable T cannot change</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 3: </span>mut <span style="color: #306010;">float</span> <span style="color: #00603f;">hh</span> = 1.0 {
+<span class="linenr"> 4: </span>  <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">..... body/scope of mutable variable</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 5: </span>} <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Mutable variable hh with its scope defined by {}</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 6: </span>mut <span style="color: #306010;">float</span> <span style="color: #00603f;">f</span>;                    <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">error, variable needs to be initialised</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 7: </span><span style="color: #306010;">float</span> <span style="color: #00603f;">f</span>;                        <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">error, do not know whether this is const or mutable</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 8: </span>
+<span class="linenr"> 9: </span>
+<span class="linenr">10: </span><span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Define a structure</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">11: </span><span style="font-weight: bold;">struct</span> <span style="color: #306010;">X</span> {
+<span class="linenr">12: </span>  <span style="color: #306010;">float</span> <span style="color: #00603f;">x</span>;                      <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">field x</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">13: </span>};
+<span class="linenr">14: </span>
+<span class="linenr">15: </span><span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Define another structure</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">16: </span><span style="font-weight: bold;">struct</span> <span style="color: #306010;">Y</span> {
+<span class="linenr">17: </span>  <span style="color: #306010;">int</span> <span style="color: #00603f;">a</span>;                        <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">field a</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">18: </span>  <span style="font-weight: bold;">struct</span> <span style="color: #306010;">X</span> <span style="color: #00603f;">m</span>;                   <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">field m</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">19: </span>};
+<span class="linenr">20: </span>
+<span class="linenr">21: </span><span style="font-weight: bold;">const</span> <span style="color: #306010;">int</span>[2] U1 = {1, 2};       <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Constant array U1 of type int[2] with elements 1 and 2</span><span style="color: #7f0000;">*/</span>
+<span class="linenr">22: </span><span style="font-weight: bold;">struct</span> <span style="color: #306010;">Y</span> <span style="color: #00603f;">channel</span> C delay 2;     <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Channel C of type struct Y with delay 2</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">23: </span><span style="color: #7f0000;">/* </span><span style="color: #7f0000;">A mutable structure</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">24: </span>mut <span style="font-weight: bold;">struct</span> <span style="color: #306010;">Y</span> <span style="color: #00603f;">y</span> = {100, {9.6}} {
+<span class="linenr">25: </span>  y.a = U1[0];                  <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Updating the field of y</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">26: </span>  <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Send on channel C</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">27: </span>  <span style="color: #306010;">send</span> <span style="color: #602938;">C</span>(y);                    <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Will be available at receiver after two global ticks</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">28: </span>}
+<span class="linenr">29: </span><span style="font-weight: bold;">const</span> <span style="color: #306010;">int</span> <span style="color: #00603f;">HH</span> = 100;
+<span class="linenr">30: </span>mut <span style="color: #306010;">int</span> <span style="color: #00603f;">HH</span> = 90 {
+<span class="linenr">31: </span>  <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">body</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">32: </span>} <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Such shadowing of variable name HH is *not* allowed</span><span style="color: #7f0000;"> */</span>
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org5d7c21d" class="outline-4">
-<h4 id="org5d7c21d">Conditionals</h4>
-<div class="outline-text-4" id="text-org5d7c21d">
+<div id="outline-container-org804a825" class="outline-4">
+<h4 id="org804a825">Conditionals</h4>
+<div class="outline-text-4" id="text-org804a825">
 <ol class="org-ol">
 <li>Only <code>if-else</code> blocks are supported.</li>
 <li>The semantics are similar (not the same) as <code>C</code>.</li>
@@ -854,32 +941,32 @@ mut <span style="font-weight: bold;">struct</span> <span style="color: #306010;"
 Example follows:
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold;">const</span> <span style="color: #306010;">int</span> <span style="color: #00603f;">K1</span> = 0;
-<span style="color: #7f0000;">/* </span><span style="color: #7f0000;">This is getting the value of the channel</span><span style="color: #7f0000;"> */</span>
-mut <span style="color: #306010;">int</span> <span style="color: #00603f;">U</span> = 0 {
-  U = ?L;                       <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">get the value of channel</span><span style="color: #7f0000;"> */</span>
-  <span style="font-weight: bold;">if</span> (?L == 1) {;}              <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">check the value of the channel</span><span style="color: #7f0000;"> */</span>
-  <span style="font-weight: bold;">else</span> {U = 100;}
-}
-<span style="font-weight: bold;">if</span> (L) {                        <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">check status of channel</span><span style="color: #7f0000;"> */</span>
-  task(period=1, duration=1, offset=0) {;}
-}
+<pre class="src src-C"><span class="linenr"> 1: </span><span style="font-weight: bold;">const</span> <span style="color: #306010;">int</span> <span style="color: #00603f;">K1</span> = 0;
+<span class="linenr"> 2: </span><span style="color: #7f0000;">/* </span><span style="color: #7f0000;">This is getting the value of the channel</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 3: </span>mut <span style="color: #306010;">int</span> <span style="color: #00603f;">U</span> = 0 {
+<span class="linenr"> 4: </span>  U = ?L;                       <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">get the value of channel</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 5: </span>  <span style="font-weight: bold;">if</span> (?L == 1) {;}              <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">check the value of the channel</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 6: </span>  <span style="font-weight: bold;">else</span> {U = 100;}
+<span class="linenr"> 7: </span>}
+<span class="linenr"> 8: </span><span style="font-weight: bold;">if</span> (L) {                        <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">check status of channel</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 9: </span>  task(period=1, duration=1, offset=0) {;}
+<span class="linenr">10: </span>}
 </pre>
 </div></li>
 <li>Major difference to <code>C</code>
 <ul class="org-ul">
 <li><p>
-Checking value of variable/channel requires one to write:
+Checking <b>value</b> of variable/channel requires one to write:
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold;">if</span>(&lt;var-name&gt; == &lt;some-value&gt;){<span style="color: #7f0000;">/*</span><span style="color: #7f0000;">body</span><span style="color: #7f0000;">*/</span>}
+<pre class="src src-C"><span class="linenr">1: </span><span style="font-weight: bold;">if</span>(&lt;var-name&gt;/&lt;?channel-name&gt; == &lt;some-value&gt;){<span style="color: #7f0000;">/*</span><span style="color: #7f0000;">body</span><span style="color: #7f0000;">*/</span>}
 </pre>
 </div></li>
 <li><p>
-Checking the status of the channel requires one to write:
+Checking the <b>status</b> of the channel requires one to write:
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="font-weight: bold;">if</span>(&lt;channel-name&gt;) {<span style="color: #7f0000;">/*</span><span style="color: #7f0000;">body</span><span style="color: #7f0000;">*/</span>}
+<pre class="src src-C"><span class="linenr">1: </span><span style="font-weight: bold;">if</span>(&lt;channel-name&gt;) {<span style="color: #7f0000;">/*</span><span style="color: #7f0000;">body</span><span style="color: #7f0000;">*/</span>}
 </pre>
 </div></li>
 <li>Expressions in conditionals for variables. Using name only
@@ -888,13 +975,13 @@ implies checking channel status.</li>
 </ol>
 </div>
 </div>
-<div id="outline-container-org3d31463" class="outline-4">
-<h4 id="org3d31463">Loops</h4>
-<div class="outline-text-4" id="text-org3d31463">
+<div id="outline-container-org75ba6ba" class="outline-4">
+<h4 id="org75ba6ba">Loops</h4>
+<div class="outline-text-4" id="text-org75ba6ba">
 </div>
 <ul class="org-ul">
-<li><a id="org50e8e92"></a>Sequential loops<br />
-<div class="outline-text-5" id="text-org50e8e92">
+<li><a id="orgfb003b4"></a>Sequential loops<br />
+<div class="outline-text-5" id="text-orgfb003b4">
 <ol class="org-ol">
 <li>Sequential loops in Time tide are always bounded.</li>
 <li>Sequential loops are of two types:
@@ -907,19 +994,19 @@ completion of module' tick</li>
 Example of instantaneous loop follows:
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #306010;">mut</span> <span style="color: #306010;">int</span>[4] g = {0, 0, 0, 0} {   <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">declare an array</span><span style="color: #7f0000;"> */</span>
-  <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">The below is an instantaneous loop</span><span style="color: #7f0000;"> */</span>
-  <span style="font-weight: bold;">for</span>(<span style="color: #306010;">int</span> <span style="color: #00603f;">i</span> : 0:4) {            <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Loop through the array</span><span style="color: #7f0000;"> */</span>
-    g[i] = g[i] + i;            <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">update the value of the array</span><span style="color: #7f0000;"> */</span>
-  }
-}
-<span style="color: #7f0000;">/* </span><span style="color: #7f0000;">The above loop is equivalent to</span><span style="color: #7f0000;"> */</span>
-<span style="color: #306010;">mut</span> <span style="color: #306010;">int</span>[4] g = {0, 0, 0, 0} {   <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">declare an array</span><span style="color: #7f0000;"> */</span>
-  g[0] = g[0] + 0;              <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">update the value of the array</span><span style="color: #7f0000;"> */</span>
-  g[1] = g[1] + 1;              <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">update the value of the array</span><span style="color: #7f0000;"> */</span>
-  g[2] = g[2] + 2;              <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">update the value of the array</span><span style="color: #7f0000;"> */</span>
-  g[3] = g[3] + 3;              <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">update the value of the array</span><span style="color: #7f0000;"> */</span>
-}
+<pre class="src src-C"><span class="linenr"> 1: </span><span style="color: #306010;">mut</span> <span style="color: #306010;">int</span>[4] g = {0, 0, 0, 0} {   <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">declare an array</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 2: </span>  <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">The below is an instantaneous loop</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 3: </span>  <span style="font-weight: bold;">for</span>(<span style="color: #306010;">int</span> <span style="color: #00603f;">i</span> : 0:4) {            <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Loop through the array</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 4: </span>    g[i] = g[i] + i;            <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">update the value of the array</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 5: </span>  }
+<span class="linenr"> 6: </span>}
+<span class="linenr"> 7: </span><span style="color: #7f0000;">/* </span><span style="color: #7f0000;">The above loop is equivalent to</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 8: </span><span style="color: #306010;">mut</span> <span style="color: #306010;">int</span>[4] g = {0, 0, 0, 0} {   <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">declare an array</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 9: </span>  g[0] = g[0] + 0;              <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">update the value of the array</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">10: </span>  g[1] = g[1] + 1;              <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">update the value of the array</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">11: </span>  g[2] = g[2] + 2;              <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">update the value of the array</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">12: </span>  g[3] = g[3] + 3;              <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">update the value of the array</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">13: </span>}
 </pre>
 </div></li>
 
@@ -927,17 +1014,17 @@ Example of instantaneous loop follows:
 Example of yielding (non-instantaneous) loop follows:
 </p>
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #306010;">mut</span> <span style="color: #306010;">int</span>[4] X = {0, 0, 0, 0} {   <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">declare array X</span><span style="color: #7f0000;"> */</span>
-  mut <span style="color: #306010;">int</span> v = 0 {               <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">declare a mutable variable</span><span style="color: #7f0000;"> */</span>
-    <span style="font-weight: bold;">for</span>(<span style="color: #306010;">int</span> <span style="color: #00603f;">i</span>:0:4) {            <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Iterate through the loop</span><span style="color: #7f0000;"> */</span>
-      <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Define a task, which performs its body every 1 logical tick</span><span style="color: #7f0000;"> */</span>
-      task(period=1, duration=0, offset=0) {
-        v = v + i;              <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">increment v every tick</span><span style="color: #7f0000;"> */</span>
-        X[i] = v + i;           <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">update X[i] every tick</span><span style="color: #7f0000;"> */</span>
-      }                         
-    }<span style="color: #7f0000;">/* </span><span style="color: #7f0000;">break once iterations are done</span><span style="color: #7f0000;"> */</span>
-  }
-}
+<pre class="src src-C"><span class="linenr"> 1: </span><span style="color: #306010;">mut</span> <span style="color: #306010;">int</span>[4] X = {0, 0, 0, 0} {   <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">declare array X</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 2: </span>  mut <span style="color: #306010;">int</span> v = 0 {               <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">declare a mutable variable</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 3: </span>    <span style="font-weight: bold;">for</span>(<span style="color: #306010;">int</span> <span style="color: #00603f;">i</span>:0:4) {            <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Iterate through the loop</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 4: </span>      <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">Define a task, which performs its body every 1 logical tick</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 5: </span>      task(period=1, duration=0, offset=0) {
+<span class="linenr"> 6: </span>        v = v + i;              <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">increment v every tick</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 7: </span>        X[i] = v + i;           <span style="color: #7f0000;">/* </span><span style="color: #7f0000;">update X[i] every tick</span><span style="color: #7f0000;"> */</span>
+<span class="linenr"> 8: </span>      }                         
+<span class="linenr"> 9: </span>    }<span style="color: #7f0000;">/* </span><span style="color: #7f0000;">break once iterations are done</span><span style="color: #7f0000;"> */</span>
+<span class="linenr">10: </span>  }
+<span class="linenr">11: </span>}
 </pre>
 </div>
 
@@ -945,12 +1032,12 @@ Example of yielding (non-instantaneous) loop follows:
 <li>The above code will update the value of X' elements
 once/logical tick of the module.</li>
 <li>This is different to instantaneous loop where all of X'
-elements get update in the same logical tick of the module.</li>
+elements get updated in the same logical tick of the module.</li>
 </ul></li>
 </ol>
 </div>
 </li>
-<li><a id="orgaac5ddf"></a>Parallel loops<br /></li>
+<li><a id="org7ee92ce"></a>Parallel loops<br /></li>
 </ul>
 </div>
 </div>

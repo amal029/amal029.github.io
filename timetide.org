@@ -72,10 +72,9 @@
       compilers.
   17. Now run the command:
       #+begin_src bash
-      COMPILE_SWITCH=sysrs FNAME="abro" \
-      SYSRUST_DIR=<path-of-sysrust-compiler-dir> \
-      TIMETIDE_DIR=<path-of-timetide-compiler-dir>
-      compilers	
+	COMPILE_SWITCH=sysrs FNAME="abro" \
+			     SYSRUST_DIR=<path-of-sysrust-compiler-dir> \
+			     TIMETIDE_DIR=<path-of-timetide-compiler-dir> compilers
       #+end_src
       - This will build all the compilers.
 
@@ -84,7 +83,7 @@
 We will use the ~abro.tt~ program in ~Timetide_tests~ directory as our
 first program.
 
-#+begin_src C
+#+begin_src C -n
   main() {
     int channel A delay 1;
     int channel B delay 1;
@@ -145,7 +144,7 @@ first program.
    always the name of the ~.tt~ file.
 5. You need to now write a ~main.cpp~ file that provides the input
    and output functions.
-   #+begin_src C++
+   #+begin_src C++ -n -r
      namespace abro {
        //....
        int main(void) {
@@ -160,7 +159,7 @@ first program.
    #+end_src
 6. The example ~main.cpp~ file is below. The file is available in
    ~Timetide_tests~ directory to modify.
-   #+begin_src C++
+   #+begin_src C++ -n -r
      #include "abro.h"
      #include <cassert>
      #include <iostream>
@@ -191,8 +190,7 @@ first program.
    #+begin_src bash
      COMPILE_SWITCH=sysrs FNAME="abro" \
      		     SYSRUST_DIR=<path-of-sysrust-compiler-dir> \
-     		     TIMETIDE_DIR=<path-of-timetide-compiler-dir> EXTRA_FLAGS="-DDEBUG"
-     exe
+     		     TIMETIDE_DIR=<path-of-timetide-compiler-dir> EXTRA_FLAGS="-DDEBUG" exe
    #+end_src
    - Notice the ~-DDEBUG~ macro being provided.
 
@@ -200,10 +198,8 @@ first program.
    #+begin_src bash
      COMPILE_SWITCH=sysrs FNAME="abro" \
 		    SYSRUST_DIR=<path-of-sysrust-compiler-dir> \
-		    TIMETIDE_DIR=<path-of-timetide-compiler-dir> EXTRA_FLAGS="-DDEBUG"
-     run
+		    TIMETIDE_DIR=<path-of-timetide-compiler-dir> EXTRA_FLAGS="-DDEBUG" run
    #+end_src
-
 
 ** Compiling the abro example (distributed memory) program
 The primary idea is to divide the ~abro~ program into two parts: (a)
@@ -215,7 +211,7 @@ that produces the inputs for the system.
    ~abro_sys.tt~ and ~abro_env.tt~. These individual modules are
    presented below:
 
-   #+begin_src C
+   #+begin_src C -n -r
      /* abro_sys.tt */
      main(input int A, input int B, input int R, output int O) {
        for (int i:1:99) {
@@ -232,7 +228,7 @@ that produces the inputs for the system.
      waitB(input int B) {abort(B) {task(period=1,duration=0,offset=0){;}}}
    #+end_src
 
-   #+begin_src C
+   #+begin_src C -n -r
      /* abro_env.tt */
      main(output int A, output int B, output int R) {
        {send A(1);}<>{send B(1);};
@@ -254,7 +250,6 @@ that produces the inputs for the system.
 			  TIMETIDE_DIR=<path-of-timetide-compiler-dir> make \
 			  EXTRA_FLAGS="-DDEBUG"
    #+end_src
-   
    - Notice that we specify the individual module names in ~FNAME~
      environment variable for compiling both modules together.
 
@@ -271,39 +266,38 @@ that produces the inputs for the system.
 6. These functions are presented below:
 
    - The ~abro_env::write_outputs~ function:
-     #+begin_src C++
+     #+begin_src C++ -n -r
        // This function serializes and then send the data from output port to
        // the input port.
        template <typename In, typename Out, typename Q>
-       void In2Out(In *in, Out *out, Q *q) {
-	 Qpush(q, (void *)in, out);
-       }
+       void In2Out(In *in, Out *out, Q *q) {Qpush(q, (void *)in, out);} (ref:queue)
        // We always write the current value from one to the previous value of
        // the next.
-       void abro_env::write_outputs() {
+       void abro_env::write_outputs() { (ref:writeo)
 	 // Then we write the outputs for the tick done.
 	 In2Out(abro_env::A_curr_ptr, abro_sys::A_prev_ptr, abro_sys::qA_ptr);
 	 In2Out(abro_env::B_curr_ptr, abro_sys::B_prev_ptr, abro_sys::qB_ptr);
 	 In2Out(abro_env::R_curr_ptr, abro_sys::R_prev_ptr, abro_sys::qR_ptr);
        }
      #+end_src
-   - Function ~abro_env::write_outputs~ passes the outputs from
-     module ~abro_env~ to module ~abro_sys~.
+   - Function ~abro_env::write_outputs~ (Line [[(writeo)]]) passes the
+     outputs from module ~abro_env~ to module ~abro_sys~.
    - This function *binds* the output from ~abro_env~ module to
      ~abro_sys~ module.
    - The output channel ~A~ in module ~abro_env~ (specifically
      ~abro_env::A_curr_ptr~) is bound to input channel ~A~ in module
-     ~abro_sys~ (specifically ~abro_env::A_prev_ptr~).
-   - Same for channels ~B~ and ~R~.
+     ~abro_sys~ (specifically ~abro_env::A_prev_ptr~). Same for channels
+     ~B~ and ~R~.
    - Function ~In2Out~ achieves this binding via queue on the
      receiving side -- in this case module ~abro_sys~.
-   - The third argument in function ~In2Out~ is this receiving queue
-     for each channel.
+   - The third argument in function ~In2Out~ (Line [[(queue)]]) is this
+     receiving queue for each channel.
    - The size of the queue is determined by the delay $\delta$
      connecting the channels, and is determined by the system
      designer.
-   - The ~Qpush~ function is provided in the library (which we will
-     see later) for pushing into the queue of the receiver.
+   - The ~Qpush~ function (Line [[(queue)]]) is provided in the library
+     (which we will see later) for pushing into the queue of the
+     receiver.
 
    - The ~abro_env::read_inputs~ function:
      #+begin_src C++
@@ -312,7 +306,7 @@ that produces the inputs for the system.
      #+end_src
 
 7. The channels being used to connect the two modules along with the
-   queue functions are provided in:
+   queue functions are provided in files:
    - ~abro_env.h~, ~abro_sys.h~, ~includes/lib.h~, and
      ~includes/mQueue.h~ in the ~Timetide_tests~ directory.
    - The ~abro_env.h~ and ~abro_sys.h~ headers are generated by the
@@ -322,7 +316,7 @@ that produces the inputs for the system.
 
 8. The important parts of the generated ~abro_env.h~ header is shown
    below:
-   #+begin_src C++
+   #+begin_src C++ -n -r
      namespace abro_env {
        // ....
        struct signal_A;
@@ -399,7 +393,7 @@ that produces the inputs for the system.
 10. The templated library function implementations are specialised
     for each channel in generated C++ code from the Time tide
     modules. Example shown below from ~abro_env.cpp~:
-    #+begin_src C++
+    #+begin_src C++ -n -r
       namespace abro_env {
 	//...
       #include "lib.h"
@@ -417,21 +411,22 @@ that produces the inputs for the system.
 	signal_A *A_curr_ptr = &A_curr;
 	signal_A *A_prev_ptr = &A_prev;
 	// Below are template specilisations for working with channel A
-	template size_t get_sizeof_value(signal_A *);
+	template size_t get_sizeof_value(signal_A *); (ref:start)
 	template size_t get_sizeof_status(signal_A *);
 	template bool get_status(signal_A *);
 	template void get_value(void *, signal_A *);
 	template void set_value(signal_A *, void *);
-	template void set_status(signal_A *, unsigned char v);
+	template void set_status(signal_A *, unsigned char v); (ref:end)
 	// ......
       }
     #+end_src
+    - Notice the template specialisation from (Line [[(start)]] -- Line [[(end)]])
 
 11. Similarly, the receiving Queue' opaque queue pointers (e.g.,
     ~abro_sys::qA_ptr~) are declared and the ~Qpush~ and ~Qpull~
     template functions specialised in the generated C++ files. See
     below for a snippet of the generated ~abro_sys.cpp~:
-    #+begin_src C++
+    #+begin_src C++ -n
       #include "mQueue.h"
       namespace abro_sys {
         // ....
@@ -460,7 +455,7 @@ that produces the inputs for the system.
 13. The delay $\delta$ determining the size of the queues is defined
     in file ~delays.cpp~. For the current example the code is shown
     below:
-    #+begin_src C++
+    #+begin_src C++ -n
       #include "abro_sys.h"
       int abro_sys::A_DELAY = 4;	// size of queue connecting channel A
       int abro_sys::B_DELAY = 2;	// size of queue connecting channel B
@@ -470,7 +465,7 @@ that produces the inputs for the system.
 14. Finally, we can now write the main function that runs the two
     modules. This function is written in ~main.cpp~ and is shown
     below:
-    #+begin_src C++
+    #+begin_src C++ -n -r
       #include "abro_env.h"
       #include "abro_sys.h"
       #include <atomic>
@@ -479,7 +474,7 @@ that produces the inputs for the system.
       #include <thread>
       void abro_run(std::atomic<int> &&barrier = 0) {
         std::cout << "running two threads\n";
-        auto env = std::thread([&barrier]() {
+        auto env = std::thread([&barrier]() { (ref:thread1)
           while (barrier != 1) {
             std::this_thread::yield();
           }
@@ -490,7 +485,7 @@ that produces the inputs for the system.
           std::cout << "Done running the abro env\n";
         });
 
-        auto sys = std::thread([&barrier]() {
+        auto sys = std::thread([&barrier]() { (ref:thread2)
           while (barrier != 2) {
             std::this_thread::yield();
           }
@@ -505,7 +500,7 @@ that produces the inputs for the system.
         // think of barrier as a token that is passed to threads to make then
         // execute an LSN.
         barrier = 2;
-        while (barrier != 0)
+        while (barrier != 0) (ref:barrier)
           ; // spin until both the modules/threads are done -- the barrier
         env.join();
         sys.join();
@@ -521,9 +516,10 @@ that produces the inputs for the system.
       }
     #+end_src
     + Notice that we are using threads to run the two modules.
-    + The first thread runs ~abro_env::main~
-    + The second thread runs ~abro_sys::main~
+    + The first thread runs ~abro_env::main~ (Line [[(thread1)]])
+    + The second thread runs ~abro_sys::main~ (Line [[(thread2)]])
     + The two threads execute one tick each before reaching a barrier
+      (Line [[(barrier)]])
     + It is *essential* that all modules in the Time tide program
       execute using barriers, because they all need to be
       synchronised.
@@ -557,20 +553,20 @@ that produces the inputs for the system.
 
 * The Time tide language
 
-** Types
+** Types and variables
 
 *** Primitive types
-  We only support three signed types listed below
-#+begin_src C
-  int a;
-  char b;
-  float c;
+  We only support three signed primitive types listed below
+#+begin_src C -n
+  int	a;			/* This is a comment (int is 4 bytes) */
+  char	a;			/* char is  1 byte */
+  float	a;			/* Float is 4 bytes */
 #+end_src
 
 *** User defined structures
    User defined types follows the same convention as =C=. However, no
-   pointers are allowed. Example follows:
-#+begin_src C
+   pointers are allowed. Examples follow:
+#+begin_src C -n
   struct Y { int a; float u;};	/* Structure (type Y) with field varibles a and u */
   struct X {
     int yy;			/* varible yy of type int */
@@ -578,14 +574,14 @@ that produces the inputs for the system.
   }
   /* Since there are no pointers, one cannot define self refrential structures */
   struct X {
-    struct X m;			/* not allowed */
+    struct X *m;			/* not allowed */
   }
 #+end_src
 
 *** Array types
     Arrays are ~similar~ (not the same) to those in =C=.
     Multidimensional arrays are supported. Example follows:
-    #+begin_src C
+    #+begin_src C -n
       const int[4] X = {0, 0, 0, 0};	/* constant array, notice it is int[4]  not int X[4]*/
       const int[2][3] Y = {{0, 0, 0}, {0, 0, 0}} /* 2 x 3 constant array Y -- multidimensional */
     #+end_src
@@ -595,29 +591,93 @@ that produces the inputs for the system.
     2. Channels carry data.
     3. Channels also have an associated delay $\delta$.
     4. Channels can be of any primitive, user defined, or array type.
-    5. Examples follows:
-    #+begin_src C
-      int channel K delay 3;		/* channel K of type int with delay 3 */
+    5. Channel status and values are set using =send= (Line [[(send)]])
+    6. Channel status is read using the name of the channel (Line
+       [[(status)]])
+    7. Channel value is read using =?<channel-name>= (Line [[(val)]])
+    8. Examples follows:
+    #+begin_src C -n -r
+      int channel K delay 3;		/* Channel K of type int with delay 3 */
       struct Y channel C delay 2;	/* Channel C of type struct Y with delay 2 */
       int[100] channel M delay 1;	/* Channel M of type int[100] with delay 1*/
 
       /* TODO: Such bunching of channels  are not yet supported */
       struct Y[100] channel M[100] delay 7; /* 100 channel M[0]...M[99] each of
-      					 type struct Y[100] with delay 7*/
+          					 type struct Y[100] with delay 7*/
+      send K(10);			/* Will be available at receiver after 3 logical ticks */ (ref:send)
+      if (K) { (ref:status)
+        mut int uu = 0 {
+         uu = ?K (ref:val)
+        }
+        /* body... */
+       }
     #+end_src
+
+** Operators and expressions in Time tide
+
+*** Operators in Time tide
+
+#+begin_src C -n
+  a + b;				/* addition */
+  a - b;				/* subtraction */
+  a % b;				/* Modulus  */
+  a * b;				/* Multiply */
+  a / b;				/* Divide */
+  a >> b;				/* Right shift logical */
+  a << b;				/* Logical left shift */
+  a > b;				/* Logical greater than */
+  a < b;				/* Logical less than */
+  a >= b;				/* Logical greater than equal */
+  a <= b;				/* Logical less than equal */
+  a == b;				/* Logical equality comparison */
+  a != b;				/* Logical not equal to comparison */
+  a ^^ b;				/* a to the power of b */
+#+end_src
+  + The above operators are defined on primitive types only.
+    
+  
+*** Expressions in Time tide
+
+    + Time tide supports the usual expressions as in =C=.
+    
+#+begin_src C -n -r
+  a + b - c			/* left to right precedence */
+  (a + b) * c			/* Bracket has higher precedence */
+  a + b * c			/* Multiply has higher precedence */
+  a * b / f			/* Left to right precedence */
+  (a == b) && (b != c)		/* Logical and expression */
+  (a == 1) || (b == 1)		/* logical or */
+  !(a == 0)			/* logical not */
+  (int)1.0			/* casting C style */
+    
+  channel int K;			/* int type channel */
+  channel int I1;			/* int type channel */
+  
+  extern f(1.0+(float)?K * (float)?I1); /* calling an external C function */ (ref:ext)
+#+end_src
+
+  * =extern= function calls are expressions (not statements)
+  * =extern= function calls only work with primitives (not structures yet).
+  * =extern= function calls are type inferred, i.e., you currently don't
+    need to specify the function signature (will change in future)
+  * Might need to cast the output or arguments to correct type in
+    =extern= function calls (Line [[(ext)]])
 
 ** Statements
 
-*** Variable declaration
+*** Variable declaration and updates
    1. There are two types of variables =const= and =mutable=.
-   2. Constant variables cannot be updated, they are similar to =#define= in =C=.
+   2. Constant variables cannot be modified.
    3. Mutable variables are like normal =C= style variables.
-   4. Examples follow:
-   #+begin_src C
+   4. Variables should always be initialised with literal constants (not
+      expressions).
+   5. Shadowing variable names is *not* allowed.
+   6. Examples follow:
+   #+begin_src C -n
      const int U11 = 1;		/* constant variabel U11 cannot change */
      const int T = 10;		/* constant variable T cannot change */
      mut float hh = 1.0 {
-       /* ..... body of mutable variable */
+       /* ..... body/scope of mutable variable */
      } /* Mutable variable hh with its scope defined by {} */
      mut float f;			/* error, variable needs to be initialised */
      float f; 			/* error, do not know whether this is const or mutable */
@@ -642,13 +702,17 @@ that produces the inputs for the system.
        /* Send on channel C */
        send C(y); 			/* Will be available at receiver after two global ticks */
      }
+     const int HH = 100;
+     mut int HH = 90 {
+       /* body */
+     } /* Such shadowing of variable name HH is *not* allowed */
    #+end_src
 
 *** Conditionals
     1. Only ~if-else~ blocks are supported.
     2. The semantics are similar (not the same) as ~C~.
     3. Example follows:
-       #+begin_src C
+       #+begin_src C -n
 	 const int K1 = 0;
 	 /* This is getting the value of the channel */
 	 mut int U = 0 {
@@ -661,12 +725,12 @@ that produces the inputs for the system.
          }
        #+end_src
     4. Major difference to ~C~
-       - Checking value of variable/channel requires one to write:
-	 #+begin_src C
-	   if(<var-name> == <some-value>){/*body*/}
+       - Checking *value* of variable/channel requires one to write:
+	 #+begin_src C -n
+	   if(<var-name>/<?channel-name> == <some-value>){/*body*/}
 	 #+end_src
-       - Checking the status of the channel requires one to write:
-	 #+begin_src C
+       - Checking the *status* of the channel requires one to write:
+	 #+begin_src C -n
 	   if(<channel-name>) {/*body*/}
 	 #+end_src
        - Expressions in conditionals for variables. Using name only
@@ -681,7 +745,7 @@ that produces the inputs for the system.
          completion of module' tick
        - Instantaneous, where the whole loop gets unrolled.
     3. Example of instantaneous loop follows:
-       #+begin_src C
+       #+begin_src C -n
 	 mut int[4] g = {0, 0, 0, 0} {	/* declare an array */
 	   /* The below is an instantaneous loop */
 	   for(int i : 0:4) {		/* Loop through the array */
@@ -698,7 +762,7 @@ that produces the inputs for the system.
        #+end_src
        
     4. Example of yielding (non-instantaneous) loop follows:
-       #+begin_src C
+       #+begin_src C -n
 	 mut int[4] X = {0, 0, 0, 0} {	/* declare array X */
 	   mut int v = 0 {		/* declare a mutable variable */
 	     for(int i:0:4) {		/* Iterate through the loop */
@@ -712,9 +776,9 @@ that produces the inputs for the system.
 	 }
        #+end_src
        
-       - The above code will update the value of X' elements
+       + The above code will update the value of X' elements
          once/logical tick of the module.
-       - This is different to instantaneous loop where all of X'
-         elements get update in the same logical tick of the module.
+       + This is different to instantaneous loop where all of X'
+         elements get updated in the same logical tick of the module.
 
 **** Parallel loops
