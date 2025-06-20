@@ -31,8 +31,17 @@
   3. It allows for shared memory or distributed memory concurrency.
   4. The compiler produces efficient C++ code, which allows for easy
      interaction with native code and deployment on embedded platforms.
-  5. Time tide language and tool suite is a work in progress -- expect
+     
+** Requirements when reading this document
+  1. The reader is expected to have knowledge of:
+     + Synchronous programming principles
+     + Good knowledge of C/C++ including template meta-programming
+  2. Please read the comments in the code snippet along with the text in
+     this document.
+  3. Time tide language and tool suite is a work in progress -- expect
      bugs and things to change daily
+  4. Please file bug reports on github repository with code snippets
+     when things do not work.
 
 * Installing the Time tide compiler(s)
   1. Time tide uses multiple compiler tool chains.
