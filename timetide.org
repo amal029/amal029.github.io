@@ -691,9 +691,9 @@ that produces the inputs for the system.
 	 /* The above loop is equivalent to */
 	 mut int[4] g = {0, 0, 0, 0} {	/* declare an array */
 	   g[0] = g[0] + 0;		/* update the value of the array */
-	   g[1] = g[1] + 0;		/* update the value of the array */
-	   g[2] = g[2] + 0;		/* update the value of the array */
-	   g[3] = g[3] + 0;		/* update the value of the array */
+	   g[1] = g[1] + 1;		/* update the value of the array */
+	   g[2] = g[2] + 2;		/* update the value of the array */
+	   g[3] = g[3] + 3;		/* update the value of the array */
 	 }
        #+end_src
        
