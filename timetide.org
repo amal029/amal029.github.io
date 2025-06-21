@@ -405,8 +405,8 @@ that produces the inputs for the system.
        constexpr std::size_t size = sizeof(s->status) + sizeof(s->value);
        // This array is stack allocated
        std::array<unsigned char, size> arr{0};
-       memcpy(arr.data(), &((S *)src)->status, size);
-       memcpy(arr.data() + 1, &((S *)src)->value, size - 1);
+       memcpy(arr.data(), &(static_cast<S*>(src))->status, size);
+       memcpy(arr.data() + 1, &(static_cast<S*>(src))->value, size - 1);
        q->v->push(std::move(arr));
      }
 
