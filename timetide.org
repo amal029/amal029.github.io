@@ -403,10 +403,11 @@ that produces the inputs for the system.
      requires has_status<S> && has_value<S>
      void Qpush(Q *q, void *src, S *s) {
        constexpr std::size_t size = sizeof(s->status) + sizeof(s->value);
+       std::size_t size_status = get_sizeof_status(static_cast<S *>(src));
        // This array is stack allocated
        std::array<unsigned char, size> arr{0};
-       memcpy(arr.data(), &(static_cast<S*>(src))->status, size);
-       memcpy(arr.data() + 1, &(static_cast<S*>(src))->value, size - 1);
+       memcpy(arr.data(), &(static_cast<S *>(src))->status, size_status);
+       memcpy(arr.data() + size_status, &(static_cast<S *>(src))->value, size - size_status);
        q->v->push(std::move(arr));
      }
 
