@@ -46,7 +46,7 @@
 * Installing the Time tide compiler(s)
   1. Time tide uses multiple compiler tool chains.
   2. You are expected to have installed C++ compilers with support for
-     at least C++-17 standard.
+     at least C++-20 standard.
   3. Pull the Time tide compiler from:
      https://github.com/PRETgroup/timetide
   4. Install the Ocaml programming language compiler from here:
@@ -355,31 +355,55 @@ that produces the inputs for the system.
 
 9. The implementation of these header functions is provided in
    ~includes/lib.h~ and is provided below:
-   #+begin_src C++
-     template <typename T> size_t get_sizeof_value(T *obj) {
+   #+begin_src C++ -n
+     template <typename T>
+     concept has_status = requires(T* t) {
+       {t->status};
+     };
+
+     template <typename T>
+     concept has_value = requires(T *t) {
+       { t->value };
+     };
+
+     template <typename T>
+     requires has_value<T>
+     constexpr size_t get_sizeof_value(T *obj) {
        return sizeof(obj->value);
      }
 
-     template <typename T> size_t get_sizeof_status(T *obj) {
+     template <typename T>
+     requires has_status<T>
+     constexpr size_t get_sizeof_status(T *obj) {
        return sizeof(obj->status);
      }
 
-     template <typename T> bool get_status(T *obj) { return obj->status; }
+     template <typename T>
+     requires has_status<T>
+     bool get_status(T *obj) { return obj->status; }
 
-     template <typename T> void get_value(void *dest, T *obj) {
+     template <typename T>
+     requires has_value<T>
+     void get_value(void *dest, T *obj) {
        memcpy(dest, &(obj->value), get_sizeof_value(obj));
      }
 
-     template <typename T> void set_status(T *obj, unsigned char v) {
+     template <typename T>
+     requires has_status<T>
+     void set_status(T *obj, unsigned char v) {
        memcpy(&(obj->status), &v, get_sizeof_status(obj));
      }
 
-     template <typename T> void set_value(T *obj, void *src) {
+     template <typename T>
+     requires has_value<T>
+     void set_value(T *obj, void *src) {
        memcpy(&(obj->value), src, get_sizeof_value(obj));
      }
 
-     template <typename Q, typename S> void Qpush(Q *q, void *src, S *s) {
-       const std::size_t size = sizeof(s->status) + sizeof(s->value);
+     template <typename Q, typename S>
+     requires has_status<S> && has_value<S>
+     void Qpush(Q *q, void *src, S *s) {
+       constexpr std::size_t size = sizeof(s->status) + sizeof(s->value);
        // This array is stack allocated
        std::array<unsigned char, size> arr{0};
        memcpy(arr.data(), &((S *)src)->status, size);
@@ -387,12 +411,14 @@ that produces the inputs for the system.
        q->v->push(std::move(arr));
      }
 
-     template <typename Q, typename S> std::size_t Qpull(Q *q, S *s) {
-       const std::size_t size = sizeof(s->status) + sizeof(s->value);
+     template <typename Q, typename S>
+     requires has_status<S> && has_value<S>
+     std::size_t Qpull(Q *q, S *s) {
+       constexpr std::size_t size = sizeof(s->status) + sizeof(s->value);
        using at = std::array<unsigned char, size>;
        at *res = q->v->front(); // the pointer to the top of the queue.
        s->status = (*res)[0]; // the first value in the returned array
-			      // pointer
+                              // pointer
        set_value(s, &(*res)[1]);
        q->v->pop();
        return size;
@@ -404,31 +430,32 @@ that produces the inputs for the system.
     modules. Example shown below from ~abro_env.cpp~:
     #+begin_src C++ -n -r
       namespace abro_env {
-	//...
-      #include "lib.h"
+        //...
+        #include "lib.h"
 
-	// Sig decls
-	typedef struct signal_A {
-	  int value = 0;
-	  bool status = false;
-	  // We should never need the combinator operator
-	  std::plus<int> op{};
-	  // tag is for fresh value updates
-	  bool tag = false;
-	} signal_A;
-	signal_A A_curr, A_prev;
-	signal_A *A_curr_ptr = &A_curr;
-	signal_A *A_prev_ptr = &A_prev;
-	// Below are template specilisations for working with channel A
-	template size_t get_sizeof_value(signal_A *); (ref:start)
-	template size_t get_sizeof_status(signal_A *);
-	template bool get_status(signal_A *);
-	template void get_value(void *, signal_A *);
-	template void set_value(signal_A *, void *);
-	template void set_status(signal_A *, unsigned char v); (ref:end)
-	// ......
+        // Sig decls
+        typedef struct signal_A {
+          int value = 0;
+          bool status = false;
+          // We should never need the combinator operator
+          std::plus<int> op{};
+          // tag is for fresh value updates
+          bool tag = false;
+        } signal_A;
+        signal_A A_curr, A_prev;
+        signal_A *A_curr_ptr = &A_curr;
+        signal_A *A_prev_ptr = &A_prev;
+        // Below are template specilisations for working with channel A
+        template size_t get_sizeof_value(signal_A *); (ref:start)
+        template size_t get_sizeof_status(signal_A *);
+        template bool get_status(signal_A *);
+        template void get_value(void *, signal_A *);
+        template void set_value(signal_A *, void *);
+        template void set_status(signal_A *, unsigned char v); (ref:end)
+        // ......
       }
     #+end_src
+
     - Notice the template specialisation from (Line [[(start)]] -- Line [[(end)]])
 
 11. Similarly, the receiving Queue' opaque queue pointers (e.g.,
