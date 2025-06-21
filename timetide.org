@@ -660,8 +660,22 @@ that produces the inputs for the system.
   (int)1.0			/* casting C style */
     
   channel int K delay 1;			/* int type channel */
-  
+  channel int I1 delay 1;			/* int type channel */
   extern f(1.0+(float)?K * (float)?I1); /* calling an external C function */ (ref:ext)
+  
+  struct X{int a;};
+  struct Y{
+    float h;
+    struct X xx;
+  }
+  /* Let yy be a variable of type struct Y */
+  y.h = (float)7;			/* assigning to field h */ (ref:struct1)
+  y.xx = {8.5};			/* assigned to field xx of type struct X */
+  y.xx.a = 10;			/* Not allowed */ (ref:struct3)
+  struct X {
+   float x;
+   int[2] uuar;	/* Currently arrays inside structs are not supported */ (ref:structarr)
+  };
 #+end_src
 
   * =extern= function calls are expressions (not statements)
@@ -670,6 +684,10 @@ that produces the inputs for the system.
     need to specify the function signature (will change in future)
   * Might need to cast the output or arguments to correct type in
     =extern= function calls (Line [[(ext)]])
+  * Only one level of =struct= fields can be accessed right now (Line
+    [[(struct1)]] -- Line [[(struct3)]]) -- will change in the future
+  * Arrays inside =struct= are currently not supported -- will change in
+    the future (Line [[(structarr)]]).
 
 ** Statements
 
