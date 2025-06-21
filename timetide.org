@@ -8,7 +8,7 @@
 #+EXCLUDE_TAGS: noexport
 #+KEYWORDS:
 #+LANGUAGE: en
-#+Title: Time tide
+#+Title: Time tide Programming Language
 #+OPTIONS: html-style:nil
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
@@ -23,7 +23,6 @@
 #+MACRO: enable-search #+HTML_HEAD: <script type="text/javascript">enableSearch();</script>
 #+MACRO: disable-search #+HTML_HEAD: <script type="text/javascript">disableSearch();</script>
 #+MACRO: set-search-limit #+HTML_HEAD: <script type="text/javascript">setSearchLimit($1);</script>
-
 
 * Time tide is a new programming language
   1. It allows building finite state machines.
