@@ -20,6 +20,38 @@
  pre.src {background-color: #000000; color: #ffffff;}</style>
 <style type="text/css">
  pre.src {background-color: #000000; color: #ffffff;}</style>
+<style type="text/css">
+ pre.src {background-color: #000000; color: #ffffff;}</style>
+<style type="text/css">
+ pre.src {background-color: #000000; color: #ffffff;}</style>
+<style type="text/css">
+ pre.src {background-color: #000000; color: #ffffff;}</style>
+<style type="text/css">
+ pre.src {background-color: #000000; color: #ffffff;}</style>
+<style type="text/css">
+ pre.src {background-color: #000000; color: #ffffff;}</style>
+<style type="text/css">
+ pre.src {background-color: #000000; color: #ffffff;}</style>
+<style type="text/css">
+ pre.src {background-color: #000000; color: #ffffff;}</style>
+<style type="text/css">
+ pre.src {background-color: #000000; color: #ffffff;}</style>
+<style type="text/css">
+ pre.src {background-color: #000000; color: #ffffff;}</style>
+<style type="text/css">
+ pre.src {background-color: #000000; color: #ffffff;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #181818; color: #e4e4ef;}</style>
+<style type="text/css">
+ pre.src {background-color: #ffffff; color: #000000;}</style>
+<style type="text/css">
+ pre.src {background-color: #000000; color: #ffffff;}</style>
+<style type="text/css">
+ pre.src {background-color: #000000; color: #ffffff;}</style>
+<style type="text/css">
+ pre.src {background-color: #000000; color: #ffffff;}</style>
 <script>
   window.MathJax = {
     tex: {
@@ -60,43 +92,43 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgee9e593">Time tide is a new programming language</a>
+<li><a href="#org0c963cf">Time tide is a new programming language</a>
 <ul>
-<li><a href="#org031815c">Requirements when reading this document</a></li>
+<li><a href="#org0061eb7">Requirements when reading this document</a></li>
 </ul>
 </li>
-<li><a href="#orgb672aa2">Installing the Time tide compiler(s)</a></li>
-<li><a href="#org167f1f8">Compiling first example program</a>
+<li><a href="#orgd2a12f2">Installing the Time tide compiler(s)</a></li>
+<li><a href="#org2307c6f">Compiling first example program</a>
 <ul>
-<li><a href="#orgcc45958">Compiling the abro (shared memory) program</a></li>
-<li><a href="#org6ed0a82">Compiling the abro example (distributed memory) program</a></li>
+<li><a href="#orgf20b93f">Compiling the abro (shared memory) program</a></li>
+<li><a href="#orga4d0a50">Compiling the abro example (distributed memory) program</a></li>
 </ul>
 </li>
-<li><a href="#org7f9b61a">The Time tide language</a>
+<li><a href="#org287d7f9">The Time tide language</a>
 <ul>
-<li><a href="#org828424f">Types and variables</a>
+<li><a href="#org175bf69">Types and variables</a>
 <ul>
-<li><a href="#org2d16f2a">Primitive types</a></li>
-<li><a href="#org9bae56e">User defined structures</a></li>
-<li><a href="#org46e3246">Array types</a></li>
-<li><a href="#orgde18cbf">Channels</a></li>
+<li><a href="#org80ac2b4">Primitive types</a></li>
+<li><a href="#org9adbbf4">User defined structures</a></li>
+<li><a href="#org020a838">Array types</a></li>
+<li><a href="#orgc1ade96">Channels</a></li>
 </ul>
 </li>
-<li><a href="#org6e56095">Operators and expressions in Time tide</a>
+<li><a href="#org998fe57">Operators and expressions in Time tide</a>
 <ul>
-<li><a href="#org2079907">Operators in Time tide</a></li>
-<li><a href="#org6a5b0af">Expressions in Time tide</a></li>
+<li><a href="#org1686c9e">Operators in Time tide</a></li>
+<li><a href="#org002c6b0">Expressions in Time tide</a></li>
 </ul>
 </li>
-<li><a href="#orgdd84841">Statements</a>
+<li><a href="#org74c7c0d">Statements</a>
 <ul>
-<li><a href="#org94343e3">Variable declaration and updates</a></li>
-<li><a href="#org6c5d992">Conditionals</a></li>
-<li><a href="#org37f7d4d">Loops</a></li>
-<li><a href="#orga1fd6f0">The Task construct</a></li>
-<li><a href="#org5157320">The Abort construct</a></li>
-<li><a href="#orga8acc9e">The Synchronous parallel construct</a></li>
-<li><a href="#org44da1bf">Function/module definition</a></li>
+<li><a href="#org13fcae6">Variable declaration and updates</a></li>
+<li><a href="#orgac3c333">Conditionals</a></li>
+<li><a href="#orgb1b2038">Loops</a></li>
+<li><a href="#org6950c02">The Task construct</a></li>
+<li><a href="#org9312714">The Abort construct</a></li>
+<li><a href="#org2e49268">The Synchronous parallel construct</a></li>
+<li><a href="#org076229c">Function/module definition</a></li>
 </ul>
 </li>
 </ul>
@@ -104,9 +136,9 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-orgee9e593" class="outline-2">
-<h2 id="orgee9e593">Time tide is a new programming language</h2>
-<div class="outline-text-2" id="text-orgee9e593">
+<div id="outline-container-org0c963cf" class="outline-2">
+<h2 id="org0c963cf">Time tide is a new programming language</h2>
+<div class="outline-text-2" id="text-org0c963cf">
 <ol class="org-ol">
 <li>It allows building finite state machines.</li>
 <li>It allows developing synchronous concurrent programs.</li>
@@ -115,9 +147,9 @@
 interaction with native code and deployment on embedded platforms.</li>
 </ol>
 </div>
-<div id="outline-container-org031815c" class="outline-3">
-<h3 id="org031815c">Requirements when reading this document</h3>
-<div class="outline-text-3" id="text-org031815c">
+<div id="outline-container-org0061eb7" class="outline-3">
+<h3 id="org0061eb7">Requirements when reading this document</h3>
+<div class="outline-text-3" id="text-org0061eb7">
 <ol class="org-ol">
 <li>The reader is expected to have knowledge of:
 <ul class="org-ul">
@@ -134,9 +166,9 @@ when things do not work.</li>
 </div>
 </div>
 </div>
-<div id="outline-container-orgb672aa2" class="outline-2">
-<h2 id="orgb672aa2">Installing the Time tide compiler(s)</h2>
-<div class="outline-text-2" id="text-orgb672aa2">
+<div id="outline-container-orgd2a12f2" class="outline-2">
+<h2 id="orgd2a12f2">Installing the Time tide compiler(s)</h2>
+<div class="outline-text-2" id="text-orgd2a12f2">
 <ol class="org-ol">
 <li>Time tide uses multiple compiler tool chains.</li>
 <li>You are expected to have installed C++ compilers with support for
@@ -191,9 +223,9 @@ Now run the command:
 </ol>
 </div>
 </div>
-<div id="outline-container-org167f1f8" class="outline-2">
-<h2 id="org167f1f8">Compiling first example program</h2>
-<div class="outline-text-2" id="text-org167f1f8">
+<div id="outline-container-org2307c6f" class="outline-2">
+<h2 id="org2307c6f">Compiling first example program</h2>
+<div class="outline-text-2" id="text-org2307c6f">
 <p>
 We will use the <code>abro.tt</code> program in <code>Timetide_tests</code> directory as our
 first program.
@@ -245,9 +277,9 @@ available after a single so called <code>tick</code>.</li>
 <li>Tick is the synchronous (logical) clock running the whole program.</li>
 </ol>
 </div>
-<div id="outline-container-orgcc45958" class="outline-3">
-<h3 id="orgcc45958">Compiling the abro (shared memory) program</h3>
-<div class="outline-text-3" id="text-orgcc45958">
+<div id="outline-container-orgf20b93f" class="outline-3">
+<h3 id="orgf20b93f">Compiling the abro (shared memory) program</h3>
+<div class="outline-text-3" id="text-orgf20b93f">
 <ol class="org-ol">
 <li><p>
 Run the command:
@@ -344,9 +376,9 @@ We can finally run the program using the command:
 </ol>
 </div>
 </div>
-<div id="outline-container-org6ed0a82" class="outline-3">
-<h3 id="org6ed0a82">Compiling the abro example (distributed memory) program</h3>
-<div class="outline-text-3" id="text-org6ed0a82">
+<div id="outline-container-orga4d0a50" class="outline-3">
+<h3 id="orga4d0a50">Compiling the abro example (distributed memory) program</h3>
+<div class="outline-text-3" id="text-orga4d0a50">
 <p>
 The primary idea is to divide the <code>abro</code> program into two parts: (a)
 <code>abro_sys.tt</code>, which captures the system waiting for the data to
@@ -779,17 +811,17 @@ synchronisation.</li>
 </div>
 </div>
 </div>
-<div id="outline-container-org7f9b61a" class="outline-2">
-<h2 id="org7f9b61a">The Time tide language</h2>
-<div class="outline-text-2" id="text-org7f9b61a">
+<div id="outline-container-org287d7f9" class="outline-2">
+<h2 id="org287d7f9">The Time tide language</h2>
+<div class="outline-text-2" id="text-org287d7f9">
 </div>
-<div id="outline-container-org828424f" class="outline-3">
-<h3 id="org828424f">Types and variables</h3>
-<div class="outline-text-3" id="text-org828424f">
+<div id="outline-container-org175bf69" class="outline-3">
+<h3 id="org175bf69">Types and variables</h3>
+<div class="outline-text-3" id="text-org175bf69">
 </div>
-<div id="outline-container-org2d16f2a" class="outline-4">
-<h4 id="org2d16f2a">Primitive types</h4>
-<div class="outline-text-4" id="text-org2d16f2a">
+<div id="outline-container-org80ac2b4" class="outline-4">
+<h4 id="org80ac2b4">Primitive types</h4>
+<div class="outline-text-4" id="text-org80ac2b4">
 <p>
 We only support three signed primitive types listed below
 </p>
@@ -801,9 +833,9 @@ We only support three signed primitive types listed below
 </div>
 </div>
 </div>
-<div id="outline-container-org9bae56e" class="outline-4">
-<h4 id="org9bae56e">User defined structures</h4>
-<div class="outline-text-4" id="text-org9bae56e">
+<div id="outline-container-org9adbbf4" class="outline-4">
+<h4 id="org9adbbf4">User defined structures</h4>
+<div class="outline-text-4" id="text-org9adbbf4">
 <p>
 User defined types follows the same convention as <code>C</code>. However, no
 pointers are allowed. Examples follow:
@@ -822,9 +854,9 @@ pointers are allowed. Examples follow:
 </div>
 </div>
 </div>
-<div id="outline-container-org46e3246" class="outline-4">
-<h4 id="org46e3246">Array types</h4>
-<div class="outline-text-4" id="text-org46e3246">
+<div id="outline-container-org020a838" class="outline-4">
+<h4 id="org020a838">Array types</h4>
+<div class="outline-text-4" id="text-org020a838">
 <p>
 Arrays are <code>similar</code> (not the same) to those in <code>C</code>.
 Multidimensional arrays are supported. Example follows:
@@ -836,9 +868,9 @@ Multidimensional arrays are supported. Example follows:
 </div>
 </div>
 </div>
-<div id="outline-container-orgde18cbf" class="outline-4">
-<h4 id="orgde18cbf">Channels</h4>
-<div class="outline-text-4" id="text-orgde18cbf">
+<div id="outline-container-orgc1ade96" class="outline-4">
+<h4 id="orgc1ade96">Channels</h4>
+<div class="outline-text-4" id="text-orgc1ade96">
 <ol class="org-ol">
 <li>Channels are specific to Time tide and do not exist in <code>C</code>.</li>
 <li>Channels carry data.</li>
@@ -870,13 +902,13 @@ Multidimensional arrays are supported. Example follows:
 </div>
 </div>
 </div>
-<div id="outline-container-org6e56095" class="outline-3">
-<h3 id="org6e56095">Operators and expressions in Time tide</h3>
-<div class="outline-text-3" id="text-org6e56095">
+<div id="outline-container-org998fe57" class="outline-3">
+<h3 id="org998fe57">Operators and expressions in Time tide</h3>
+<div class="outline-text-3" id="text-org998fe57">
 </div>
-<div id="outline-container-org2079907" class="outline-4">
-<h4 id="org2079907">Operators in Time tide</h4>
-<div class="outline-text-4" id="text-org2079907">
+<div id="outline-container-org1686c9e" class="outline-4">
+<h4 id="org1686c9e">Operators in Time tide</h4>
+<div class="outline-text-4" id="text-org1686c9e">
 <div class="org-src-container">
 <pre class="src src-C"><span class="linenr"> 1: </span>a + b;                          <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">addition</span><span style="color: #d8af7a;"> */</span>
 <span class="linenr"> 2: </span>a - b;                          <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">subtraction</span><span style="color: #d8af7a;"> */</span>
@@ -899,9 +931,9 @@ Multidimensional arrays are supported. Example follows:
 </ul>
 </div>
 </div>
-<div id="outline-container-org6a5b0af" class="outline-4">
-<h4 id="org6a5b0af">Expressions in Time tide</h4>
-<div class="outline-text-4" id="text-org6a5b0af">
+<div id="outline-container-org002c6b0" class="outline-4">
+<h4 id="org002c6b0">Expressions in Time tide</h4>
+<div class="outline-text-4" id="text-org002c6b0">
 <ul class="org-ul">
 <li>Time tide supports the usual expressions as in <code>C</code>.</li>
 </ul>
@@ -926,38 +958,89 @@ Multidimensional arrays are supported. Example follows:
 <span class="linenr">17: </span>  <span style="font-weight: bold;">struct</span> <span style="color: #6ae4b9;">X</span> <span style="color: #00d3d0;">xx</span>;
 <span class="linenr">18: </span>}
 <span class="linenr">19: </span><span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">Let yy be a variable of type struct Y</span><span style="color: #d8af7a;"> */</span>
-<span id="coderef-struct1" class="coderef-off"><span class="linenr">20: </span><span style="color: #00d3d0;">y</span>.h = (<span style="color: #6ae4b9;">float</span>)7;                 <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">assigning to field h</span><span style="color: #d8af7a;"> */</span></span>
-<span class="linenr">21: </span>y.xx = {(<span style="color: #6ae4b9;">int</span>)8.5};                      <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">assigned to field xx of type struct X</span><span style="color: #d8af7a;"> */</span>
+<span id="coderef-struct1" class="coderef-off"><span class="linenr">20: </span>  <span style="color: #00d3d0;">y</span>.h = (<span style="color: #6ae4b9;">float</span>)7;                       <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">assigning to field h</span><span style="color: #d8af7a;"> */</span></span>
+<span class="linenr">21: </span>  y.xx = {(<span style="color: #6ae4b9;">int</span>)8.5};                    <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">assigned to field xx of type struct X</span><span style="color: #d8af7a;"> */</span>
 <span id="coderef-struct3" class="coderef-off"><span class="linenr">22: </span>y.xx.a = (<span style="color: #6ae4b9;">int</span>)8.5;                      <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">Not allowed</span><span style="color: #d8af7a;"> */</span></span>
 <span class="linenr">23: </span><span style="font-weight: bold;">struct</span> <span style="color: #6ae4b9;">X</span> {
-<span class="linenr">24: </span> <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">x</span>;
-<span id="coderef-structarr" class="coderef-off"><span class="linenr">25: </span> <span style="color: #6ae4b9;">int</span>[2] uuar;   <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">Currently arrays inside structs are not supported</span><span style="color: #d8af7a;"> */</span></span>
+<span class="linenr">24: </span>  <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">x</span>;
+<span id="coderef-structarr" class="coderef-off"><span class="linenr">25: </span>  <span style="color: #6ae4b9;">int</span>[2] uuar;  <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">Currently arrays inside structs are not supported</span><span style="color: #d8af7a;"> */</span></span>
 <span class="linenr">26: </span>};
 </pre>
 </div>
 
 <ul class="org-ul">
 <li><code>extern</code> function calls are expressions (not statements)</li>
-<li><code>extern</code> function calls only work with primitives (not structures yet).</li>
-<li><code>extern</code> function calls are type inferred, i.e., you currently don't
-need to specify the function signature (will change in future)</li>
 <li>Might need to cast the output or arguments to correct type in
 <code>extern</code> function calls (Line <a href="#coderef-ext" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-ext');" onmouseout="CodeHighlightOff(this, 'coderef-ext');">12</a>)</li>
 <li>Only one level of <code>struct</code> fields can be accessed right now (Line
 <a href="#coderef-struct1" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-struct1');" onmouseout="CodeHighlightOff(this, 'coderef-struct1');">20</a> &#x2013; Line <a href="#coderef-struct3" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-struct3');" onmouseout="CodeHighlightOff(this, 'coderef-struct3');">22</a>) &#x2013; will change in the future</li>
 <li>Arrays inside <code>struct</code> are currently not supported &#x2013; will change in
 the future (Line <a href="#coderef-structarr" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-structarr');" onmouseout="CodeHighlightOff(this, 'coderef-structarr');">25</a>).</li>
+<li><p>
+A more detailed example of calling <code>extern C</code> functions is provided
+below:
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">Intelligent Driver Model car system with external C function call</span><span style="color: #d8af7a;"> */</span>
+<span style="font-weight: bold;">extern</span> {                        <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">extern function declaration</span><span style="color: #d8af7a;"> */</span>
+  <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">The below is the type signature of the function defined in C</span><span style="color: #d8af7a;"> */</span>
+  <span style="font-weight: bold;">struct</span> <span style="color: #6ae4b9;">IDMState</span> <span style="color: #ffa00f;">idm_run</span>(<span style="color: #6ae4b9;">float</span>, <span style="color: #6ae4b9;">float</span>, <span style="color: #6ae4b9;">float</span>, <span style="color: #6ae4b9;">float</span>, <span style="color: #6ae4b9;">float</span>);
+};
+
+<span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">Intelligent Driver Model car state</span><span style="color: #d8af7a;"> */</span>
+<span style="font-weight: bold;">struct</span> <span style="color: #6ae4b9;">IDMState</span> {
+  <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">position</span>;
+  <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">velocity</span>;
+  <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">acceleration</span>;
+  <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">gap</span>;
+  <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">lead_position</span>;
+  <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">lead_velocity</span>;
+};
+
+<span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">Intelligent Driver Model car system main function/module</span><span style="color: #d8af7a;"> */</span>
+<span style="color: #ffa00f;">main</span>(input <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">lead_position</span>, input <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">lead_velocity</span>, 
+     output <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">car_position</span>, output <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">car_velocity</span>,
+     output <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">car_acceleration</span>)
+<span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">The arguments to main are the I/O to this module</span><span style="color: #d8af7a;"> */</span>
+{
+  <span style="font-weight: bold;">const</span> <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">dt</span> = 0.1; <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">Time step -- constant variable</span><span style="color: #d8af7a;"> */</span>
+  <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">Initial car state -- mutable variable</span><span style="color: #d8af7a;"> */</span>
+  mut <span style="font-weight: bold;">struct</span> <span style="color: #6ae4b9;">IDMState</span> <span style="color: #00d3d0;">car</span> = {0.0, 20.0, 0.0, 0.0, 0.0, 0.0} { <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">mutable variable</span><span style="color: #d8af7a;"> */</span>
+    <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">Wait for fresh lead vehicle data from the input channels</span><span style="color: #d8af7a;"> */</span>
+    <span style="font-weight: bold;">if</span> (lead_position &amp;&amp; lead_velocity) {
+      <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">Get current lead vehicle state</span><span style="color: #d8af7a;"> */</span>
+      mut <span style="color: #6ae4b9;">float</span> current_lead_pos = 0.0 { <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">mutable variable</span><span style="color: #d8af7a;"> */</span>
+        current_lead_pos = ?lead_position; <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">update variable</span><span style="color: #d8af7a;"> */</span>
+        mut <span style="color: #6ae4b9;">float</span> <span style="color: #00d3d0;">current_lead_vel</span> = 0.0 { <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">mutable variable</span><span style="color: #d8af7a;"> */</span>
+          current_lead_vel = ?lead_velocity; <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">update variable</span><span style="color: #d8af7a;"> */</span>
+          <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">Call external C IDM function and get struct result</span><span style="color: #d8af7a;"> */</span>
+          <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">IDM returns IDMState struct with all updated values</span><span style="color: #d8af7a;"> */</span>
+          <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">Run the idm_run function and return stating that it</span>
+<span style="color: #d8af7a;">             succeeded.</span><span style="color: #d8af7a;"> */</span>
+          car =                 <span style="color: #d8af7a;">/* </span><span style="color: #d8af7a;">extern call -- updating car variable</span><span style="color: #d8af7a;">*/</span>
+          <span style="font-weight: bold;">extern</span> idm_run(dt, car.position,
+                         car.velocity, current_lead_pos, current_lead_vel);
+        }
+      }
+    }
+  }
+}
+</pre>
+</div></li>
+<li>Type of <code>extern</code> function declaration and call have to match, else
+an error will be raised by the compiler.</li>
+<li>The types of arguments and return type have to match.</li>
 </ul>
 </div>
 </div>
 </div>
-<div id="outline-container-orgdd84841" class="outline-3">
-<h3 id="orgdd84841">Statements</h3>
-<div class="outline-text-3" id="text-orgdd84841">
+<div id="outline-container-org74c7c0d" class="outline-3">
+<h3 id="org74c7c0d">Statements</h3>
+<div class="outline-text-3" id="text-org74c7c0d">
 </div>
-<div id="outline-container-org94343e3" class="outline-4">
-<h4 id="org94343e3">Variable declaration and updates</h4>
-<div class="outline-text-4" id="text-org94343e3">
+<div id="outline-container-org13fcae6" class="outline-4">
+<h4 id="org13fcae6">Variable declaration and updates</h4>
+<div class="outline-text-4" id="text-org13fcae6">
 <ol class="org-ol">
 <li>There are two types of variables <code>const</code> and <code>mutable</code>.</li>
 <li>Constant variables cannot be modified.</li>
@@ -1004,9 +1087,9 @@ expressions).</li>
 </div>
 </div>
 </div>
-<div id="outline-container-org6c5d992" class="outline-4">
-<h4 id="org6c5d992">Conditionals</h4>
-<div class="outline-text-4" id="text-org6c5d992">
+<div id="outline-container-orgac3c333" class="outline-4">
+<h4 id="orgac3c333">Conditionals</h4>
+<div class="outline-text-4" id="text-orgac3c333">
 <ol class="org-ol">
 <li>Only <code>if-else</code> blocks are supported.</li>
 <li>The semantics are similar (not the same) as <code>C</code>.</li>
@@ -1049,13 +1132,13 @@ implies checking channel status.</li>
 </ol>
 </div>
 </div>
-<div id="outline-container-org37f7d4d" class="outline-4">
-<h4 id="org37f7d4d">Loops</h4>
-<div class="outline-text-4" id="text-org37f7d4d">
+<div id="outline-container-orgb1b2038" class="outline-4">
+<h4 id="orgb1b2038">Loops</h4>
+<div class="outline-text-4" id="text-orgb1b2038">
 </div>
 <ul class="org-ul">
-<li><a id="org863f529"></a>Sequential loops<br />
-<div class="outline-text-5" id="text-org863f529">
+<li><a id="org22798a1"></a>Sequential loops<br />
+<div class="outline-text-5" id="text-org22798a1">
 <ol class="org-ol">
 <li>Sequential loops in Time tide are always bounded.</li>
 <li>Sequential loops are of two types:
@@ -1111,8 +1194,8 @@ elements get updated in the same logical tick of the module.</li>
 </ol>
 </div>
 </li>
-<li><a id="orgf25a5ff"></a>Parallel loops<br />
-<div class="outline-text-5" id="text-orgf25a5ff">
+<li><a id="org27a7958"></a>Parallel loops<br />
+<div class="outline-text-5" id="text-org27a7958">
 <ol class="org-ol">
 <li>Parallel loops execute statement in synchronous parallel &#x2013; update
 values together.</li>
@@ -1191,9 +1274,9 @@ compiler error.</li>
 </li>
 </ul>
 </div>
-<div id="outline-container-orga1fd6f0" class="outline-4">
-<h4 id="orga1fd6f0">The Task construct</h4>
-<div class="outline-text-4" id="text-orga1fd6f0">
+<div id="outline-container-org6950c02" class="outline-4">
+<h4 id="org6950c02">The Task construct</h4>
+<div class="outline-text-4" id="text-org6950c02">
 <ol class="org-ol">
 <li>Tasks are the primary construct to introduce state (tick) in a
 Time tide program.</li>
@@ -1243,9 +1326,9 @@ Examples follow:
 </ol>
 </div>
 </div>
-<div id="outline-container-org5157320" class="outline-4">
-<h4 id="org5157320">The Abort construct</h4>
-<div class="outline-text-4" id="text-org5157320">
+<div id="outline-container-org9312714" class="outline-4">
+<h4 id="org9312714">The Abort construct</h4>
+<div class="outline-text-4" id="text-org9312714">
 <ol class="org-ol">
 <li><code>abort(logical-expression){/* body */}</code> is the way to preempt a halted system.</li>
 <li><p>
@@ -1264,9 +1347,9 @@ Example follows:
 </ol>
 </div>
 </div>
-<div id="outline-container-orga8acc9e" class="outline-4">
-<h4 id="orga8acc9e">The Synchronous parallel construct</h4>
-<div class="outline-text-4" id="text-orga8acc9e">
+<div id="outline-container-org2e49268" class="outline-4">
+<h4 id="org2e49268">The Synchronous parallel construct</h4>
+<div class="outline-text-4" id="text-org2e49268">
 <ol class="org-ol">
 <li><code>{/*thread body 1*/}&lt;&gt;{/*thread body 2*/}&lt;&gt;{/*thread body
        3*/}...</code> is the way to execute multiple bodies in parallel.</li>
@@ -1308,9 +1391,9 @@ Examples follow:
 </ol>
 </div>
 </div>
-<div id="outline-container-org44da1bf" class="outline-4">
-<h4 id="org44da1bf">Function/module definition</h4>
-<div class="outline-text-4" id="text-org44da1bf">
+<div id="outline-container-org076229c" class="outline-4">
+<h4 id="org076229c">Function/module definition</h4>
+<div class="outline-text-4" id="text-org076229c">
 <ol class="org-ol">
 <li>Function/module definition is similar to <code>C</code>.</li>
 <li>Functions can take as arguments constant and channels.</li>

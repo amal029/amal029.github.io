@@ -676,45 +676,93 @@ that produces the inputs for the system.
 
     + Time tide supports the usual expressions as in =C=.
     
-#+begin_src C -n -r
-  a + b - c			/* left to right precedence */
-  (a + b) * c			/* Bracket has higher precedence */
-  a + b * c			/* Multiply has higher precedence */
-  a * b / f			/* Left to right precedence */
-  (a == b) && (b != c)		/* Logical and expression */
-  (a == 1) || (b == 1)		/* logical or */
-  !(a == 0)			/* logical not */
-  (int)1.0			/* casting C style */
-    
-  channel int K delay 1;			/* int type channel */
-  channel int I1 delay 1;			/* int type channel */
-  extern f(1.0+(float)?K * (float)?I1); /* calling an external C function */ (ref:ext)
-  
-  struct X{int a;};
-  struct Y{
-    float h;
-    struct X xx;
-  }
-  /* Let yy be a variable of type struct Y */
-  y.h = (float)7;			/* assigning to field h */ (ref:struct1)
-  y.xx = {(int)8.5};			/* assigned to field xx of type struct X */
-  y.xx.a = (int)8.5;			/* Not allowed */ (ref:struct3)
-  struct X {
-   float x;
-   int[2] uuar;	/* Currently arrays inside structs are not supported */ (ref:structarr)
-  };
-#+end_src
+    #+begin_src C -n -r
+      a + b - c			/* left to right precedence */
+      (a + b) * c			/* Bracket has higher precedence */
+      a + b * c			/* Multiply has higher precedence */
+      a * b / f			/* Left to right precedence */
+      (a == b) && (b != c)		/* Logical and expression */
+      (a == 1) || (b == 1)		/* logical or */
+      !(a == 0)			/* logical not */
+      (int)1.0			/* casting C style */
+        
+      channel int K delay 1;			/* int type channel */
+      channel int I1 delay 1;			/* int type channel */
+      extern f(1.0+(float)?K * (float)?I1); /* calling an external C function */ (ref:ext)
 
-  * =extern= function calls are expressions (not statements)
-  * =extern= function calls only work with primitives (not structures yet).
-  * =extern= function calls are type inferred, i.e., you currently don't
-    need to specify the function signature (will change in future)
-  * Might need to cast the output or arguments to correct type in
-    =extern= function calls (Line [[(ext)]])
-  * Only one level of =struct= fields can be accessed right now (Line
-    [[(struct1)]] -- Line [[(struct3)]]) -- will change in the future
-  * Arrays inside =struct= are currently not supported -- will change in
-    the future (Line [[(structarr)]]).
+      struct X{int a;};
+      struct Y{
+        float h;
+        struct X xx;
+      }
+      /* Let yy be a variable of type struct Y */
+        y.h = (float)7;			/* assigning to field h */ (ref:struct1)
+        y.xx = {(int)8.5};			/* assigned to field xx of type struct X */
+      y.xx.a = (int)8.5;			/* Not allowed */ (ref:struct3)
+      struct X {
+        float x;
+        int[2] uuar;	/* Currently arrays inside structs are not supported */ (ref:structarr)
+      };
+    #+end_src
+
+    * =extern= function calls are expressions (not statements)
+    * Might need to cast the output or arguments to correct type in
+      =extern= function calls (Line [[(ext)]])
+    * Only one level of =struct= fields can be accessed right now (Line
+      [[(struct1)]] -- Line [[(struct3)]]) -- will change in the future
+    * Arrays inside =struct= are currently not supported -- will change in
+      the future (Line [[(structarr)]]).
+    * A more detailed example of calling =extern C= functions is provided
+      below:
+      #+begin_src C
+	/* Intelligent Driver Model car system with external C function call */
+	extern { 			/* extern function declaration */
+	  /* The below is the type signature of the function defined in C */
+	  struct IDMState idm_run(float, float, float, float, float);
+	};
+
+	/* Intelligent Driver Model car state */
+	struct IDMState {
+	  float position;
+	  float velocity;
+	  float acceleration;
+	  float gap;
+	  float lead_position;
+	  float lead_velocity;
+	};
+
+	/* Intelligent Driver Model car system main function/module */
+	main(input float lead_position, input float lead_velocity, 
+	     output float car_position, output float car_velocity,
+	     output float car_acceleration)
+	/* The arguments to main are the I/O to this module */
+	{
+	  const float dt = 0.1; /* Time step -- constant variable */
+	  /* Initial car state -- mutable variable */
+	  mut struct IDMState car = {0.0, 20.0, 0.0, 0.0, 0.0, 0.0} { /* mutable variable */
+	    /* Wait for fresh lead vehicle data from the input channels */
+	    if (lead_position && lead_velocity) {
+	      /* Get current lead vehicle state */
+	      mut float current_lead_pos = 0.0 { /* mutable variable */
+		current_lead_pos = ?lead_position; /* update variable */
+		mut float current_lead_vel = 0.0 { /* mutable variable */
+		  current_lead_vel = ?lead_velocity; /* update variable */
+		  /* Call external C IDM function and get struct result */
+		  /* IDM returns IDMState struct with all updated values */
+		  /* Run the idm_run function and return stating that it
+		     succeeded. */
+		  car =			/* extern call -- updating car variable*/
+		  extern idm_run(dt, car.position,
+				 car.velocity, current_lead_pos, current_lead_vel);
+		}
+	      }
+	    }
+	  }
+	}
+      #+end_src
+    * Type of =extern= function declaration and call have to match, else
+      an error will be raised by the compiler.
+    * The types of arguments and return type have to match.
 
 ** Statements
 
