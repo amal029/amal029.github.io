@@ -762,7 +762,11 @@ that produces the inputs for the system.
       #+end_src
     * Type of =extern= function declaration and call have to match, else
       an error will be raised by the compiler.
-    * The types of arguments and return type have to match.
+    * The types of arguments and return type have to match between the
+      =extern= type signature declaration and its use.
+    * =extern= functions are unique, i.e., there can only be one
+      function =f= with a given signature. This is requirement of the
+      =C= programming language.
 
 ** Statements
 
