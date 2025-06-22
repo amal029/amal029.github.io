@@ -744,9 +744,9 @@ that produces the inputs for the system.
 	    if (lead_position && lead_velocity) {
 	      /* Get current lead vehicle state */
 	      mut float current_lead_pos = 0.0 { /* mutable variable */
-		current_lead_pos = ?lead_position; /* update variable */
+		current_lead_pos = ?lead_position; /* update variable with value of channel */
 		mut float current_lead_vel = 0.0 { /* mutable variable */
-		  current_lead_vel = ?lead_velocity; /* update variable */
+		  current_lead_vel = ?lead_velocity; /* update variable with value of channel */
 		  /* Call external C IDM function and get struct result */
 		  /* IDM returns IDMState struct with all updated values */
 		  /* Run the idm_run function and return stating that it
