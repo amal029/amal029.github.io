@@ -463,7 +463,7 @@ that produces the inputs for the system.
         signal_A A_curr, A_prev;
         signal_A *A_curr_ptr = &A_curr;
         signal_A *A_prev_ptr = &A_prev;
-        // Below are template specilisations for working with channel A
+        // Below are template instantiations for working with channel A
         template size_t get_sizeof_value(signal_A *); (ref:start)
         template size_t get_sizeof_status(signal_A *);
         template bool get_status(signal_A *);
@@ -498,8 +498,8 @@ that produces the inputs for the system.
         };
         QA qA_var(&qA);
         QA *qA_ptr = &qA_var;
-        template void Qpush(QA *, void *, signal_A *); // template specilisation
-        template size_t Qpull(QA *, signal_A *);	 // template specilisation
+        template void Qpush(QA *, void *, signal_A *); // template instantiation
+        template size_t Qpull(QA *, signal_A *);	 // template instantiation
         // ....
       }
     #+end_src
