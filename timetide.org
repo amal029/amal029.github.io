@@ -724,7 +724,7 @@ that produces the inputs for the system.
         struct X {
          float x;
          int[2] uuar;	/* Currently arrays inside structs are not supported */ (ref:structarr)
-      };
+        };
     #+end_src
 
     * =extern= function calls are expressions (not statements)
