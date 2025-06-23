@@ -588,10 +588,10 @@ that produces the inputs for the system.
     machines, make sure that modules still execute using barrier
     synchronisation.
 
-** Visual Studio Code Time tide syntax highlighter and formatter 
+* Visual Studio Code Time tide syntax highlighter and formatter 
 # Image with caption
 #+CAPTION: Time tide syntax highlighter and formatter on the VSCode Extensions page
-#+NAME: fig:compilation
+#+NAME: fig:formatter
 [[./images/timetide_dsl_formatter.png]]
 
 We currently have a syntax highlighter and formatter for *Visual Studio Code* and any other editors, like *Cursor*, that can access Visual Studio Code extensions. The extension can be installed as follows.
