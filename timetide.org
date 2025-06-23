@@ -84,7 +84,24 @@
 			     SYSRUST_DIR=<path-of-sysrust-compiler-dir> \
 			     TIMETIDE_DIR=<path-of-timetide-compiler-dir> compilers
       #+end_src
-      - This will build all the compilers.
+
+     - This will build all the compilers.
+	
+* Visual Studio Code Time tide syntax highlighter and formatter 
+# Image with caption
+#+CAPTION: Time tide syntax highlighter and formatter on the VSCode Extensions page
+#+NAME: fig:formatter
+[[./images/timetide_dsl_formatter.png]]
+
+We currently have a syntax highlighter and formatter for *Visual Studio Code* and any other editors, like *Cursor*, that can access Visual Studio Code extensions. The extension can be installed as follows.
+
+1. Please go the Extensions tab in Visual Studio Code (VS Code) or other editors with access to  VS Code Extensions.
+2. Search Timetide DSL.
+3. Click on install. Please ensure that the extension page looks like the one shown in the figure above.
+
+*Note:* The syntax highligter and formatter is currently under development and may have some issues. Please report your issues at https://github.com/amal029/amal029.github.io.
+
+
 
 * Compiling first example program
 
@@ -587,21 +604,6 @@ that produces the inputs for the system.
 18. When the modules are implemented on physically different
     machines, make sure that modules still execute using barrier
     synchronisation.
-
-* Visual Studio Code Time tide syntax highlighter and formatter 
-# Image with caption
-#+CAPTION: Time tide syntax highlighter and formatter on the VSCode Extensions page
-#+NAME: fig:formatter
-[[./images/timetide_dsl_formatter.png]]
-
-We currently have a syntax highlighter and formatter for *Visual Studio Code* and any other editors, like *Cursor*, that can access Visual Studio Code extensions. The extension can be installed as follows.
-
-1. Please go the Extensions tab in Visual Studio Code (VS Code) or other editors with access to  VS Code Extensions.
-2. Search Timetide DSL.
-3. Click on install. Please ensure that the extension page looks like the one shown in the figure above.
-
-*Note:* The syntax highligter and formatter is currently under development and may have some issues. Please report your issues at https://github.com/amal029/amal029.github.io.
-
 
 
 * The Time tide language
