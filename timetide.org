@@ -720,10 +720,10 @@ that produces the inputs for the system.
       /* Let yy be a variable of type struct Y */
         y.h = (float)7;			/* assigning to field h */ (ref:struct1)
         y.xx = {(int)8.5};			/* assigned to field xx of type struct X */
-      y.xx.a = (int)8.5;			/* Not allowed */ (ref:struct3)
-      struct X {
-        float x;
-        int[2] uuar;	/* Currently arrays inside structs are not supported */ (ref:structarr)
+        y.xx.a = (int)8.5;			/* Not allowed */ (ref:struct3)
+        struct X {
+         float x;
+         int[2] uuar;	/* Currently arrays inside structs are not supported */ (ref:structarr)
       };
     #+end_src
 
