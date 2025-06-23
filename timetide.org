@@ -443,9 +443,9 @@ that produces the inputs for the system.
      }
    #+end_src
 
-10. The templated library function implementations are specialised
-    for each channel in generated C++ code from the Time tide
-    modules. Example shown below from ~abro_env.cpp~:
+10. The templated library function implementations are instantiated for
+    each channel in generated C++ code from the Time tide modules.
+    Example shown below from ~abro_env.cpp~:
     #+begin_src C++ -n -r
       namespace abro_env {
         //...
@@ -474,11 +474,12 @@ that produces the inputs for the system.
       }
     #+end_src
 
-    - Notice the template specialisation from (Line [[(start)]] -- Line [[(end)]])
+    - Notice the template instantiation from (Line [[(start)]] -- Line
+      [[(end)]])
 
 11. Similarly, the receiving Queue' opaque queue pointers (e.g.,
     ~abro_sys::qA_ptr~) are declared and the ~Qpush~ and ~Qpull~
-    template functions specialised in the generated C++ files. See
+    template functions instantiated in the generated C++ files. See
     below for a snippet of the generated ~abro_sys.cpp~:
     #+begin_src C++ -n
       #include "mQueue.h"
