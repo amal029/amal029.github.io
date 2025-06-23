@@ -612,10 +612,11 @@ that produces the inputs for the system.
 ** Types and variables
 
 *** Primitive types
-  We only support three signed primitive types listed below
+  We only support four signed primitive types listed below
 #+begin_src C -n
   int	a;			/* This is a comment (int is 4 bytes) */
   char	a;			/* char is  1 byte */
+  short	a;			/* short is 2 byte */
   float	a;			/* Float is 4 bytes */
 #+end_src
 
