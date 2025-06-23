@@ -637,7 +637,8 @@ that produces the inputs for the system.
 
 *** Array types
     Arrays are ~similar~ (not the same) to those in =C=.
-    Multidimensional arrays are supported. Example follows:
+    Multidimensional arrays are supported (but are a work in process).
+    Example follows:
     #+begin_src C -n
       const int[4] X = {0, 0, 0, 0};	/* constant array, notice it is int[4]  not int X[4]*/
       const int[2][3] Y = {{0, 0, 0}, {0, 0, 0}} /* 2 x 3 constant array Y -- multidimensional */
