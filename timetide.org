@@ -637,7 +637,7 @@ that produces the inputs for the system.
 
 *** Array types
     Arrays are ~similar~ (not the same) to those in =C=.
-    Multidimensional arrays are supported (but are a work in process).
+    Multidimensional arrays are supported (but are being worked on).
     Example follows:
     #+begin_src C -n
       const int[4] X = {0, 0, 0, 0};	/* constant array, notice it is int[4]  not int X[4]*/
@@ -707,33 +707,35 @@ that produces the inputs for the system.
       (a == 1) || (b == 1)		/* logical or */
       !(a == 0)			/* logical not */
       (int)1.0			/* casting C style */
-        
+           
       channel int K delay 1;			/* int type channel */
       channel int I1 delay 1;			/* int type channel */
       extern f(1.0+(float)?K * (float)?I1); /* calling an external C function */ (ref:ext)
 
       struct X{int a;};
       struct Y{
-        float h;
-        struct X xx;
+          float h;
+          struct X xx;
       }
       /* Let yy be a variable of type struct Y */
-        y.h = (float)7;			/* assigning to field h */ (ref:struct1)
-        y.xx = {(int)8.5};			/* assigned to field xx of type struct X */
-        y.xx.a = (int)8.5;			/* Not allowed */ (ref:struct3)
-        struct X {
-         float x;
-         int[2] uuar;	/* Currently arrays inside structs are not supported */ (ref:structarr)
-        };
+      y.h = (float)7;			/* assigning to field h */ (ref:struct1)
+      y.xx = {(int)8.5};			/* assigned to field xx of type struct X */
+      y.xx.a = (int)8.5;			/* Allowed and OK! */ (ref:struct3)
+      struct X {
+          float x;
+          int[2] uuar;	/* Arrays inside structs are also supported */ (ref:structarr)
+      };
+      mut struct X xx = {0.0, {1, 2}} {
+          xx.uuar[0] = 100;		/* This is OK! */
+      }
     #+end_src
 
     * =extern= function calls are expressions (not statements)
     * Might need to cast the output or arguments to correct type in
       =extern= function calls (Line [[(ext)]])
-    * Only one level of =struct= fields can be accessed right now (Line
-      [[(struct1)]] -- Line [[(struct3)]]) -- will change in the future
-    * Arrays inside =struct= are currently not supported -- will change in
-      the future (Line [[(structarr)]]).
+    * Access to nested =struct= member fields is allowed (Line [[(struct1)]]
+      -- Line [[(struct3)]])
+    * Arrays inside =struct= are also supported (Line [[(structarr)]]).
     * A more detailed example of calling =extern C= functions is provided
       below:
       #+begin_src C
