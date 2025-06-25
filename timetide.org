@@ -606,7 +606,6 @@ that produces the inputs for the system.
     machines, make sure that modules still execute using barrier
     synchronisation.
 
-
 * The Time tide language
 
 ** Types and variables
@@ -689,7 +688,8 @@ that produces the inputs for the system.
   a <= b;				/* Logical less than equal */
   a == b;				/* Logical equality comparison */
   a != b;				/* Logical not equal to comparison */
-  a ^^ b;				/* a to the power of b */
+  a ^^ b;				/* a to the power of b -- currently *not*
+  				         supported in the backend */
 #+end_src
   + The above operators are defined on primitive types only.
     
