@@ -25,68 +25,68 @@
 #+MACRO: set-search-limit #+HTML_HEAD: <script type="text/javascript">setSearchLimit($1);</script>
 
 * Time tide is a new programming language
-  1. It allows building finite state machines.
-  2. It allows developing synchronous concurrent programs.
-  3. It allows for shared memory or distributed memory concurrency.
-  4. The compiler produces efficient C++ code, which allows for easy
-     interaction with native code and deployment on embedded platforms.
-     
+1. It allows building finite state machines.
+2. It allows developing synchronous concurrent programs.
+3. It allows for shared memory or distributed memory concurrency.
+4. The compiler produces efficient C++ code, which allows for easy
+   interaction with native code and deployment on embedded platforms.
+
 ** Requirements when reading this document
-  1. The reader is expected to have knowledge of:
-     + Synchronous programming principles
-     + Good knowledge of C/C++ including template meta-programming
-  2. Please read the comments in the code snippet along with the text in
-     this document.
-  3. Time tide language and tool suite is a work in progress -- expect
-     bugs and things to change daily
-  4. Please file bug reports on github repository with code snippets
-     when things do not work.
+1. The reader is expected to have knowledge of:
+   + Synchronous programming principles
+   + Good knowledge of C/C++ including template meta-programming
+2. Please read the comments in the code snippet along with the text in
+   this document.
+3. Time tide language and tool suite is a work in progress -- expect
+   bugs and things to change daily
+4. Please file bug reports on github repository with code snippets
+   when things do not work.
 
 * Installing the Time tide compiler(s)
-  1. Time tide uses multiple compiler tool chains.
-  2. You are expected to have installed C++ compilers with support for
-     at least C++-20 standard.
-  3. Pull the Time tide compiler from:
-     https://github.com/PRETgroup/timetide
-  4. Install the Ocaml programming language compiler from here:
-     https://ocaml.org/install#linux_mac_bsd
-  5. Install dune with command ~opam install dune~
-  6. Now go to the timetide directory and do command ~dune build~
-  7. It will *not* compile and list the missing libraries.
-  8. You will need to manually install the libraries like so: ~opam install <lib-name>~
-  9. You will need to install the following libraries:
-     ~pretty_expressive~
-     ~ppx_deriving~
-     ~ppx_sexp_conv~
-     ~sexplib~
-     ~base~
-  10. Once all the libraries are installed you should be able to build
-      the compiler using ~dune build~ in the timetide directory.
-  11. Download and install the Rust programming language compiler from:
-      [[https://rustlang.org][Rust]]
-  12. Pull the Sysrust intermediate language compiler from:
-      https://github.com/amal029/sysrust
-  13. Go inside the Sysrust compiler directory and run: ~make br~
-  14. Download and pull the Time tide example directory from:
-      https://github.com/PRETgroup/Timetide_tests
-  15. Go inside the ~Timetide_tests~ directory and run the following
-      command:
-      #+begin_src bash
-	COMPILE_SWITCH=sysrs FNAME="abro" SYSRUST_DIR=<path-of-sysrust-compiler-dir> \
-			     TIMETIDE_DIR=<path-of-timetide-compiler-dir> make cleanall
-      #+end_src
-  16. In the above command replace the ~<path-of-sysrust-compiler-dir>~
-      with where you have downloaded the individual timetide and sysrust
-      compilers.
-  17. Now run the command:
-      #+begin_src bash
-	COMPILE_SWITCH=sysrs FNAME="abro" \
-			     SYSRUST_DIR=<path-of-sysrust-compiler-dir> \
-			     TIMETIDE_DIR=<path-of-timetide-compiler-dir> compilers
-      #+end_src
+1. Time tide uses multiple compiler tool chains.
+2. You are expected to have installed C++ compilers with support for
+   at least C++-20 standard.
+3. Pull the Time tide compiler from:
+   https://github.com/PRETgroup/timetide
+4. Install the Ocaml programming language compiler from here:
+   https://ocaml.org/install#linux_mac_bsd
+5. Install dune with command ~opam install dune~
+6. Now go to the timetide directory and do command ~dune build~
+7. It will *not* compile and list the missing libraries.
+8. You will need to manually install the libraries like so: ~opam install <lib-name>~
+9. You will need to install the following libraries:
+   ~pretty_expressive~
+   ~ppx_deriving~
+   ~ppx_sexp_conv~
+   ~sexplib~
+   ~base~
+10. Once all the libraries are installed you should be able to build
+    the compiler using ~dune build~ in the timetide directory.
+11. Download and install the Rust programming language compiler from:
+    [[https://rustlang.org][Rust]]
+12. Pull the Sysrust intermediate language compiler from:
+    https://github.com/amal029/sysrust
+13. Go inside the Sysrust compiler directory and run: ~make br~
+14. Download and pull the Time tide example directory from:
+    https://github.com/PRETgroup/Timetide_tests
+15. Go inside the ~Timetide_tests~ directory and run the following
+    command:
+    #+begin_src bash
+      COMPILE_SWITCH=sysrs FNAME="abro" SYSRUST_DIR=<path-of-sysrust-compiler-dir> \
+      		     TIMETIDE_DIR=<path-of-timetide-compiler-dir> make cleanall
+    #+end_src
+16. In the above command replace the ~<path-of-sysrust-compiler-dir>~
+    with where you have downloaded the individual timetide and sysrust
+    compilers.
+17. Now run the command:
+    #+begin_src bash
+      COMPILE_SWITCH=sysrs FNAME="abro" \
+      		     SYSRUST_DIR=<path-of-sysrust-compiler-dir> \
+      		     TIMETIDE_DIR=<path-of-timetide-compiler-dir> compilers
+    #+end_src
 
-     - This will build all the compilers.
-	
+    - This will build all the compilers.
+
 * Visual Studio Code Time tide syntax highlighter and formatter 
 # Image with caption
 #+CAPTION: Time tide syntax highlighter and formatter on the VSCode Extensions page
@@ -223,8 +223,8 @@ first program.
 8. We can finally run the program using the command:
    #+begin_src bash
      COMPILE_SWITCH=sysrs FNAME="abro" \
-		    SYSRUST_DIR=<path-of-sysrust-compiler-dir> \
-		    TIMETIDE_DIR=<path-of-timetide-compiler-dir> EXTRA_FLAGS="-DDEBUG" run
+     		     SYSRUST_DIR=<path-of-sysrust-compiler-dir> \
+     		     TIMETIDE_DIR=<path-of-timetide-compiler-dir> EXTRA_FLAGS="-DDEBUG" run
    #+end_src
 
 ** Compiling the abro example (distributed memory) program
@@ -241,13 +241,13 @@ that produces the inputs for the system.
      /* abro_sys.tt */
      main(input int A, input int B, input int R, output int O) {
        for (int i:1:99) {
-	 abort(R) {
-	   /* Wait for A and B in parallel */
-	   {run waitA(A);}<>{run waitB(B);};
-	   send O(100);		/* send O once both are received */
-	   /* abort when R is present and restart */
-	   task(period=1,duration=0,offset=0){;} /* halt */
-	 }
+         abort(R) {
+           /* Wait for A and B in parallel */
+           {run waitA(A);}<>{run waitB(B);};
+           send O(100);		/* send O once both are received */
+           /* abort when R is present and restart */
+           task(period=1,duration=0,offset=0){;} /* halt */
+         }
        } /* loop back */
      };
      waitA(input int A) {abort(A) {task(period=1,duration=0,offset=0){;}}};
@@ -264,7 +264,7 @@ that produces the inputs for the system.
 
 2. Important point to notice:
    + Each of these modules are written in their individual files
-      ~abro_sys.tt~ and ~abro_env.tt~.
+     ~abro_sys.tt~ and ~abro_env.tt~.
    + Each module has an individual ~main~ function/reaction.
    + The ~main~ function takes inputs and outputs as required.
 
@@ -272,9 +272,9 @@ that produces the inputs for the system.
    following command:
    #+begin_src bash
      COMPILE_SWITCH=sysrs FNAME="abro_sys abro_env" \
-			  SYSRUST_DIR=<path-of-sysrust-compiler-dir> \
-			  TIMETIDE_DIR=<path-of-timetide-compiler-dir> make \
-			  EXTRA_FLAGS="-DDEBUG"
+     		     SYSRUST_DIR=<path-of-sysrust-compiler-dir> \
+     		     TIMETIDE_DIR=<path-of-timetide-compiler-dir> make \
+     		     EXTRA_FLAGS="-DDEBUG"
    #+end_src
    - Notice that we specify the individual module names in ~FNAME~
      environment variable for compiling both modules together.
@@ -297,14 +297,14 @@ that produces the inputs for the system.
        // the input port.
        template <typename In, typename Out, typename Q>
        void In2Out(In *in, Out *out, Q *q) {Qpush(q, (void *)in, out);} (ref:queue)
-       // We always write the current value from one to the previous value of
-       // the next.
+       								 // We always write the current value from one to the previous value of
+       								 // the next.
        void abro_env::write_outputs() { (ref:writeo)
-	 // Then we write the outputs for the tick done.
-	 In2Out(abro_env::A_curr_ptr, abro_sys::A_prev_ptr, abro_sys::qA_ptr);
-	 In2Out(abro_env::B_curr_ptr, abro_sys::B_prev_ptr, abro_sys::qB_ptr);
-	 In2Out(abro_env::R_curr_ptr, abro_sys::R_prev_ptr, abro_sys::qR_ptr);
-       }
+       								     // Then we write the outputs for the tick done.
+       								     In2Out(abro_env::A_curr_ptr, abro_sys::A_prev_ptr, abro_sys::qA_ptr);
+         In2Out(abro_env::B_curr_ptr, abro_sys::B_prev_ptr, abro_sys::qB_ptr);
+         In2Out(abro_env::R_curr_ptr, abro_sys::R_prev_ptr, abro_sys::qR_ptr);
+       								 }
      #+end_src
    - Function ~abro_env::write_outputs~ (Line [[(writeo)]]) passes the
      outputs from module ~abro_env~ to module ~abro_sys~.
@@ -449,7 +449,7 @@ that produces the inputs for the system.
     #+begin_src C++ -n -r
       namespace abro_env {
         //...
-        #include "lib.h"
+      #include "lib.h"
 
         // Sig decls
         typedef struct signal_A {
@@ -470,7 +470,7 @@ that produces the inputs for the system.
         template void get_value(void *, signal_A *);
         template void set_value(signal_A *, void *);
         template void set_status(signal_A *, unsigned char v); (ref:end)
-        // ......
+      							 // ......
       }
     #+end_src
 
@@ -530,24 +530,24 @@ that produces the inputs for the system.
       void abro_run(std::atomic<int> &&barrier = 0) {
         std::cout << "running two threads\n";
         auto env = std::thread([&barrier]() { (ref:thread1)
-          while (barrier != 1) {
-            std::this_thread::yield();
-          }
-          barrier--;
-          // First we read from the buffer for all inputs
-          std::cout << "Running the abro env \n";
-          abro_env::main();
-          std::cout << "Done running the abro env\n";
+      	while (barrier != 1) {
+      	  std::this_thread::yield();
+      	}
+            barrier--;
+            // First we read from the buffer for all inputs
+            std::cout << "Running the abro env \n";
+            abro_env::main();
+            std::cout << "Done running the abro env\n";
         });
 
         auto sys = std::thread([&barrier]() { (ref:thread2)
-          while (barrier != 2) {
-            std::this_thread::yield();
-          }
-          barrier--;
-          std::cout << "Running the abro sys\n";
-          abro_sys::main();
-          std::cout << "Done running the abro sys\n";
+      	while (barrier != 2) {
+      	  std::this_thread::yield();
+      	}
+            barrier--;
+            std::cout << "Running the abro sys\n";
+            abro_sys::main();
+            std::cout << "Done running the abro sys\n";
         });
         // XXX: you can change this to change the order of execution.
         // barrier = 2, makes sys run first.
@@ -556,7 +556,7 @@ that produces the inputs for the system.
         // execute an LSN.
         barrier = 2;
         while (barrier != 0) (ref:barrier)
-          ; // spin until both the modules/threads are done -- the barrier
+      			 ; // spin until both the modules/threads are done -- the barrier
         env.join();
         sys.join();
       }
@@ -585,17 +585,17 @@ that produces the inputs for the system.
     generate the binary to execute using the command:
     #+begin_src bash
       COMPILE_SWITCH=sysrs FNAME="abro_sys abro_env" \
-			  SYSRUST_DIR=<path-of-sysrust-compiler-dir> \
-			  TIMETIDE_DIR=<path-of-timetide-compiler-dir> make \
-			  EXTRA_FLAGS="-DDEBUG delays.cpp" exe	 
+      		     SYSRUST_DIR=<path-of-sysrust-compiler-dir> \
+      		     TIMETIDE_DIR=<path-of-timetide-compiler-dir> make \
+      		     EXTRA_FLAGS="-DDEBUG delays.cpp" exe	 
     #+end_src
 
 16. We can then run the program like so:
     #+begin_src bash
       COMPILE_SWITCH=sysrs FNAME="abro_sys abro_env" \
-			  SYSRUST_DIR=<path-of-sysrust-compiler-dir> \
-			  TIMETIDE_DIR=<path-of-timetide-compiler-dir> make \
-			  EXTRA_FLAGS="-DDEBUG delays.cpp" run	 
+      		     SYSRUST_DIR=<path-of-sysrust-compiler-dir> \
+      		     TIMETIDE_DIR=<path-of-timetide-compiler-dir> make \
+      		     EXTRA_FLAGS="-DDEBUG delays.cpp" run	 
     #+end_src
 
 17. One needs to write a new library header/C++ file to send data
@@ -611,7 +611,7 @@ that produces the inputs for the system.
 ** Types and variables
 
 *** Primitive types
-  We only support four signed primitive types listed below
+We only support four signed primitive types listed below
 #+begin_src C -n
   int	a;			/* This is a comment (int is 4 bytes) */
   char	a;			/* char is  1 byte */
@@ -620,8 +620,8 @@ that produces the inputs for the system.
 #+end_src
 
 *** User defined structures
-   User defined types follows the same convention as =C=. However, no
-   pointers are allowed. Examples follow:
+User defined types follows the same convention as =C=. However, no
+pointers are allowed. Examples follow:
 #+begin_src C -n
   struct Y { int a; float u;};	/* Structure (type Y) with field varibles a and u */
   struct X {
@@ -629,19 +629,47 @@ that produces the inputs for the system.
     struct Y g;			/* variable g of type struct Y */
   }
   /* Since there are no pointers, one cannot define self refrential structures */
-  struct X {
-    struct X *m;			/* not allowed */
-  }
+    struct X {
+      struct X *m;			/* not allowed */
+    }
 #+end_src
 
 *** Array types
-    Arrays are ~similar~ (not the same) to those in =C=.
-    Multidimensional arrays are supported (but are being worked on).
-    Example follows:
-    #+begin_src C -n
-      const int[4] X = {0, 0, 0, 0};	/* constant array, notice it is int[4]  not int X[4]*/
-      const int[2][3] Y = {{0, 0, 0}, {0, 0, 0}} /* 2 x 3 constant array Y -- multidimensional */
+Arrays are ~similar~ (not the same) to those in =C=.
+Multidimensional arrays are supported (but are being worked on).
+Example follows:
+#+begin_src C -n
+  const int[4] X = {0, 0, 0, 0};	/* constant array, notice it is int[4]  not int X[4]*/
+  const int[2][3] Y = {{0, 0, 0}, {0, 0, 0}} /* 2 x 3 constant array Y -- multidimensional */
+#+end_src
+    
+*** Peculiarity of Array Types
+    Consider the =C= source code below:
+    #+begin_src C -n -r
+      int X[2] = {1, 1};	 /* Array initialization -- OK*/
+      X = {2, 2}; /* This code will not compile */ (ref:arrayass)
+      struct ZZ {
+        int X[2];
+      };		    /* Struct wrapping an array */
+      ZZ z = {{1, 1}};/* Struct and array intialization */ (ref:structdec)
+      z  = {{2, 2}}; /* Struct copy assignment -- OK */ (ref:structass)
     #+end_src
+    + Arrays in =C= decay to pointers.
+    + Copy assignment (using ===) does not work in C (Line [[(arrayass)]]).
+    + The solution is to wrap the arrays in =struct= as shown on Line
+      [[(structdec)]] and Line [[(structass)]].
+    + This peculiarity of =C= is essential to understand, because of
+      array type channels with their issue and their solution as shown
+      in the /Time tide/ code below:
+      #+begin_src C -n -r
+	int[2] channel X delay 1; /* channel carrying 2 size array of int */
+	send X({1, 1});  /* Will _not_ work, because array decays to a pointer */
+	struct Z {
+	  int[2] x;/* Declare structure to wrap the array */
+	};
+	struct Z channel X delay 1;/* channel of type struct Z */
+	send X({{1, 1}});/* OK, because struct does not decay to a pointer */
+      #+end_src
 
 *** Channels
     1. Channels are specific to Time tide and do not exist in ~C~.

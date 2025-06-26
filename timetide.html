@@ -25,11 +25,15 @@
 <style type="text/css">
  pre.src {background-color: #000000; color: #ffffff;}</style>
 <style type="text/css">
- pre.src {background-color: #FFFFFF; color: #333333;}</style>
+ pre.src {background-color: #000000; color: #ffffff;}</style>
 <style type="text/css">
- pre.src {background-color: #ffffff; color: #000000;}</style>
+ pre.src {background-color: #000000; color: #ffffff;}</style>
 <style type="text/css">
- pre.src {background-color: #ffffff; color: #000000;}</style>
+ pre.src {background-color: #000000; color: #ffffff;}</style>
+<style type="text/css">
+ pre.src {background-color: #000000; color: #ffffff;}</style>
+<style type="text/css">
+ pre.src {background-color: #000000; color: #ffffff;}</style>
 <style type="text/css">
  pre.src {background-color: #000000; color: #ffffff;}</style>
 <style type="text/css">
@@ -76,44 +80,45 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org9306c61">Time tide is a new programming language</a>
+<li><a href="#orgf803dd7">Time tide is a new programming language</a>
 <ul>
-<li><a href="#org0c002ee">Requirements when reading this document</a></li>
+<li><a href="#orgd1a6171">Requirements when reading this document</a></li>
 </ul>
 </li>
-<li><a href="#orgb960030">Installing the Time tide compiler(s)</a></li>
-<li><a href="#org10288c3">Visual Studio Code Time tide syntax highlighter and formatter</a></li>
-<li><a href="#org532716b">Compiling first example program</a>
+<li><a href="#org2358b9f">Installing the Time tide compiler(s)</a></li>
+<li><a href="#orgbb89f75">Visual Studio Code Time tide syntax highlighter and formatter</a></li>
+<li><a href="#orgfda61c5">Compiling first example program</a>
 <ul>
-<li><a href="#orgd5dccc0">Compiling the abro (shared memory) program</a></li>
-<li><a href="#org04e1aa0">Compiling the abro example (distributed memory) program</a></li>
+<li><a href="#org5882839">Compiling the abro (shared memory) program</a></li>
+<li><a href="#orgd56f3fd">Compiling the abro example (distributed memory) program</a></li>
 </ul>
 </li>
-<li><a href="#org29c2999">The Time tide language</a>
+<li><a href="#org193ef85">The Time tide language</a>
 <ul>
-<li><a href="#org8b19dc7">Types and variables</a>
+<li><a href="#org4c45b7a">Types and variables</a>
 <ul>
-<li><a href="#orgc6fe33b">Primitive types</a></li>
-<li><a href="#orgd4e3c19">User defined structures</a></li>
-<li><a href="#org4198f39">Array types</a></li>
-<li><a href="#org51f46f3">Channels</a></li>
+<li><a href="#org9d4c742">Primitive types</a></li>
+<li><a href="#org5ca7446">User defined structures</a></li>
+<li><a href="#orgdfde124">Array types</a></li>
+<li><a href="#org022b14a">Peculiarity of Array Types</a></li>
+<li><a href="#org4792f7d">Channels</a></li>
 </ul>
 </li>
-<li><a href="#org9be8df4">Operators and expressions in Time tide</a>
+<li><a href="#org4a53fa7">Operators and expressions in Time tide</a>
 <ul>
-<li><a href="#org86a2bb1">Operators in Time tide</a></li>
-<li><a href="#orgb48636b">Expressions in Time tide</a></li>
+<li><a href="#org5cf88cb">Operators in Time tide</a></li>
+<li><a href="#orge9ce3c5">Expressions in Time tide</a></li>
 </ul>
 </li>
-<li><a href="#org2696ce5">Statements</a>
+<li><a href="#org9d21fc2">Statements</a>
 <ul>
-<li><a href="#org48a3e9e">Variable declaration and updates</a></li>
-<li><a href="#org9b0f008">Conditionals</a></li>
-<li><a href="#orge6594f9">Loops</a></li>
-<li><a href="#orgea6c315">The Task construct</a></li>
-<li><a href="#org8c45c89">The Abort construct</a></li>
-<li><a href="#orgd425838">The Synchronous parallel construct</a></li>
-<li><a href="#orgaf7f419">Function/module definition</a></li>
+<li><a href="#org42447e5">Variable declaration and updates</a></li>
+<li><a href="#org9384c0a">Conditionals</a></li>
+<li><a href="#org17aad58">Loops</a></li>
+<li><a href="#org1ea0808">The Task construct</a></li>
+<li><a href="#org824e942">The Abort construct</a></li>
+<li><a href="#org25cffd1">The Synchronous parallel construct</a></li>
+<li><a href="#org48c7968">Function/module definition</a></li>
 </ul>
 </li>
 </ul>
@@ -121,9 +126,9 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org9306c61" class="outline-2">
-<h2 id="org9306c61">Time tide is a new programming language</h2>
-<div class="outline-text-2" id="text-org9306c61">
+<div id="outline-container-orgf803dd7" class="outline-2">
+<h2 id="orgf803dd7">Time tide is a new programming language</h2>
+<div class="outline-text-2" id="text-orgf803dd7">
 <ol class="org-ol">
 <li>It allows building finite state machines.</li>
 <li>It allows developing synchronous concurrent programs.</li>
@@ -132,9 +137,9 @@
 interaction with native code and deployment on embedded platforms.</li>
 </ol>
 </div>
-<div id="outline-container-org0c002ee" class="outline-3">
-<h3 id="org0c002ee">Requirements when reading this document</h3>
-<div class="outline-text-3" id="text-org0c002ee">
+<div id="outline-container-orgd1a6171" class="outline-3">
+<h3 id="orgd1a6171">Requirements when reading this document</h3>
+<div class="outline-text-3" id="text-orgd1a6171">
 <ol class="org-ol">
 <li>The reader is expected to have knowledge of:
 <ul class="org-ul">
@@ -151,9 +156,9 @@ when things do not work.</li>
 </div>
 </div>
 </div>
-<div id="outline-container-orgb960030" class="outline-2">
-<h2 id="orgb960030">Installing the Time tide compiler(s)</h2>
-<div class="outline-text-2" id="text-orgb960030">
+<div id="outline-container-org2358b9f" class="outline-2">
+<h2 id="org2358b9f">Installing the Time tide compiler(s)</h2>
+<div class="outline-text-2" id="text-org2358b9f">
 <ol class="org-ol">
 <li>Time tide uses multiple compiler tool chains.</li>
 <li>You are expected to have installed C++ compilers with support for
@@ -209,11 +214,11 @@ Now run the command:
 </ol>
 </div>
 </div>
-<div id="outline-container-org10288c3" class="outline-2">
-<h2 id="org10288c3">Visual Studio Code Time tide syntax highlighter and formatter</h2>
-<div class="outline-text-2" id="text-org10288c3">
+<div id="outline-container-orgbb89f75" class="outline-2">
+<h2 id="orgbb89f75">Visual Studio Code Time tide syntax highlighter and formatter</h2>
+<div class="outline-text-2" id="text-orgbb89f75">
 
-<div id="orgcfb5f2d" class="figure">
+<div id="org1d7cd2d" class="figure">
 <p><img src="./images/timetide_dsl_formatter.png" alt="timetide_dsl_formatter.png" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Time tide syntax highlighter and formatter on the VSCode Extensions page</p>
@@ -234,9 +239,9 @@ We currently have a syntax highlighter and formatter for <b>Visual Studio Code</
 </p>
 </div>
 </div>
-<div id="outline-container-org532716b" class="outline-2">
-<h2 id="org532716b">Compiling first example program</h2>
-<div class="outline-text-2" id="text-org532716b">
+<div id="outline-container-orgfda61c5" class="outline-2">
+<h2 id="orgfda61c5">Compiling first example program</h2>
+<div class="outline-text-2" id="text-orgfda61c5">
 <p>
 We will use the <code>abro.tt</code> program in <code>Timetide_tests</code> directory as our
 first program.
@@ -288,9 +293,9 @@ available after a single so called <code>tick</code>.</li>
 <li>Tick is the synchronous (logical) clock running the whole program.</li>
 </ol>
 </div>
-<div id="outline-container-orgd5dccc0" class="outline-3">
-<h3 id="orgd5dccc0">Compiling the abro (shared memory) program</h3>
-<div class="outline-text-3" id="text-orgd5dccc0">
+<div id="outline-container-org5882839" class="outline-3">
+<h3 id="org5882839">Compiling the abro (shared memory) program</h3>
+<div class="outline-text-3" id="text-org5882839">
 <ol class="org-ol">
 <li><p>
 Run the command:
@@ -380,16 +385,16 @@ We can finally run the program using the command:
 </p>
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #eedd82;">COMPILE_SWITCH</span>=sysrs <span style="color: #eedd82;">FNAME</span>=<span style="color: #ffa07a;">"abro"</span> <span style="color: #ffa07a;">\</span>
-                    <span style="color: #eedd82;">SYSRUST_DIR</span>=&lt;path-of-sysrust-compiler-dir&gt; <span style="color: #ffa07a;">\</span>
-                    <span style="color: #eedd82;">TIMETIDE_DIR</span>=&lt;path-of-timetide-compiler-dir&gt; <span style="color: #eedd82;">EXTRA_FLAGS</span>=<span style="color: #ffa07a;">"-DDEBUG"</span> run
+                     <span style="color: #eedd82;">SYSRUST_DIR</span>=&lt;path-of-sysrust-compiler-dir&gt; <span style="color: #ffa07a;">\</span>
+                     <span style="color: #eedd82;">TIMETIDE_DIR</span>=&lt;path-of-timetide-compiler-dir&gt; <span style="color: #eedd82;">EXTRA_FLAGS</span>=<span style="color: #ffa07a;">"-DDEBUG"</span> run
 </pre>
 </div></li>
 </ol>
 </div>
 </div>
-<div id="outline-container-org04e1aa0" class="outline-3">
-<h3 id="org04e1aa0">Compiling the abro example (distributed memory) program</h3>
-<div class="outline-text-3" id="text-org04e1aa0">
+<div id="outline-container-orgd56f3fd" class="outline-3">
+<h3 id="orgd56f3fd">Compiling the abro example (distributed memory) program</h3>
+<div class="outline-text-3" id="text-orgd56f3fd">
 <p>
 The primary idea is to divide the <code>abro</code> program into two parts: (a)
 <code>abro_sys.tt</code>, which captures the system waiting for the data to
@@ -408,13 +413,13 @@ presented below:
 <pre class="src src-C"><span class="linenr"> 1: </span><span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">abro_sys.tt</span><span style="color: #ff7f24;"> */</span>
 <span class="linenr"> 2: </span><span style="color: #87cefa;">main</span>(input <span style="color: #98fb98;">int</span> <span style="color: #eedd82;">A</span>, input <span style="color: #98fb98;">int</span> <span style="color: #eedd82;">B</span>, input <span style="color: #98fb98;">int</span> <span style="color: #eedd82;">R</span>, output <span style="color: #98fb98;">int</span> <span style="color: #eedd82;">O</span>) {
 <span class="linenr"> 3: </span>  <span style="font-weight: bold;">for</span> (<span style="color: #98fb98;">int</span> <span style="color: #eedd82;">i</span>:1:99) {
-<span class="linenr"> 4: </span>         abort(R) {
-<span class="linenr"> 5: </span>           <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">Wait for A and B in parallel</span><span style="color: #ff7f24;"> */</span>
-<span class="linenr"> 6: </span>           {<span style="color: #98fb98;">run</span> <span style="color: #87cefa;">waitA</span>(A);}&lt;&gt;{<span style="color: #98fb98;">run</span> <span style="color: #87cefa;">waitB</span>(B);};
-<span class="linenr"> 7: </span>           <span style="color: #98fb98;">send</span> <span style="color: #87cefa;">O</span>(100);         <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">send O once both are received</span><span style="color: #ff7f24;"> */</span>
-<span class="linenr"> 8: </span>           <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">abort when R is present and restart</span><span style="color: #ff7f24;"> */</span>
-<span class="linenr"> 9: </span>           task(period=1,duration=0,offset=0){;} <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">halt</span><span style="color: #ff7f24;"> */</span>
-<span class="linenr">10: </span>         }
+<span class="linenr"> 4: </span>    abort(R) {
+<span class="linenr"> 5: </span>      <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">Wait for A and B in parallel</span><span style="color: #ff7f24;"> */</span>
+<span class="linenr"> 6: </span>      {<span style="color: #98fb98;">run</span> <span style="color: #87cefa;">waitA</span>(A);}&lt;&gt;{<span style="color: #98fb98;">run</span> <span style="color: #87cefa;">waitB</span>(B);};
+<span class="linenr"> 7: </span>      <span style="color: #98fb98;">send</span> <span style="color: #87cefa;">O</span>(100);              <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">send O once both are received</span><span style="color: #ff7f24;"> */</span>
+<span class="linenr"> 8: </span>      <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">abort when R is present and restart</span><span style="color: #ff7f24;"> */</span>
+<span class="linenr"> 9: </span>      task(period=1,duration=0,offset=0){;} <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">halt</span><span style="color: #ff7f24;"> */</span>
+<span class="linenr">10: </span>    }
 <span class="linenr">11: </span>  } <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">loop back</span><span style="color: #ff7f24;"> */</span>
 <span class="linenr">12: </span>};
 <span class="linenr">13: </span><span style="color: #87cefa;">waitA</span>(input <span style="color: #98fb98;">int</span> <span style="color: #eedd82;">A</span>) {abort(A) {task(period=1,duration=0,offset=0){;}}};
@@ -445,9 +450,9 @@ following command:
 </p>
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #eedd82;">COMPILE_SWITCH</span>=sysrs <span style="color: #eedd82;">FNAME</span>=<span style="color: #ffa07a;">"abro_sys abro_env"</span> <span style="color: #ffa07a;">\</span>
-                          <span style="color: #eedd82;">SYSRUST_DIR</span>=&lt;path-of-sysrust-compiler-dir&gt; <span style="color: #ffa07a;">\</span>
-                          <span style="color: #eedd82;">TIMETIDE_DIR</span>=&lt;path-of-timetide-compiler-dir&gt; make <span style="color: #ffa07a;">\</span>
-                          <span style="color: #eedd82;">EXTRA_FLAGS</span>=<span style="color: #ffa07a;">"-DDEBUG"</span>
+                     <span style="color: #eedd82;">SYSRUST_DIR</span>=&lt;path-of-sysrust-compiler-dir&gt; <span style="color: #ffa07a;">\</span>
+                     <span style="color: #eedd82;">TIMETIDE_DIR</span>=&lt;path-of-timetide-compiler-dir&gt; make <span style="color: #ffa07a;">\</span>
+                     <span style="color: #eedd82;">EXTRA_FLAGS</span>=<span style="color: #ffa07a;">"-DDEBUG"</span>
 </pre>
 </div>
 <ul class="org-ul">
@@ -476,14 +481,14 @@ The <code>abro_env::write_outputs</code> function:
 <span class="linenr"> 2: </span><span style="color: #ff7f24;">// </span><span style="color: #ff7f24;">the input port.</span>
 <span class="linenr"> 3: </span><span style="font-weight: bold;">template</span> &lt;<span style="font-weight: bold;">typename</span> <span style="color: #98fb98;">In</span>, <span style="font-weight: bold;">typename</span> <span style="color: #98fb98;">Out</span>, <span style="font-weight: bold;">typename</span> <span style="color: #98fb98;">Q</span>&gt;
 <span id="coderef-queue" class="coderef-off"><span class="linenr"> 4: </span><span style="color: #98fb98;">void</span> <span style="color: #87cefa;">In2Out</span>(<span style="color: #98fb98;">In</span> *<span style="color: #eedd82;">in</span>, <span style="color: #98fb98;">Out</span> *<span style="color: #eedd82;">out</span>, <span style="color: #98fb98;">Q</span> *<span style="color: #eedd82;">q</span>) {Qpush(q, (<span style="color: #98fb98;">void</span> *)in, out);}</span>
-<span class="linenr"> 5: </span><span style="color: #ff7f24;">// </span><span style="color: #ff7f24;">We always write the current value from one to the previous value of</span>
-<span class="linenr"> 6: </span><span style="color: #ff7f24;">// </span><span style="color: #ff7f24;">the next.</span>
+<span class="linenr"> 5: </span>                                                                 <span style="color: #ff7f24;">// </span><span style="color: #ff7f24;">We always write the current value from one to the previous value of</span>
+<span class="linenr"> 6: </span>                                                                 <span style="color: #ff7f24;">// </span><span style="color: #ff7f24;">the next.</span>
 <span id="coderef-writeo" class="coderef-off"><span class="linenr"> 7: </span><span style="color: #98fb98;">void</span> <span style="color: #7fffd4;">abro_env</span>::<span style="color: #87cefa;">write_outputs</span>() {</span>
-<span class="linenr"> 8: </span>         <span style="color: #ff7f24;">// </span><span style="color: #ff7f24;">Then we write the outputs for the tick done.</span>
-<span class="linenr"> 9: </span>         In2Out(<span style="color: #7fffd4;">abro_env</span>::A_curr_ptr, <span style="color: #7fffd4;">abro_sys</span>::A_prev_ptr, <span style="color: #7fffd4;">abro_sys</span>::qA_ptr);
-<span class="linenr">10: </span>         In2Out(<span style="color: #7fffd4;">abro_env</span>::B_curr_ptr, <span style="color: #7fffd4;">abro_sys</span>::B_prev_ptr, <span style="color: #7fffd4;">abro_sys</span>::qB_ptr);
-<span class="linenr">11: </span>         In2Out(<span style="color: #7fffd4;">abro_env</span>::R_curr_ptr, <span style="color: #7fffd4;">abro_sys</span>::R_prev_ptr, <span style="color: #7fffd4;">abro_sys</span>::qR_ptr);
-<span class="linenr">12: </span>}
+<span class="linenr"> 8: </span>                                                                     <span style="color: #ff7f24;">// </span><span style="color: #ff7f24;">Then we write the outputs for the tick done.</span>
+<span class="linenr"> 9: </span>                                                                     In2Out(<span style="color: #7fffd4;">abro_env</span>::A_curr_ptr, <span style="color: #7fffd4;">abro_sys</span>::A_prev_ptr, <span style="color: #7fffd4;">abro_sys</span>::qA_ptr);
+<span class="linenr">10: </span>  In2Out(<span style="color: #7fffd4;">abro_env</span>::B_curr_ptr, <span style="color: #7fffd4;">abro_sys</span>::B_prev_ptr, <span style="color: #7fffd4;">abro_sys</span>::qB_ptr);
+<span class="linenr">11: </span>  In2Out(<span style="color: #7fffd4;">abro_env</span>::R_curr_ptr, <span style="color: #7fffd4;">abro_sys</span>::R_prev_ptr, <span style="color: #7fffd4;">abro_sys</span>::qR_ptr);
+<span class="linenr">12: </span>                                                                 }
 </pre>
 </div></li>
 <li>Function <code>abro_env::write_outputs</code> (Line <a href="#coderef-writeo" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-writeo');" onmouseout="CodeHighlightOff(this, 'coderef-writeo');">7</a>) passes the
@@ -643,7 +648,7 @@ Example shown below from <code>abro_env.cpp</code>:
 <div class="org-src-container">
 <pre class="src src-C++"><span class="linenr"> 1: </span><span style="font-weight: bold;">namespace</span> <span style="color: #7fffd4;">abro_env</span> {
 <span class="linenr"> 2: </span>  <span style="color: #ff7f24;">//</span><span style="color: #ff7f24;">...</span>
-<span class="linenr"> 3: </span><span style="color: #b0c4de;">  #include</span> <span style="color: #ffa07a;">"lib.h"</span>
+<span class="linenr"> 3: </span><span style="color: #b0c4de;">#include</span> <span style="color: #ffa07a;">"lib.h"</span>
 <span class="linenr"> 4: </span>
 <span class="linenr"> 5: </span>  <span style="color: #ff7f24;">// </span><span style="color: #ff7f24;">Sig decls</span>
 <span class="linenr"> 6: </span>  <span style="font-weight: bold;">typedef</span> <span style="font-weight: bold;">struct</span> <span style="color: #98fb98;">signal_A</span> {
@@ -664,7 +669,7 @@ Example shown below from <code>abro_env.cpp</code>:
 <span class="linenr">21: </span>  <span style="font-weight: bold;">template</span> <span style="color: #98fb98;">void</span> <span style="color: #87cefa;">get_value</span>(<span style="color: #98fb98;">void</span> *, <span style="color: #98fb98;">signal_A</span> *);
 <span class="linenr">22: </span>  <span style="font-weight: bold;">template</span> <span style="color: #98fb98;">void</span> <span style="color: #87cefa;">set_value</span>(<span style="color: #98fb98;">signal_A</span> *, <span style="color: #98fb98;">void</span> *);
 <span id="coderef-end" class="coderef-off"><span class="linenr">23: </span>  <span style="font-weight: bold;">template</span> <span style="color: #98fb98;">void</span> <span style="color: #87cefa;">set_status</span>(<span style="color: #98fb98;">signal_A</span> *, <span style="color: #98fb98;">unsigned</span> <span style="color: #98fb98;">char</span> <span style="color: #eedd82;">v</span>);</span>
-<span class="linenr">24: </span>  <span style="color: #ff7f24;">// </span><span style="color: #ff7f24;">......</span>
+<span class="linenr">24: </span>                                                         <span style="color: #ff7f24;">// </span><span style="color: #ff7f24;">......</span>
 <span class="linenr">25: </span>}
 </pre>
 </div>
@@ -735,24 +740,24 @@ below:
 <span class="linenr"> 7: </span><span style="color: #98fb98;">void</span> <span style="color: #87cefa;">abro_run</span>(<span style="color: #7fffd4;">std</span>::<span style="color: #98fb98;">atomic</span>&lt;<span style="color: #98fb98;">int</span>&gt; &amp;&amp;<span style="color: #eedd82;">barrier</span> = 0) {
 <span class="linenr"> 8: </span>  <span style="color: #7fffd4;">std</span>::cout &lt;&lt; <span style="color: #ffa07a;">"running two threads\n"</span>;
 <span id="coderef-thread1" class="coderef-off"><span class="linenr"> 9: </span>  <span style="font-weight: bold;">auto</span> <span style="color: #eedd82;">env</span> = <span style="color: #7fffd4;">std</span>::thread([&amp;<span style="color: #eedd82;">barrier</span>]() {</span>
-<span class="linenr">10: </span>    <span style="font-weight: bold;">while</span> (barrier != 1) {
-<span class="linenr">11: </span>      <span style="color: #7fffd4;">std</span>::<span style="color: #7fffd4;">this_thread</span>::yield();
-<span class="linenr">12: </span>    }
-<span class="linenr">13: </span>    barrier--;
-<span class="linenr">14: </span>    <span style="color: #ff7f24;">// </span><span style="color: #ff7f24;">First we read from the buffer for all inputs</span>
-<span class="linenr">15: </span>    <span style="color: #7fffd4;">std</span>::cout &lt;&lt; <span style="color: #ffa07a;">"Running the abro env \n"</span>;
-<span class="linenr">16: </span>    <span style="color: #7fffd4;">abro_env</span>::main();
-<span class="linenr">17: </span>    <span style="color: #7fffd4;">std</span>::cout &lt;&lt; <span style="color: #ffa07a;">"Done running the abro env\n"</span>;
+<span class="linenr">10: </span>        <span style="font-weight: bold;">while</span> (barrier != 1) {
+<span class="linenr">11: </span>          <span style="color: #7fffd4;">std</span>::<span style="color: #7fffd4;">this_thread</span>::yield();
+<span class="linenr">12: </span>        }
+<span class="linenr">13: </span>      barrier--;
+<span class="linenr">14: </span>      <span style="color: #ff7f24;">// </span><span style="color: #ff7f24;">First we read from the buffer for all inputs</span>
+<span class="linenr">15: </span>      <span style="color: #7fffd4;">std</span>::cout &lt;&lt; <span style="color: #ffa07a;">"Running the abro env \n"</span>;
+<span class="linenr">16: </span>      <span style="color: #7fffd4;">abro_env</span>::main();
+<span class="linenr">17: </span>      <span style="color: #7fffd4;">std</span>::cout &lt;&lt; <span style="color: #ffa07a;">"Done running the abro env\n"</span>;
 <span class="linenr">18: </span>  });
 <span class="linenr">19: </span>
 <span id="coderef-thread2" class="coderef-off"><span class="linenr">20: </span>  <span style="font-weight: bold;">auto</span> <span style="color: #eedd82;">sys</span> = <span style="color: #7fffd4;">std</span>::thread([&amp;<span style="color: #eedd82;">barrier</span>]() {</span>
-<span class="linenr">21: </span>    <span style="font-weight: bold;">while</span> (barrier != 2) {
-<span class="linenr">22: </span>      <span style="color: #7fffd4;">std</span>::<span style="color: #7fffd4;">this_thread</span>::yield();
-<span class="linenr">23: </span>    }
-<span class="linenr">24: </span>    barrier--;
-<span class="linenr">25: </span>    <span style="color: #7fffd4;">std</span>::cout &lt;&lt; <span style="color: #ffa07a;">"Running the abro sys\n"</span>;
-<span class="linenr">26: </span>    <span style="color: #7fffd4;">abro_sys</span>::main();
-<span class="linenr">27: </span>    <span style="color: #7fffd4;">std</span>::cout &lt;&lt; <span style="color: #ffa07a;">"Done running the abro sys\n"</span>;
+<span class="linenr">21: </span>        <span style="font-weight: bold;">while</span> (barrier != 2) {
+<span class="linenr">22: </span>          <span style="color: #7fffd4;">std</span>::<span style="color: #7fffd4;">this_thread</span>::yield();
+<span class="linenr">23: </span>        }
+<span class="linenr">24: </span>      barrier--;
+<span class="linenr">25: </span>      <span style="color: #7fffd4;">std</span>::cout &lt;&lt; <span style="color: #ffa07a;">"Running the abro sys\n"</span>;
+<span class="linenr">26: </span>      <span style="color: #7fffd4;">abro_sys</span>::main();
+<span class="linenr">27: </span>      <span style="color: #7fffd4;">std</span>::cout &lt;&lt; <span style="color: #ffa07a;">"Done running the abro sys\n"</span>;
 <span class="linenr">28: </span>  });
 <span class="linenr">29: </span>  <span style="color: #ff7f24;">// </span><span style="color: #ff7f24;">XXX: you can change this to change the order of execution.</span>
 <span class="linenr">30: </span>  <span style="color: #ff7f24;">// </span><span style="color: #ff7f24;">barrier = 2, makes sys run first.</span>
@@ -761,7 +766,7 @@ below:
 <span class="linenr">33: </span>  <span style="color: #ff7f24;">// </span><span style="color: #ff7f24;">execute an LSN.</span>
 <span class="linenr">34: </span>  barrier = 2;
 <span id="coderef-barrier" class="coderef-off"><span class="linenr">35: </span>  <span style="font-weight: bold;">while</span> (barrier != 0)</span>
-<span class="linenr">36: </span>    ; <span style="color: #ff7f24;">// </span><span style="color: #ff7f24;">spin until both the modules/threads are done -- the barrier</span>
+<span class="linenr">36: </span>                         ; <span style="color: #ff7f24;">// </span><span style="color: #ff7f24;">spin until both the modules/threads are done -- the barrier</span>
 <span class="linenr">37: </span>  env.join();
 <span class="linenr">38: </span>  sys.join();
 <span class="linenr">39: </span>}
@@ -795,9 +800,9 @@ generate the binary to execute using the command:
 </p>
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #eedd82;">COMPILE_SWITCH</span>=sysrs <span style="color: #eedd82;">FNAME</span>=<span style="color: #ffa07a;">"abro_sys abro_env"</span> <span style="color: #ffa07a;">\</span>
-                          <span style="color: #eedd82;">SYSRUST_DIR</span>=&lt;path-of-sysrust-compiler-dir&gt; <span style="color: #ffa07a;">\</span>
-                          <span style="color: #eedd82;">TIMETIDE_DIR</span>=&lt;path-of-timetide-compiler-dir&gt; make <span style="color: #ffa07a;">\</span>
-                          <span style="color: #eedd82;">EXTRA_FLAGS</span>=<span style="color: #ffa07a;">"-DDEBUG delays.cpp"</span> exe   
+                     <span style="color: #eedd82;">SYSRUST_DIR</span>=&lt;path-of-sysrust-compiler-dir&gt; <span style="color: #ffa07a;">\</span>
+                     <span style="color: #eedd82;">TIMETIDE_DIR</span>=&lt;path-of-timetide-compiler-dir&gt; make <span style="color: #ffa07a;">\</span>
+                     <span style="color: #eedd82;">EXTRA_FLAGS</span>=<span style="color: #ffa07a;">"-DDEBUG delays.cpp"</span> exe        
 </pre>
 </div></li>
 
@@ -806,9 +811,9 @@ We can then run the program like so:
 </p>
 <div class="org-src-container">
 <pre class="src src-bash"><span style="color: #eedd82;">COMPILE_SWITCH</span>=sysrs <span style="color: #eedd82;">FNAME</span>=<span style="color: #ffa07a;">"abro_sys abro_env"</span> <span style="color: #ffa07a;">\</span>
-                          <span style="color: #eedd82;">SYSRUST_DIR</span>=&lt;path-of-sysrust-compiler-dir&gt; <span style="color: #ffa07a;">\</span>
-                          <span style="color: #eedd82;">TIMETIDE_DIR</span>=&lt;path-of-timetide-compiler-dir&gt; make <span style="color: #ffa07a;">\</span>
-                          <span style="color: #eedd82;">EXTRA_FLAGS</span>=<span style="color: #ffa07a;">"-DDEBUG delays.cpp"</span> run   
+                     <span style="color: #eedd82;">SYSRUST_DIR</span>=&lt;path-of-sysrust-compiler-dir&gt; <span style="color: #ffa07a;">\</span>
+                     <span style="color: #eedd82;">TIMETIDE_DIR</span>=&lt;path-of-timetide-compiler-dir&gt; make <span style="color: #ffa07a;">\</span>
+                     <span style="color: #eedd82;">EXTRA_FLAGS</span>=<span style="color: #ffa07a;">"-DDEBUG delays.cpp"</span> run        
 </pre>
 </div></li>
 
@@ -823,17 +828,17 @@ synchronisation.</li>
 </div>
 </div>
 </div>
-<div id="outline-container-org29c2999" class="outline-2">
-<h2 id="org29c2999">The Time tide language</h2>
-<div class="outline-text-2" id="text-org29c2999">
+<div id="outline-container-org193ef85" class="outline-2">
+<h2 id="org193ef85">The Time tide language</h2>
+<div class="outline-text-2" id="text-org193ef85">
 </div>
-<div id="outline-container-org8b19dc7" class="outline-3">
-<h3 id="org8b19dc7">Types and variables</h3>
-<div class="outline-text-3" id="text-org8b19dc7">
+<div id="outline-container-org4c45b7a" class="outline-3">
+<h3 id="org4c45b7a">Types and variables</h3>
+<div class="outline-text-3" id="text-org4c45b7a">
 </div>
-<div id="outline-container-orgc6fe33b" class="outline-4">
-<h4 id="orgc6fe33b">Primitive types</h4>
-<div class="outline-text-4" id="text-orgc6fe33b">
+<div id="outline-container-org9d4c742" class="outline-4">
+<h4 id="org9d4c742">Primitive types</h4>
+<div class="outline-text-4" id="text-org9d4c742">
 <p>
 We only support four signed primitive types listed below
 </p>
@@ -846,9 +851,9 @@ We only support four signed primitive types listed below
 </div>
 </div>
 </div>
-<div id="outline-container-orgd4e3c19" class="outline-4">
-<h4 id="orgd4e3c19">User defined structures</h4>
-<div class="outline-text-4" id="text-orgd4e3c19">
+<div id="outline-container-org5ca7446" class="outline-4">
+<h4 id="org5ca7446">User defined structures</h4>
+<div class="outline-text-4" id="text-org5ca7446">
 <p>
 User defined types follows the same convention as <code>C</code>. However, no
 pointers are allowed. Examples follow:
@@ -860,16 +865,16 @@ pointers are allowed. Examples follow:
 <span class="linenr">4: </span>  <span style="font-weight: bold;">struct</span> <span style="color: #98fb98;">Y</span> <span style="color: #eedd82;">g</span>;                   <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">variable g of type struct Y</span><span style="color: #ff7f24;"> */</span>
 <span class="linenr">5: </span>}
 <span class="linenr">6: </span><span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">Since there are no pointers, one cannot define self refrential structures</span><span style="color: #ff7f24;"> */</span>
-<span class="linenr">7: </span><span style="font-weight: bold;">struct</span> <span style="color: #98fb98;">X</span> {
-<span class="linenr">8: </span>  <span style="font-weight: bold;">struct</span> <span style="color: #98fb98;">X</span> *<span style="color: #eedd82;">m</span>;                  <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">not allowed</span><span style="color: #ff7f24;"> */</span>
-<span class="linenr">9: </span>}
+<span class="linenr">7: </span>  <span style="font-weight: bold;">struct</span> <span style="color: #98fb98;">X</span> {
+<span class="linenr">8: </span>    <span style="font-weight: bold;">struct</span> <span style="color: #98fb98;">X</span> *<span style="color: #eedd82;">m</span>;                        <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">not allowed</span><span style="color: #ff7f24;"> */</span>
+<span class="linenr">9: </span>  }
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org4198f39" class="outline-4">
-<h4 id="org4198f39">Array types</h4>
-<div class="outline-text-4" id="text-org4198f39">
+<div id="outline-container-orgdfde124" class="outline-4">
+<h4 id="orgdfde124">Array types</h4>
+<div class="outline-text-4" id="text-orgdfde124">
 <p>
 Arrays are <code>similar</code> (not the same) to those in <code>C</code>.
 Multidimensional arrays are supported (but are being worked on).
@@ -882,9 +887,48 @@ Example follows:
 </div>
 </div>
 </div>
-<div id="outline-container-org51f46f3" class="outline-4">
-<h4 id="org51f46f3">Channels</h4>
-<div class="outline-text-4" id="text-org51f46f3">
+<div id="outline-container-org022b14a" class="outline-4">
+<h4 id="org022b14a">Peculiarity of Array Types</h4>
+<div class="outline-text-4" id="text-org022b14a">
+<p>
+Consider the <code>C</code> source code below:
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span class="linenr">1: </span><span style="color: #98fb98;">int</span> <span style="color: #eedd82;">X</span>[2] = {1, 1};       <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">Array initialization -- OK</span><span style="color: #ff7f24;">*/</span>
+<span id="coderef-arrayass" class="coderef-off"><span class="linenr">2: </span>X = {2, 2}; <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">This code will not compile</span><span style="color: #ff7f24;"> */</span></span>
+<span class="linenr">3: </span><span style="font-weight: bold;">struct</span> <span style="color: #98fb98;">ZZ</span> {
+<span class="linenr">4: </span>  <span style="color: #98fb98;">int</span> <span style="color: #eedd82;">X</span>[2];
+<span class="linenr">5: </span>};                  <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">Struct wrapping an array</span><span style="color: #ff7f24;"> */</span>
+<span id="coderef-structdec" class="coderef-off"><span class="linenr">6: </span><span style="color: #98fb98;">ZZ</span> <span style="color: #eedd82;">z</span> = {{1, 1}};<span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">Struct and array intialization</span><span style="color: #ff7f24;"> */</span></span>
+<span id="coderef-structass" class="coderef-off"><span class="linenr">7: </span>z  = {{2, 2}}; <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">Struct copy assignment -- OK</span><span style="color: #ff7f24;"> */</span></span>
+</pre>
+</div>
+<ul class="org-ul">
+<li>Arrays in <code>C</code> decay to pointers.</li>
+<li>Copy assignment (using <code>=</code>) does not work in C (Line <a href="#coderef-arrayass" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-arrayass');" onmouseout="CodeHighlightOff(this, 'coderef-arrayass');">2</a>).</li>
+<li>The solution is to wrap the arrays in <code>struct</code> as shown on Line
+<a href="#coderef-structdec" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-structdec');" onmouseout="CodeHighlightOff(this, 'coderef-structdec');">6</a> and Line <a href="#coderef-structass" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-structass');" onmouseout="CodeHighlightOff(this, 'coderef-structass');">7</a>.</li>
+<li><p>
+This peculiarity of <code>C</code> is essential to understand, because of
+array type channels with their issue and their solution as shown
+in the <i>Time tide</i> code below:
+</p>
+<div class="org-src-container">
+<pre class="src src-C"><span class="linenr">1: </span><span style="color: #98fb98;">int</span>[2] channel X delay 1; <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">channel carrying 2 size array of int</span><span style="color: #ff7f24;"> */</span>
+<span class="linenr">2: </span><span style="color: #98fb98;">send</span> <span style="color: #87cefa;">X</span>({1, 1});  <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">Will _not_ work, because array decays to a pointer</span><span style="color: #ff7f24;"> */</span>
+<span class="linenr">3: </span><span style="font-weight: bold;">struct</span> <span style="color: #98fb98;">Z</span> {
+<span class="linenr">4: </span>  <span style="color: #98fb98;">int</span>[2] x;<span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">Declare structure to wrap the array</span><span style="color: #ff7f24;"> */</span>
+<span class="linenr">5: </span>};
+<span class="linenr">6: </span><span style="font-weight: bold;">struct</span> <span style="color: #98fb98;">Z</span> <span style="color: #eedd82;">channel</span> X delay 1;<span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">channel of type struct Z</span><span style="color: #ff7f24;"> */</span>
+<span class="linenr">7: </span><span style="color: #98fb98;">send</span> <span style="color: #87cefa;">X</span>({{1, 1}});<span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">OK, because struct does not decay to a pointer</span><span style="color: #ff7f24;"> */</span>
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org4792f7d" class="outline-4">
+<h4 id="org4792f7d">Channels</h4>
+<div class="outline-text-4" id="text-org4792f7d">
 <ol class="org-ol">
 <li>Channels are specific to Time tide and do not exist in <code>C</code>.</li>
 <li>Channels carry data.</li>
@@ -916,13 +960,13 @@ Example follows:
 </div>
 </div>
 </div>
-<div id="outline-container-org9be8df4" class="outline-3">
-<h3 id="org9be8df4">Operators and expressions in Time tide</h3>
-<div class="outline-text-3" id="text-org9be8df4">
+<div id="outline-container-org4a53fa7" class="outline-3">
+<h3 id="org4a53fa7">Operators and expressions in Time tide</h3>
+<div class="outline-text-3" id="text-org4a53fa7">
 </div>
-<div id="outline-container-org86a2bb1" class="outline-4">
-<h4 id="org86a2bb1">Operators in Time tide</h4>
-<div class="outline-text-4" id="text-org86a2bb1">
+<div id="outline-container-org5cf88cb" class="outline-4">
+<h4 id="org5cf88cb">Operators in Time tide</h4>
+<div class="outline-text-4" id="text-org5cf88cb">
 <div class="org-src-container">
 <pre class="src src-C"><span class="linenr"> 1: </span>a + b;                          <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">addition</span><span style="color: #ff7f24;"> */</span>
 <span class="linenr"> 2: </span>a - b;                          <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">subtraction</span><span style="color: #ff7f24;"> */</span>
@@ -946,9 +990,9 @@ Example follows:
 </ul>
 </div>
 </div>
-<div id="outline-container-orgb48636b" class="outline-4">
-<h4 id="orgb48636b">Expressions in Time tide</h4>
-<div class="outline-text-4" id="text-orgb48636b">
+<div id="outline-container-orge9ce3c5" class="outline-4">
+<h4 id="orge9ce3c5">Expressions in Time tide</h4>
+<div class="outline-text-4" id="text-orge9ce3c5">
 <ul class="org-ul">
 <li>Time tide supports the usual expressions as in <code>C</code>.</li>
 </ul>
@@ -1055,13 +1099,13 @@ function <code>f</code> with a given signature. This is requirement of the
 </div>
 </div>
 </div>
-<div id="outline-container-org2696ce5" class="outline-3">
-<h3 id="org2696ce5">Statements</h3>
-<div class="outline-text-3" id="text-org2696ce5">
+<div id="outline-container-org9d21fc2" class="outline-3">
+<h3 id="org9d21fc2">Statements</h3>
+<div class="outline-text-3" id="text-org9d21fc2">
 </div>
-<div id="outline-container-org48a3e9e" class="outline-4">
-<h4 id="org48a3e9e">Variable declaration and updates</h4>
-<div class="outline-text-4" id="text-org48a3e9e">
+<div id="outline-container-org42447e5" class="outline-4">
+<h4 id="org42447e5">Variable declaration and updates</h4>
+<div class="outline-text-4" id="text-org42447e5">
 <ol class="org-ol">
 <li>There are two types of variables <code>const</code> and <code>mutable</code>.</li>
 <li>Constant variables cannot be modified.</li>
@@ -1108,9 +1152,9 @@ expressions).</li>
 </div>
 </div>
 </div>
-<div id="outline-container-org9b0f008" class="outline-4">
-<h4 id="org9b0f008">Conditionals</h4>
-<div class="outline-text-4" id="text-org9b0f008">
+<div id="outline-container-org9384c0a" class="outline-4">
+<h4 id="org9384c0a">Conditionals</h4>
+<div class="outline-text-4" id="text-org9384c0a">
 <ol class="org-ol">
 <li>Only <code>if-else</code> blocks are supported.</li>
 <li>The semantics are similar (not the same) as <code>C</code>.</li>
@@ -1153,13 +1197,13 @@ implies checking channel status.</li>
 </ol>
 </div>
 </div>
-<div id="outline-container-orge6594f9" class="outline-4">
-<h4 id="orge6594f9">Loops</h4>
-<div class="outline-text-4" id="text-orge6594f9">
+<div id="outline-container-org17aad58" class="outline-4">
+<h4 id="org17aad58">Loops</h4>
+<div class="outline-text-4" id="text-org17aad58">
 </div>
 <ul class="org-ul">
-<li><a id="orgfe0fe36"></a>Sequential loops<br />
-<div class="outline-text-5" id="text-orgfe0fe36">
+<li><a id="org4bde08a"></a>Sequential loops<br />
+<div class="outline-text-5" id="text-org4bde08a">
 <ol class="org-ol">
 <li>Sequential loops in Time tide are always bounded.</li>
 <li>Sequential loops are of two types:
@@ -1215,8 +1259,8 @@ elements get updated in the same logical tick of the module.</li>
 </ol>
 </div>
 </li>
-<li><a id="org168fb80"></a>Parallel loops<br />
-<div class="outline-text-5" id="text-org168fb80">
+<li><a id="org99abc5f"></a>Parallel loops<br />
+<div class="outline-text-5" id="text-org99abc5f">
 <ol class="org-ol">
 <li>Parallel loops execute statement in synchronous parallel &#x2013; update
 values together.</li>
@@ -1295,9 +1339,9 @@ compiler error.</li>
 </li>
 </ul>
 </div>
-<div id="outline-container-orgea6c315" class="outline-4">
-<h4 id="orgea6c315">The Task construct</h4>
-<div class="outline-text-4" id="text-orgea6c315">
+<div id="outline-container-org1ea0808" class="outline-4">
+<h4 id="org1ea0808">The Task construct</h4>
+<div class="outline-text-4" id="text-org1ea0808">
 <ol class="org-ol">
 <li>Tasks are the primary construct to introduce state (tick) in a
 Time tide program.</li>
@@ -1347,9 +1391,9 @@ Examples follow:
 </ol>
 </div>
 </div>
-<div id="outline-container-org8c45c89" class="outline-4">
-<h4 id="org8c45c89">The Abort construct</h4>
-<div class="outline-text-4" id="text-org8c45c89">
+<div id="outline-container-org824e942" class="outline-4">
+<h4 id="org824e942">The Abort construct</h4>
+<div class="outline-text-4" id="text-org824e942">
 <ol class="org-ol">
 <li><code>abort(logical-expression){/* body */}</code> is the way to preempt a halted system.</li>
 <li><p>
@@ -1368,9 +1412,9 @@ Example follows:
 </ol>
 </div>
 </div>
-<div id="outline-container-orgd425838" class="outline-4">
-<h4 id="orgd425838">The Synchronous parallel construct</h4>
-<div class="outline-text-4" id="text-orgd425838">
+<div id="outline-container-org25cffd1" class="outline-4">
+<h4 id="org25cffd1">The Synchronous parallel construct</h4>
+<div class="outline-text-4" id="text-org25cffd1">
 <ol class="org-ol">
 <li><code>{/*thread body 1*/}&lt;&gt;{/*thread body 2*/}&lt;&gt;{/*thread body
        3*/}...</code> is the way to execute multiple bodies in parallel.</li>
@@ -1412,9 +1456,9 @@ Examples follow:
 </ol>
 </div>
 </div>
-<div id="outline-container-orgaf7f419" class="outline-4">
-<h4 id="orgaf7f419">Function/module definition</h4>
-<div class="outline-text-4" id="text-orgaf7f419">
+<div id="outline-container-org48c7968" class="outline-4">
+<h4 id="org48c7968">Function/module definition</h4>
+<div class="outline-text-4" id="text-org48c7968">
 <ol class="org-ol">
 <li>Function/module definition is similar to <code>C</code>.</li>
 <li>Functions can take as arguments constant and channels.</li>
