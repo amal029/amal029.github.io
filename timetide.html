@@ -40,6 +40,10 @@
  pre.src {background-color: #000000; color: #ffffff;}</style>
 <style type="text/css">
  pre.src {background-color: #000000; color: #ffffff;}</style>
+<style type="text/css">
+ pre.src {background-color: #000000; color: #ffffff;}</style>
+<style type="text/css">
+ pre.src {background-color: #000000; color: #ffffff;}</style>
 <script>
   window.MathJax = {
     tex: {
@@ -80,45 +84,45 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgf803dd7">Time tide is a new programming language</a>
+<li><a href="#org08771a3">Time tide is a new programming language</a>
 <ul>
-<li><a href="#orgd1a6171">Requirements when reading this document</a></li>
+<li><a href="#orgd72682d">Requirements when reading this document</a></li>
 </ul>
 </li>
-<li><a href="#org2358b9f">Installing the Time tide compiler(s)</a></li>
-<li><a href="#orgbb89f75">Visual Studio Code Time tide syntax highlighter and formatter</a></li>
-<li><a href="#orgfda61c5">Compiling first example program</a>
+<li><a href="#org13fdac7">Installing the Time tide compiler(s)</a></li>
+<li><a href="#orga2ba481">Visual Studio Code Time tide syntax highlighter and formatter</a></li>
+<li><a href="#org07afc32">Compiling first example program</a>
 <ul>
-<li><a href="#org5882839">Compiling the abro (shared memory) program</a></li>
-<li><a href="#orgd56f3fd">Compiling the abro example (distributed memory) program</a></li>
+<li><a href="#org19e0e50">Compiling the abro (shared memory) program</a></li>
+<li><a href="#orge00f139">Compiling the abro example (distributed memory) program</a></li>
 </ul>
 </li>
-<li><a href="#org193ef85">The Time tide language</a>
+<li><a href="#orgf8848a5">The Time tide language</a>
 <ul>
-<li><a href="#org4c45b7a">Types and variables</a>
+<li><a href="#orgf76627e">Types and variables</a>
 <ul>
-<li><a href="#org9d4c742">Primitive types</a></li>
-<li><a href="#org5ca7446">User defined structures</a></li>
-<li><a href="#orgdfde124">Array types</a></li>
-<li><a href="#org022b14a">Peculiarity of Array Types</a></li>
-<li><a href="#org4792f7d">Channels</a></li>
+<li><a href="#org22694e1">Primitive types</a></li>
+<li><a href="#org5ae7a13">User defined structures</a></li>
+<li><a href="#org26f3117">Array types</a></li>
+<li><a href="#org3adbd25">Channels</a></li>
+<li><a href="#org1487f38">Peculiarity of Array Types and Channels</a></li>
 </ul>
 </li>
-<li><a href="#org4a53fa7">Operators and expressions in Time tide</a>
+<li><a href="#orgadff4db">Operators and expressions in Time tide</a>
 <ul>
-<li><a href="#org5cf88cb">Operators in Time tide</a></li>
-<li><a href="#orge9ce3c5">Expressions in Time tide</a></li>
+<li><a href="#orgd906374">Operators in Time tide</a></li>
+<li><a href="#org8bafa02">Expressions in Time tide</a></li>
 </ul>
 </li>
-<li><a href="#org9d21fc2">Statements</a>
+<li><a href="#org9da872b">Statements</a>
 <ul>
-<li><a href="#org42447e5">Variable declaration and updates</a></li>
-<li><a href="#org9384c0a">Conditionals</a></li>
-<li><a href="#org17aad58">Loops</a></li>
-<li><a href="#org1ea0808">The Task construct</a></li>
-<li><a href="#org824e942">The Abort construct</a></li>
-<li><a href="#org25cffd1">The Synchronous parallel construct</a></li>
-<li><a href="#org48c7968">Function/module definition</a></li>
+<li><a href="#org48b6efd">Variable declaration and updates</a></li>
+<li><a href="#org03ccdf1">Conditionals</a></li>
+<li><a href="#org752e20a">Loops</a></li>
+<li><a href="#org78ceb32">The Task construct</a></li>
+<li><a href="#orgb005f0b">The Abort construct</a></li>
+<li><a href="#org388a243">The Synchronous parallel construct</a></li>
+<li><a href="#orga43eead">Function/module definition</a></li>
 </ul>
 </li>
 </ul>
@@ -126,9 +130,9 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-orgf803dd7" class="outline-2">
-<h2 id="orgf803dd7">Time tide is a new programming language</h2>
-<div class="outline-text-2" id="text-orgf803dd7">
+<div id="outline-container-org08771a3" class="outline-2">
+<h2 id="org08771a3">Time tide is a new programming language</h2>
+<div class="outline-text-2" id="text-org08771a3">
 <ol class="org-ol">
 <li>It allows building finite state machines.</li>
 <li>It allows developing synchronous concurrent programs.</li>
@@ -137,9 +141,9 @@
 interaction with native code and deployment on embedded platforms.</li>
 </ol>
 </div>
-<div id="outline-container-orgd1a6171" class="outline-3">
-<h3 id="orgd1a6171">Requirements when reading this document</h3>
-<div class="outline-text-3" id="text-orgd1a6171">
+<div id="outline-container-orgd72682d" class="outline-3">
+<h3 id="orgd72682d">Requirements when reading this document</h3>
+<div class="outline-text-3" id="text-orgd72682d">
 <ol class="org-ol">
 <li>The reader is expected to have knowledge of:
 <ul class="org-ul">
@@ -156,9 +160,9 @@ when things do not work.</li>
 </div>
 </div>
 </div>
-<div id="outline-container-org2358b9f" class="outline-2">
-<h2 id="org2358b9f">Installing the Time tide compiler(s)</h2>
-<div class="outline-text-2" id="text-org2358b9f">
+<div id="outline-container-org13fdac7" class="outline-2">
+<h2 id="org13fdac7">Installing the Time tide compiler(s)</h2>
+<div class="outline-text-2" id="text-org13fdac7">
 <ol class="org-ol">
 <li>Time tide uses multiple compiler tool chains.</li>
 <li>You are expected to have installed C++ compilers with support for
@@ -214,11 +218,11 @@ Now run the command:
 </ol>
 </div>
 </div>
-<div id="outline-container-orgbb89f75" class="outline-2">
-<h2 id="orgbb89f75">Visual Studio Code Time tide syntax highlighter and formatter</h2>
-<div class="outline-text-2" id="text-orgbb89f75">
+<div id="outline-container-orga2ba481" class="outline-2">
+<h2 id="orga2ba481">Visual Studio Code Time tide syntax highlighter and formatter</h2>
+<div class="outline-text-2" id="text-orga2ba481">
 
-<div id="org1d7cd2d" class="figure">
+<div id="orgbeae774" class="figure">
 <p><img src="./images/timetide_dsl_formatter.png" alt="timetide_dsl_formatter.png" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Time tide syntax highlighter and formatter on the VSCode Extensions page</p>
@@ -239,9 +243,9 @@ We currently have a syntax highlighter and formatter for <b>Visual Studio Code</
 </p>
 </div>
 </div>
-<div id="outline-container-orgfda61c5" class="outline-2">
-<h2 id="orgfda61c5">Compiling first example program</h2>
-<div class="outline-text-2" id="text-orgfda61c5">
+<div id="outline-container-org07afc32" class="outline-2">
+<h2 id="org07afc32">Compiling first example program</h2>
+<div class="outline-text-2" id="text-org07afc32">
 <p>
 We will use the <code>abro.tt</code> program in <code>Timetide_tests</code> directory as our
 first program.
@@ -293,9 +297,9 @@ available after a single so called <code>tick</code>.</li>
 <li>Tick is the synchronous (logical) clock running the whole program.</li>
 </ol>
 </div>
-<div id="outline-container-org5882839" class="outline-3">
-<h3 id="org5882839">Compiling the abro (shared memory) program</h3>
-<div class="outline-text-3" id="text-org5882839">
+<div id="outline-container-org19e0e50" class="outline-3">
+<h3 id="org19e0e50">Compiling the abro (shared memory) program</h3>
+<div class="outline-text-3" id="text-org19e0e50">
 <ol class="org-ol">
 <li><p>
 Run the command:
@@ -392,9 +396,9 @@ We can finally run the program using the command:
 </ol>
 </div>
 </div>
-<div id="outline-container-orgd56f3fd" class="outline-3">
-<h3 id="orgd56f3fd">Compiling the abro example (distributed memory) program</h3>
-<div class="outline-text-3" id="text-orgd56f3fd">
+<div id="outline-container-orge00f139" class="outline-3">
+<h3 id="orge00f139">Compiling the abro example (distributed memory) program</h3>
+<div class="outline-text-3" id="text-orge00f139">
 <p>
 The primary idea is to divide the <code>abro</code> program into two parts: (a)
 <code>abro_sys.tt</code>, which captures the system waiting for the data to
@@ -828,17 +832,17 @@ synchronisation.</li>
 </div>
 </div>
 </div>
-<div id="outline-container-org193ef85" class="outline-2">
-<h2 id="org193ef85">The Time tide language</h2>
-<div class="outline-text-2" id="text-org193ef85">
+<div id="outline-container-orgf8848a5" class="outline-2">
+<h2 id="orgf8848a5">The Time tide language</h2>
+<div class="outline-text-2" id="text-orgf8848a5">
 </div>
-<div id="outline-container-org4c45b7a" class="outline-3">
-<h3 id="org4c45b7a">Types and variables</h3>
-<div class="outline-text-3" id="text-org4c45b7a">
+<div id="outline-container-orgf76627e" class="outline-3">
+<h3 id="orgf76627e">Types and variables</h3>
+<div class="outline-text-3" id="text-orgf76627e">
 </div>
-<div id="outline-container-org9d4c742" class="outline-4">
-<h4 id="org9d4c742">Primitive types</h4>
-<div class="outline-text-4" id="text-org9d4c742">
+<div id="outline-container-org22694e1" class="outline-4">
+<h4 id="org22694e1">Primitive types</h4>
+<div class="outline-text-4" id="text-org22694e1">
 <p>
 We only support four signed primitive types listed below
 </p>
@@ -851,9 +855,9 @@ We only support four signed primitive types listed below
 </div>
 </div>
 </div>
-<div id="outline-container-org5ca7446" class="outline-4">
-<h4 id="org5ca7446">User defined structures</h4>
-<div class="outline-text-4" id="text-org5ca7446">
+<div id="outline-container-org5ae7a13" class="outline-4">
+<h4 id="org5ae7a13">User defined structures</h4>
+<div class="outline-text-4" id="text-org5ae7a13">
 <p>
 User defined types follows the same convention as <code>C</code>. However, no
 pointers are allowed. Examples follow:
@@ -872,9 +876,9 @@ pointers are allowed. Examples follow:
 </div>
 </div>
 </div>
-<div id="outline-container-orgdfde124" class="outline-4">
-<h4 id="orgdfde124">Array types</h4>
-<div class="outline-text-4" id="text-orgdfde124">
+<div id="outline-container-org26f3117" class="outline-4">
+<h4 id="org26f3117">Array types</h4>
+<div class="outline-text-4" id="text-org26f3117">
 <p>
 Arrays are <code>similar</code> (not the same) to those in <code>C</code>.
 Multidimensional arrays are supported (but are being worked on).
@@ -887,9 +891,42 @@ Example follows:
 </div>
 </div>
 </div>
-<div id="outline-container-org022b14a" class="outline-4">
-<h4 id="org022b14a">Peculiarity of Array Types</h4>
-<div class="outline-text-4" id="text-org022b14a">
+<div id="outline-container-org3adbd25" class="outline-4">
+<h4 id="org3adbd25">Channels</h4>
+<div class="outline-text-4" id="text-org3adbd25">
+<ol class="org-ol">
+<li>Channels are specific to Time tide and do not exist in <code>C</code>.</li>
+<li>Channels carry data.</li>
+<li>Channels also have an associated delay \(\delta\).</li>
+<li>Channels can be of any primitive, user defined, or array type.</li>
+<li>Channel status and values are set using <code>send</code> (Line <a href="#coderef-send" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-send');" onmouseout="CodeHighlightOff(this, 'coderef-send');">8</a>)</li>
+<li>Channel status is read using the name of the channel (Line
+<a href="#coderef-status" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-status');" onmouseout="CodeHighlightOff(this, 'coderef-status');">9</a>)</li>
+<li>Channel value is read using <code>?&lt;channel-name&gt;</code> (Line <a href="#coderef-val" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-val');" onmouseout="CodeHighlightOff(this, 'coderef-val');">11</a>)</li>
+<li>Examples follow:</li>
+</ol>
+<div class="org-src-container">
+<pre class="src src-C"><span class="linenr"> 1: </span><span style="color: #98fb98;">int</span> <span style="color: #eedd82;">channel</span> K delay 3;          <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">Channel K of type int with delay 3</span><span style="color: #ff7f24;"> */</span>
+<span class="linenr"> 2: </span><span style="font-weight: bold;">struct</span> <span style="color: #98fb98;">Y</span> <span style="color: #eedd82;">channel</span> C delay 2;     <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">Channel C of type struct Y with delay 2</span><span style="color: #ff7f24;"> */</span>
+<span class="linenr"> 3: </span><span style="color: #98fb98;">int</span>[100] channel M delay 1;     <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">Channel M of type int[100] with delay 1</span><span style="color: #ff7f24;">*/</span>
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span><span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">TODO: Such bunching of channels  are not yet supported</span><span style="color: #ff7f24;"> */</span>
+<span class="linenr"> 6: </span><span style="font-weight: bold;">struct</span> <span style="color: #98fb98;">Y</span>[100] channel M[100] delay 7; <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">100 channel M[0]...M[99] each of</span>
+<span class="linenr"> 7: </span><span style="color: #ff7f24;">                                         type struct Y[100] with delay 7</span><span style="color: #ff7f24;">*/</span>
+<span id="coderef-send" class="coderef-off"><span class="linenr"> 8: </span><span style="color: #98fb98;">send</span> <span style="color: #87cefa;">K</span>(10);                     <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">Will be available at receiver after 3 logical ticks</span><span style="color: #ff7f24;"> */</span></span>
+<span id="coderef-status" class="coderef-off"><span class="linenr"> 9: </span><span style="font-weight: bold;">if</span> (K) {</span>
+<span class="linenr">10: </span>  mut <span style="color: #98fb98;">int</span> <span style="color: #eedd82;">uu</span> = 0 {              <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">Definig a mutable integer uu, scope starts at {</span><span style="color: #ff7f24;">*/</span>
+<span id="coderef-val" class="coderef-off"><span class="linenr">11: </span>   uu = ?K              <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">Updating the value of uu by reading the value of channel K</span><span style="color: #ff7f24;"> */</span></span>
+<span class="linenr">12: </span>  }                     <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">scope of variable uu ends</span><span style="color: #ff7f24;"> */</span>
+<span class="linenr">13: </span>  <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">body...</span><span style="color: #ff7f24;"> */</span>
+<span class="linenr">14: </span> }
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org1487f38" class="outline-4">
+<h4 id="org1487f38">Peculiarity of Array Types and Channels</h4>
+<div class="outline-text-4" id="text-org1487f38">
 <p>
 Consider the <code>C</code> source code below:
 </p>
@@ -926,47 +963,14 @@ in the <i>Time tide</i> code below:
 </ul>
 </div>
 </div>
-<div id="outline-container-org4792f7d" class="outline-4">
-<h4 id="org4792f7d">Channels</h4>
-<div class="outline-text-4" id="text-org4792f7d">
-<ol class="org-ol">
-<li>Channels are specific to Time tide and do not exist in <code>C</code>.</li>
-<li>Channels carry data.</li>
-<li>Channels also have an associated delay \(\delta\).</li>
-<li>Channels can be of any primitive, user defined, or array type.</li>
-<li>Channel status and values are set using <code>send</code> (Line <a href="#coderef-send" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-send');" onmouseout="CodeHighlightOff(this, 'coderef-send');">8</a>)</li>
-<li>Channel status is read using the name of the channel (Line
-<a href="#coderef-status" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-status');" onmouseout="CodeHighlightOff(this, 'coderef-status');">9</a>)</li>
-<li>Channel value is read using <code>?&lt;channel-name&gt;</code> (Line <a href="#coderef-val" class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-val');" onmouseout="CodeHighlightOff(this, 'coderef-val');">11</a>)</li>
-<li>Examples follow:</li>
-</ol>
-<div class="org-src-container">
-<pre class="src src-C"><span class="linenr"> 1: </span><span style="color: #98fb98;">int</span> <span style="color: #eedd82;">channel</span> K delay 3;          <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">Channel K of type int with delay 3</span><span style="color: #ff7f24;"> */</span>
-<span class="linenr"> 2: </span><span style="font-weight: bold;">struct</span> <span style="color: #98fb98;">Y</span> <span style="color: #eedd82;">channel</span> C delay 2;     <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">Channel C of type struct Y with delay 2</span><span style="color: #ff7f24;"> */</span>
-<span class="linenr"> 3: </span><span style="color: #98fb98;">int</span>[100] channel M delay 1;     <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">Channel M of type int[100] with delay 1</span><span style="color: #ff7f24;">*/</span>
-<span class="linenr"> 4: </span>
-<span class="linenr"> 5: </span><span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">TODO: Such bunching of channels  are not yet supported</span><span style="color: #ff7f24;"> */</span>
-<span class="linenr"> 6: </span><span style="font-weight: bold;">struct</span> <span style="color: #98fb98;">Y</span>[100] channel M[100] delay 7; <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">100 channel M[0]...M[99] each of</span>
-<span class="linenr"> 7: </span><span style="color: #ff7f24;">                                         type struct Y[100] with delay 7</span><span style="color: #ff7f24;">*/</span>
-<span id="coderef-send" class="coderef-off"><span class="linenr"> 8: </span><span style="color: #98fb98;">send</span> <span style="color: #87cefa;">K</span>(10);                     <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">Will be available at receiver after 3 logical ticks</span><span style="color: #ff7f24;"> */</span></span>
-<span id="coderef-status" class="coderef-off"><span class="linenr"> 9: </span><span style="font-weight: bold;">if</span> (K) {</span>
-<span class="linenr">10: </span>  mut <span style="color: #98fb98;">int</span> <span style="color: #eedd82;">uu</span> = 0 {              <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">Definig a mutable integer uu, scope starts at {</span><span style="color: #ff7f24;">*/</span>
-<span id="coderef-val" class="coderef-off"><span class="linenr">11: </span>   uu = ?K              <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">Updating the value of uu by reading the value of channel K</span><span style="color: #ff7f24;"> */</span></span>
-<span class="linenr">12: </span>  }                     <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">scope of variable uu ends</span><span style="color: #ff7f24;"> */</span>
-<span class="linenr">13: </span>  <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">body...</span><span style="color: #ff7f24;"> */</span>
-<span class="linenr">14: </span> }
-</pre>
 </div>
+<div id="outline-container-orgadff4db" class="outline-3">
+<h3 id="orgadff4db">Operators and expressions in Time tide</h3>
+<div class="outline-text-3" id="text-orgadff4db">
 </div>
-</div>
-</div>
-<div id="outline-container-org4a53fa7" class="outline-3">
-<h3 id="org4a53fa7">Operators and expressions in Time tide</h3>
-<div class="outline-text-3" id="text-org4a53fa7">
-</div>
-<div id="outline-container-org5cf88cb" class="outline-4">
-<h4 id="org5cf88cb">Operators in Time tide</h4>
-<div class="outline-text-4" id="text-org5cf88cb">
+<div id="outline-container-orgd906374" class="outline-4">
+<h4 id="orgd906374">Operators in Time tide</h4>
+<div class="outline-text-4" id="text-orgd906374">
 <div class="org-src-container">
 <pre class="src src-C"><span class="linenr"> 1: </span>a + b;                          <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">addition</span><span style="color: #ff7f24;"> */</span>
 <span class="linenr"> 2: </span>a - b;                          <span style="color: #ff7f24;">/* </span><span style="color: #ff7f24;">subtraction</span><span style="color: #ff7f24;"> */</span>
@@ -990,9 +994,9 @@ in the <i>Time tide</i> code below:
 </ul>
 </div>
 </div>
-<div id="outline-container-orge9ce3c5" class="outline-4">
-<h4 id="orge9ce3c5">Expressions in Time tide</h4>
-<div class="outline-text-4" id="text-orge9ce3c5">
+<div id="outline-container-org8bafa02" class="outline-4">
+<h4 id="org8bafa02">Expressions in Time tide</h4>
+<div class="outline-text-4" id="text-org8bafa02">
 <ul class="org-ul">
 <li>Time tide supports the usual expressions as in <code>C</code>.</li>
 </ul>
@@ -1099,13 +1103,13 @@ function <code>f</code> with a given signature. This is requirement of the
 </div>
 </div>
 </div>
-<div id="outline-container-org9d21fc2" class="outline-3">
-<h3 id="org9d21fc2">Statements</h3>
-<div class="outline-text-3" id="text-org9d21fc2">
+<div id="outline-container-org9da872b" class="outline-3">
+<h3 id="org9da872b">Statements</h3>
+<div class="outline-text-3" id="text-org9da872b">
 </div>
-<div id="outline-container-org42447e5" class="outline-4">
-<h4 id="org42447e5">Variable declaration and updates</h4>
-<div class="outline-text-4" id="text-org42447e5">
+<div id="outline-container-org48b6efd" class="outline-4">
+<h4 id="org48b6efd">Variable declaration and updates</h4>
+<div class="outline-text-4" id="text-org48b6efd">
 <ol class="org-ol">
 <li>There are two types of variables <code>const</code> and <code>mutable</code>.</li>
 <li>Constant variables cannot be modified.</li>
@@ -1152,9 +1156,9 @@ expressions).</li>
 </div>
 </div>
 </div>
-<div id="outline-container-org9384c0a" class="outline-4">
-<h4 id="org9384c0a">Conditionals</h4>
-<div class="outline-text-4" id="text-org9384c0a">
+<div id="outline-container-org03ccdf1" class="outline-4">
+<h4 id="org03ccdf1">Conditionals</h4>
+<div class="outline-text-4" id="text-org03ccdf1">
 <ol class="org-ol">
 <li>Only <code>if-else</code> blocks are supported.</li>
 <li>The semantics are similar (not the same) as <code>C</code>.</li>
@@ -1197,13 +1201,13 @@ implies checking channel status.</li>
 </ol>
 </div>
 </div>
-<div id="outline-container-org17aad58" class="outline-4">
-<h4 id="org17aad58">Loops</h4>
-<div class="outline-text-4" id="text-org17aad58">
+<div id="outline-container-org752e20a" class="outline-4">
+<h4 id="org752e20a">Loops</h4>
+<div class="outline-text-4" id="text-org752e20a">
 </div>
 <ul class="org-ul">
-<li><a id="org4bde08a"></a>Sequential loops<br />
-<div class="outline-text-5" id="text-org4bde08a">
+<li><a id="orgb2791a1"></a>Sequential loops<br />
+<div class="outline-text-5" id="text-orgb2791a1">
 <ol class="org-ol">
 <li>Sequential loops in Time tide are always bounded.</li>
 <li>Sequential loops are of two types:
@@ -1259,8 +1263,8 @@ elements get updated in the same logical tick of the module.</li>
 </ol>
 </div>
 </li>
-<li><a id="org99abc5f"></a>Parallel loops<br />
-<div class="outline-text-5" id="text-org99abc5f">
+<li><a id="org715450c"></a>Parallel loops<br />
+<div class="outline-text-5" id="text-org715450c">
 <ol class="org-ol">
 <li>Parallel loops execute statement in synchronous parallel &#x2013; update
 values together.</li>
@@ -1339,9 +1343,9 @@ compiler error.</li>
 </li>
 </ul>
 </div>
-<div id="outline-container-org1ea0808" class="outline-4">
-<h4 id="org1ea0808">The Task construct</h4>
-<div class="outline-text-4" id="text-org1ea0808">
+<div id="outline-container-org78ceb32" class="outline-4">
+<h4 id="org78ceb32">The Task construct</h4>
+<div class="outline-text-4" id="text-org78ceb32">
 <ol class="org-ol">
 <li>Tasks are the primary construct to introduce state (tick) in a
 Time tide program.</li>
@@ -1391,9 +1395,9 @@ Examples follow:
 </ol>
 </div>
 </div>
-<div id="outline-container-org824e942" class="outline-4">
-<h4 id="org824e942">The Abort construct</h4>
-<div class="outline-text-4" id="text-org824e942">
+<div id="outline-container-orgb005f0b" class="outline-4">
+<h4 id="orgb005f0b">The Abort construct</h4>
+<div class="outline-text-4" id="text-orgb005f0b">
 <ol class="org-ol">
 <li><code>abort(logical-expression){/* body */}</code> is the way to preempt a halted system.</li>
 <li><p>
@@ -1412,9 +1416,9 @@ Example follows:
 </ol>
 </div>
 </div>
-<div id="outline-container-org25cffd1" class="outline-4">
-<h4 id="org25cffd1">The Synchronous parallel construct</h4>
-<div class="outline-text-4" id="text-org25cffd1">
+<div id="outline-container-org388a243" class="outline-4">
+<h4 id="org388a243">The Synchronous parallel construct</h4>
+<div class="outline-text-4" id="text-org388a243">
 <ol class="org-ol">
 <li><code>{/*thread body 1*/}&lt;&gt;{/*thread body 2*/}&lt;&gt;{/*thread body
        3*/}...</code> is the way to execute multiple bodies in parallel.</li>
@@ -1456,9 +1460,9 @@ Examples follow:
 </ol>
 </div>
 </div>
-<div id="outline-container-org48c7968" class="outline-4">
-<h4 id="org48c7968">Function/module definition</h4>
-<div class="outline-text-4" id="text-org48c7968">
+<div id="outline-container-orga43eead" class="outline-4">
+<h4 id="orga43eead">Function/module definition</h4>
+<div class="outline-text-4" id="text-orga43eead">
 <ol class="org-ol">
 <li>Function/module definition is similar to <code>C</code>.</li>
 <li>Functions can take as arguments constant and channels.</li>

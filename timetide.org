@@ -643,7 +643,34 @@ Example follows:
   const int[2][3] Y = {{0, 0, 0}, {0, 0, 0}} /* 2 x 3 constant array Y -- multidimensional */
 #+end_src
     
-*** Peculiarity of Array Types
+*** Channels
+    1. Channels are specific to Time tide and do not exist in ~C~.
+    2. Channels carry data.
+    3. Channels also have an associated delay $\delta$.
+    4. Channels can be of any primitive, user defined, or array type.
+    5. Channel status and values are set using =send= (Line [[(send)]])
+    6. Channel status is read using the name of the channel (Line
+       [[(status)]])
+    7. Channel value is read using =?<channel-name>= (Line [[(val)]])
+    8. Examples follow:
+    #+begin_src C -n -r
+      int channel K delay 3;		/* Channel K of type int with delay 3 */
+      struct Y channel C delay 2;	/* Channel C of type struct Y with delay 2 */
+      int[100] channel M delay 1;	/* Channel M of type int[100] with delay 1*/
+
+      /* TODO: Such bunching of channels  are not yet supported */
+      struct Y[100] channel M[100] delay 7; /* 100 channel M[0]...M[99] each of
+          					 type struct Y[100] with delay 7*/
+      send K(10);			/* Will be available at receiver after 3 logical ticks */ (ref:send)
+      if (K) { (ref:status)
+        mut int uu = 0 {		/* Definig a mutable integer uu, scope starts at {*/
+         uu = ?K 		/* Updating the value of uu by reading the value of channel K */(ref:val)
+        }			/* scope of variable uu ends */
+        /* body... */
+       }
+    #+end_src
+    
+*** Peculiarity of Array Types and Channels
     Consider the =C= source code below:
     #+begin_src C -n -r
       int X[2] = {1, 1};	 /* Array initialization -- OK*/
@@ -671,32 +698,6 @@ Example follows:
 	send X({{1, 1}});/* OK, because struct does not decay to a pointer */
       #+end_src
 
-*** Channels
-    1. Channels are specific to Time tide and do not exist in ~C~.
-    2. Channels carry data.
-    3. Channels also have an associated delay $\delta$.
-    4. Channels can be of any primitive, user defined, or array type.
-    5. Channel status and values are set using =send= (Line [[(send)]])
-    6. Channel status is read using the name of the channel (Line
-       [[(status)]])
-    7. Channel value is read using =?<channel-name>= (Line [[(val)]])
-    8. Examples follow:
-    #+begin_src C -n -r
-      int channel K delay 3;		/* Channel K of type int with delay 3 */
-      struct Y channel C delay 2;	/* Channel C of type struct Y with delay 2 */
-      int[100] channel M delay 1;	/* Channel M of type int[100] with delay 1*/
-
-      /* TODO: Such bunching of channels  are not yet supported */
-      struct Y[100] channel M[100] delay 7; /* 100 channel M[0]...M[99] each of
-          					 type struct Y[100] with delay 7*/
-      send K(10);			/* Will be available at receiver after 3 logical ticks */ (ref:send)
-      if (K) { (ref:status)
-        mut int uu = 0 {		/* Definig a mutable integer uu, scope starts at {*/
-         uu = ?K 		/* Updating the value of uu by reading the value of channel K */(ref:val)
-        }			/* scope of variable uu ends */
-        /* body... */
-       }
-    #+end_src
 
 ** Operators and expressions in Time tide
 
