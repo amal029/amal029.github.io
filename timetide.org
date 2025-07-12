@@ -293,18 +293,18 @@ that produces the inputs for the system.
 
    - The ~abro_env::write_outputs~ function:
      #+begin_src C++ -n -r
-       // This function serializes and then send the data from output port to
-       // the input port.
+       /* This function serializes and then send the data from output port to
+          the input port.*/
        template <typename In, typename Out, typename Q>
        void In2Out(In *in, Out *out, Q *q) {Qpush(q, (void *)in, out);} (ref:queue)
-       								 // We always write the current value from one to the previous value of
-       								 // the next.
+       /* We always write the current value from one to the previous value of
+          the next. */
        void abro_env::write_outputs() { (ref:writeo)
-       								     // Then we write the outputs for the tick done.
-       								     In2Out(abro_env::A_curr_ptr, abro_sys::A_prev_ptr, abro_sys::qA_ptr);
+         /* Then we write the outputs for the tick done. */
+         In2Out(abro_env::A_curr_ptr, abro_sys::A_prev_ptr, abro_sys::qA_ptr);
          In2Out(abro_env::B_curr_ptr, abro_sys::B_prev_ptr, abro_sys::qB_ptr);
          In2Out(abro_env::R_curr_ptr, abro_sys::R_prev_ptr, abro_sys::qR_ptr);
-       								 }
+       }
      #+end_src
    - Function ~abro_env::write_outputs~ (Line [[(writeo)]]) passes the
      outputs from module ~abro_env~ to module ~abro_sys~.
