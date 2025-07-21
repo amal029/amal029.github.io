@@ -1,3 +1,9 @@
-* Time tide compiler
-  1. Compiler link: https://amal029.github.io/timetide.html
+#+Author: Avinash Malik
+#+Email: avinash.malik@auckland.ac.nz
+#+OPTIONS: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline author:t
+#+OPTIONS: c:nil creator:comment d:(not "LOGBOOK") date:t e:t email:t
+#+OPTIONS: f:t inline:nil num:nil p:nil pri:nil stat:nil tags:t tasks:nil tex:t
+#+OPTIONS: timestamp:nil toc:nil todo:nil |:t reveal_slide_number:nil org-html-indent:nil
 
+
+[[https://amal029.github.io/timetide.html][Timetide compiler]]
