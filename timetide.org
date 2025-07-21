@@ -227,7 +227,7 @@ first program.
      		     TIMETIDE_DIR=<path-of-timetide-compiler-dir> EXTRA_FLAGS="-DDEBUG" run
    #+end_src
 
-** Compiling the abro example (distributed memory) program
+** Compiling the abro example (concurrent) program
 The primary idea is to divide the ~abro~ program into two parts: (a)
 ~abro_sys.tt~, which captures the system waiting for the data to
 arrive from input channels, and (b) the environment ~abro_env.tt~
@@ -556,7 +556,7 @@ that produces the inputs for the system.
         // execute an LSN.
         barrier = 2;
         while (barrier != 0) (ref:barrier)
-      			 ; // spin until both the modules/threads are done -- the barrier
+          ; // spin until both the modules/threads are done -- the barrier
         env.join();
         sys.join();
       }
@@ -605,6 +605,11 @@ that produces the inputs for the system.
 18. When the modules are implemented on physically different
     machines, make sure that modules still execute using barrier
     synchronisation.
+
+** Compiling the abro example (distributed memory) program
+   Document is work in progress. See [[https://github.com/PRETgroup/Timetide_tests/blob/main/abro.sh][abro.sh]] and files there in
+   ~Timetide_tests~ directory.
+   
 
 * The Time tide language
 
